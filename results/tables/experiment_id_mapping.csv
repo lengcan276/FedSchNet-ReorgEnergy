@@ -1,0 +1,16 @@
+new_id,old_id,description,encoder,fed_strategy,phase
+E1,E1,Local GIN+MLP Client A,GIN,None,Phase 1
+E2,E2,Local GIN+MLP Client B,GIN,None,Phase 1
+E3,E3,Local GIN+MLP Client D,GIN,None,Phase 1
+E4,E7,Local GIN+KAN Client A,GIN,None,Phase 1
+E5,E9,Local GIN+KAN Client D,GIN,None,Phase 1
+E6,E10,FedAvg GIN+MLP 3-Client,GIN,FedAvg,Phase 2
+E7,E14,FedPer GIN+KAN 3-Client,GIN,FedPer,Phase 2
+E8,E15,FedPer+FedBN GIN+KAN 3-Client,GIN,FedPer+FedBN,Phase 2
+E9,E16,FedPer+FedBN+AtomMask,GIN,FedPer+FedBN+SSL,Phase 3
+E10,E17,FedPer+FedBN+EdgePred,GIN,FedPer+FedBN+SSL,Phase 3
+E11,E18,FedPer+FedBN+GraphCL,GIN,FedPer+FedBN+SSL,Phase 3
+E12,E32,FedPer+FedBN GIN+KAN 4-Client,GIN,FedPer+FedBN,Phase 4
+E13,E50,Local SchNet+KAN Client D,SchNet,None,Phase 5
+E14,E51,FedAvg SchNet+KAN 4-Client,SchNet,FedAvg,Phase 5
+E15,E52,FedPer SchNet+KAN 4-Client,SchNet,FedPer,Phase 5

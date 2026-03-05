@@ -1,0 +1,9 @@
+molecule,smiles,y_true,y_pred_gin,y_pred_schnet,error_gin,error_schnet,n_rotatable,n_aromatic,mol_weight,n_heavy_atoms,category
+5ring_nh2_3ring_cn_both,N#CC1=C(C#N)C1=C1C(N)=C(N)C(N)=C1N,1.9107,1.7336,1.9163,0.1771,0.0056,0,0,212.2,16,best
+5ring_npme3_3ring_CN,CP(C)(C)=NC1=CC=C(N=P(C)(C)C)C1=C1C(C#N)=C1C#N,0.9666,1.7872,0.9566,0.8206,0.0101,2,0,330.3,22,best
+me_oh_cn,CC1=C(O)C(=C2C(C#N)=C2C#N)C(O)=C1C,0.9715,1.26,0.9882,0.2884,0.0167,0,0,212.2,16,best
+5ring_me_3ring_cf3_in,CC1=CC=C(C)C1=C1C(C(F)(F)F)=C1C(F)(F)F,0.7764,1.1475,0.9413,0.3711,0.1649,0,0,266.2,18,medium
+calicene,C1=CC(=C2C=C2)C=C1,1.1065,1.0532,1.2742,0.0533,0.1677,0,0,102.1,8,medium
+sesqui_5ring_oh_7ring_2f_in,OC1=CC=C(O)C1=C1C(F)=CC=CC=C1F,2.1209,1.2329,1.1692,0.888,0.9517,0,0,222.2,16,worst
+5ring_nme2_3ring_nn+,CN(C)C1=CC=C(N(C)C)C1=C1C(N=[N-])=C1[N+]#N,2.4283,1.3084,1.4374,1.1199,0.9909,3,0,242.3,18,worst
+sesqui_7ring_2cn_in,N#CC1=CC=CC=C(C#N)C1=C1C=CC=C1,3.0041,1.125,1.2733,1.8791,1.7309,0,0,204.2,16,worst
