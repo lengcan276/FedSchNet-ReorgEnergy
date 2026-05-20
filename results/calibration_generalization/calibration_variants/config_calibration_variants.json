@@ -1,0 +1,19 @@
+{
+  "experiment_id": "calibration_variants",
+  "phase": "phase3",
+  "status": "PROPOSAL_ONLY",
+  "rationale": "Phase 1 + Phase 2 verdict is PASS-LIMITED; full Phase 3 not run.",
+  "candidates": {
+    "shrinkage": {
+      "src_modification_required": false,
+      "alpha_grid": [0.25, 0.5, 0.75, 1.0],
+      "smoke_only_if_requested": true
+    },
+    "learnable_affine": {
+      "src_modification_required": true,
+      "src_file": "src/models.py:CalibrationHead",
+      "implement_only_if_reviewer_requests": true
+    }
+  },
+  "decision": "Do not run Phase 3 at this time. See variant_feasibility_report.md."
+}

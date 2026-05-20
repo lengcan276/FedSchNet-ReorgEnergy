@@ -601,6 +601,38 @@ The figures distributed with this manuscript draft were rendered using Liberatio
 Quantity-aware multi-head extensions; communication compression via top-$k$ sparsification; federated active learning using the per-task-client $\sigma$ as an uncertainty proxy.
 
 % =============================================================================
+\section{Controlled pseudo-federation tests of task-specific calibration}\label{si:calgen}
+
+To check whether the calibration signal observed on the real TADF C-triplet target (\S\ref{si:abl-e71}, main-text Figure~5) is an isolated outcome or part of a broader pattern, we ran two additional controlled experiments on synthetic pseudo-federations constructed from the public QM9-derived dataset \texttt{data/client\_a\_b/public\_reorg\_energy\_15210.csv}. \textbf{These experiments do not modify any main-text result on the real C-hole or C-triplet targets}; the raw outputs are in \texttt{results/calibration\_generalization/} and the unified report is at \texttt{paper/calibration\_generalization/calibration\_generalization\_report.md}. The summary verdict is PASS-LIMITED: calibration generalises in the small-target regime that mirrors C-triplet, but not in the moderate-target / aggressive-transform regime where local-only training is already adequate.
+
+\subsection{Phase 1 -- label-scale stress test}
+A five-client pseudo-federation was built with one target (S1, identity label transform, $n_{\mathrm{target}} = 100$) and four sources carrying aggressive affine plus noise transforms (S2: $y \to 2y + 0.5$; S3: $y \to 0.5y - 0.2$; S4: $y \to 3y + 1.0$; S5: $y + \mathcal{N}(0, 0.05)$, $n_{\mathrm{source}} = 200$ each). Five seeds, twelve communication rounds, five local epochs per round. Across the five seeds, local-only training reaches MAE $= 0.309 \pm 0.010$~eV (mean $\pm$ SEM); plain FedPer reaches $0.358$; FedPer~$+$~calibration reaches $0.340$; FedAvg without calibration reaches $0.342$. Paired Wilcoxon on per-target median-across-seeds absolute errors: \textbf{FedPer~$+$~calibration vs.\ FedPer: $\Delta$MAE $= +0.010$~eV ($p = 0.73$, n.s.)} -- calibration shows no advantage over plain FedPer at this $n_{\mathrm{target}}$. FedPer~$+$~calibration vs.\ FedAvg without calibration: $\Delta$MAE $= -0.043$~eV ($p = 0.008$) -- calibration improves over no-encoder-personalisation. Local-only is already competitive in this regime, so the federation itself is not load-bearing.
+
+\subsection{Phase 2 -- pseudo-task multi-target validation}
+Ten label-quantile-binned pseudo-targets ($n_{\mathrm{per\;task}} = 50$, identity transforms) were each evaluated under the same federation. Three seeds, eight communication rounds, three local epochs per round, three folds of CV per target. The headline result is that \textbf{FedPer~$+$~calibration improved over plain FedPer on 9 of 10 pseudo-targets}, with median $\Delta$MAE $= -0.020$~eV (interquartile range $[-0.030, -0.013]$). Per-task paired Wilcoxon tests give $p < 0.001$ on 7 of 10 tasks; one task is borderline ($p = 0.745$ on T00\_quantile0, $\Delta$MAE $= -0.001$~eV) and one is in the opposite direction (T09\_quantile9, the extreme high-label quantile, $\Delta$MAE $= +0.035$~eV, $p = 0.112$). This supports the calibration-centered interpretation in small-target pseudo-federations.
+
+\subsection{Phase 3 -- calibration variants (not run)}
+Shrinkage calibration and learnable affine calibration were specified as candidate variants but not executed (\texttt{results/calibration\_generalization/calibration\_variants/variant\_feasibility\_report.md}); the PASS-LIMITED Phase 1 result does not meet the threshold for full variant testing. Shrinkage would not require a \texttt{src/} modification; learnable affine would, and at $n \approx 30$ LOOCV-train labels carries a substantial over-fit risk. The feasibility report records the decision and the design space.
+
+\begin{table}[ht]
+\centering\small
+\caption{Calibration-generalisation experiments. Controlled pseudo-federation tests built from public QM9-derived data; \textbf{not} real TADF targets. ``Comparison'' rows are paired Wilcoxon signed-rank tests on per-target median-across-seeds absolute errors.}\label{tab:calgen}
+\begin{tabular}{lllllll}
+\toprule
+Experiment & Setting & $n_{\mathrm{target}}$ & Comparison & $\Delta$MAE (eV) & Wilcoxon $p$ & Outcome / interpretation \\
+\midrule
+Phase 1 label-scale stress  & 5 clients, aggressive transforms & 100 & cal vs.\ FedPer    & $+0.010$ & $0.73$  & no advantage over FedPer in this regime \\
+Phase 1 label-scale stress  & 5 clients, aggressive transforms & 100 & cal vs.\ FedAvg    & $-0.043$ & $0.008$ & improves over FedAvg (no encoder personalisation) \\
+Phase 2 pseudo-task val.    & 10 label-quantile pseudo-targets  &  50 & cal vs.\ FedPer    & median $-0.020$ & 7/10 $< 0.001$ & improves 9/10 pseudo-targets \\
+Phase 3 calibration variants & shrinkage / learnable affine     & --- & not run            & ---      & ---     & feasibility report only \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Summary.}
+These controlled experiments strengthen the interpretation that task-specific calibration is useful in small-target heterogeneous settings, while the Phase 1 null result prevents a universal performance claim. We therefore present them as robustness evidence for the small-target reading of the main-text C-triplet result rather than as a claim of general superiority.
+
+% =============================================================================
 \bibliography{references}
 
 \end{document}

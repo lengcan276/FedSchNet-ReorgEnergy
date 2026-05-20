@@ -103,6 +103,26 @@ FedSchNet-ReorgEnergy/
 - GPU 1: Client B/C training
 - Federation aggregation on CPU
 
+## Calibration generalization experiments
+
+A separate set of controlled robustness experiments tests whether the
+task-specific calibration mechanism that distinguishes E71 from FedPer on
+the real TADF C-triplet target also helps on synthetic pseudo-federations
+built from the public QM9-derived data.
+
+- Code: [`experiments/calibration_generalization/`](experiments/calibration_generalization/)
+- Result files: [`results/calibration_generalization/`](results/calibration_generalization/)
+- Unified report: [`paper/calibration_generalization/calibration_generalization_report.md`](paper/calibration_generalization/calibration_generalization_report.md)
+
+**Verdict: PASS-LIMITED.** Calibration improves over plain FedPer on
+9 of 10 small-target pseudo-federations (n = 50, label-quantile bins;
+median ΔMAE = −0.020 eV, paired Wilcoxon p < 0.001 on 7 of 10 tasks),
+but shows no advantage in a moderate-target / aggressive-transform
+stress test (n_target = 100; ΔMAE = +0.010 eV, p = 0.73). This is a
+controlled pseudo-federation robustness analysis; it supports a
+**regime-dependent, small-target calibration interpretation, not a
+universal superiority claim** for PC²-FedReorg.
+
 ## Citation
 
 ```

@@ -267,6 +267,8 @@ We list six concrete limitations that future work should address.
 
 10. **Estimand consistency between summary tables and paired tests.** Table 2 (and Figure 5a) reports the 5-seed mean of per-method MAE_mean (the natural unit for a bar chart with seed-level SEM). Tables 3 and the paired analyses in §4.3 / §4.4 use per-molecule median-across-seeds absolute errors (the natural paired unit for Wilcoxon testing). These two estimands differ in our data by ≤ 0.003 eV (well below seed-SEM), but they are statistically distinct objects, and we have therefore stated the convention explicitly in the Figure 5 caption rather than mixing the two numbers in headline statements.
 
+11. **Calibration generalisation is regime-dependent.** Additional controlled pseudo-federation experiments, reported in the Supporting Information (§S11), support the calibration-centered interpretation in small-target pseudo-tasks: task-specific calibration improved FedPer on 9 of 10 label-quantile pseudo-targets at n = 50 (median ΔMAE = −0.020 eV; paired Wilcoxon p < 0.001 on 7 of 10 tasks). However, an aggressive label-scale stress test at n_target = 100 did not show an advantage of calibration over plain FedPer (ΔMAE = +0.010 eV, paired Wilcoxon p = 0.73), indicating that the calibration benefit observed on the real C-triplet target is regime-dependent rather than universal.
+
 ---
 
 ## 7. Conclusions

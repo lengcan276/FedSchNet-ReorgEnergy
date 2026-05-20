@@ -624,4 +624,53 @@ The figures distributed with this manuscript draft were rendered using Liberatio
 
 ---
 
+## S11. Controlled pseudo-federation tests of task-specific calibration
+
+To check whether the calibration signal observed on the real TADF C-triplet target (§S7.6, main-text Figure 5) is an isolated outcome or part of a broader pattern, we ran two additional controlled experiments on synthetic pseudo-federations constructed from the public QM9-derived dataset `data/client_a_b/public_reorg_energy_15210.csv`. **These experiments do not modify any main-text result on the real C-hole or C-triplet targets**; the raw outputs are in `results/calibration_generalization/` and the unified report is at `paper/calibration_generalization/calibration_generalization_report.md`. The summary verdict is **PASS-LIMITED**: calibration generalises in the small-target regime that mirrors C-triplet, but not in the moderate-target / aggressive-transform regime where local-only training is already adequate.
+
+### S11.1 Phase 1 — label-scale stress test
+
+A five-client pseudo-federation was built with one target (S1, identity label transform, n_target = 100) and four sources carrying aggressive affine plus noise transforms (S2: y → 2y + 0.5; S3: y → 0.5y − 0.2; S4: y → 3y + 1.0; S5: y + N(0, 0.05); n_source = 200 each). Five seeds, twelve communication rounds, five local epochs per round.
+
+- Local-only: MAE = 0.309 ± 0.010 eV (mean ± SEM across the 5 seeds).
+- Plain FedPer: 0.358.
+- FedPer + calibration: 0.340.
+- FedAvg, no calibration: 0.342.
+
+Paired Wilcoxon on per-target median-across-seeds absolute errors:
+
+- **FedPer + calibration vs. FedPer: ΔMAE = +0.010 eV (p = 0.73, n.s.)** — calibration shows no advantage over plain FedPer at this n_target.
+- FedPer + calibration vs. FedAvg without calibration: ΔMAE = −0.043 eV (p = 0.008) — calibration improves over no-encoder-personalisation.
+
+Local-only is already competitive in this regime, so the federation itself is not load-bearing.
+
+### S11.2 Phase 2 — pseudo-task multi-target validation
+
+Ten label-quantile-binned pseudo-targets (n_per_task = 50, identity transforms) were each evaluated under the same federation. Three seeds, eight communication rounds, three local epochs per round, three folds of CV per target.
+
+- **FedPer + calibration improved over plain FedPer on 9 of 10 pseudo-targets**.
+- Median ΔMAE = −0.020 eV (IQR [−0.030, −0.013]).
+- Per-task paired Wilcoxon: **p < 0.001 on 7 of 10 tasks**; one task borderline (T00_quantile0, ΔMAE = −0.001 eV, p = 0.745); one task in the opposite direction (T09_quantile9, the extreme high-label quantile, ΔMAE = +0.035 eV, p = 0.112).
+
+### S11.3 Phase 3 — calibration variants (not run)
+
+Shrinkage calibration and learnable affine calibration were specified as candidate variants but not executed (`results/calibration_generalization/calibration_variants/variant_feasibility_report.md`); the PASS-LIMITED Phase 1 result does not meet the threshold for full variant testing. Shrinkage would not require a `src/` modification; learnable affine would, and at n ≈ 30 LOOCV-train labels carries a substantial over-fit risk. The feasibility report records the decision and the design space.
+
+### S11.4 Table S11 — calibration-generalisation experiments
+
+| Experiment | Setting | n_target | Comparison | ΔMAE (eV) | Wilcoxon p | Outcome / interpretation |
+|---|---|---|---|---|---|---|
+| Phase 1 label-scale stress | 5 clients, aggressive transforms | 100 | cal vs. FedPer | +0.010 | 0.73 | no advantage over FedPer in this regime |
+| Phase 1 label-scale stress | 5 clients, aggressive transforms | 100 | cal vs. FedAvg | −0.043 | 0.008 | improves over FedAvg (no encoder personalisation) |
+| Phase 2 pseudo-task validation | 10 label-quantile pseudo-targets | 50 | cal vs. FedPer | median −0.020 | 7/10 < 0.001 | improves 9/10 pseudo-targets |
+| Phase 3 calibration variants | shrinkage / learnable affine | — | not run | — | — | feasibility report only |
+
+These are **controlled pseudo-federation tests, not real TADF targets**.
+
+### S11.5 Summary
+
+These controlled experiments strengthen the interpretation that task-specific calibration is useful in small-target heterogeneous settings, while the Phase 1 null result prevents a universal performance claim. We therefore present them as robustness evidence for the small-target reading of the main-text C-triplet result rather than as a claim of general superiority.
+
+---
+
 *End of Supporting Information.*
