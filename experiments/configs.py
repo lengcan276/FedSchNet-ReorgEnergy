@@ -34,3 +34,18 @@ GRAPHCL_TEMP = 0.1
 # ============ Evaluation ============
 N_FOLDS_AB = 5            # K-fold CV for Client A/B
 # Client C: LOOCV (49 or 53 molecules)
+
+
+# ============ PC²-FedReorg (Phase 4) ============
+# Defaults are OFF so existing E1-E59 experiments are completely unchanged.
+# Only E66 (PC²-FedReorg) enables these via run_all.py's EXPERIMENTS dict.
+
+USE_ADAPTER = False                     # Insert AdapterLayer between encoder and head
+ADAPTER_TYPE = 'mlp'                    # 'mlp' (default; recommended for small data) or 'kan'
+ADAPTER_BOTTLENECK = 128                # Bottleneck inner dim of the residual adapter
+USE_CALIBRATION = False                 # Per-task-client (mu, sigma) standardization
+USE_PC2_AGGREGATION = False             # Use experiments/pc2_fedreorg:pc2_fed_dispatch
+TRANSFERABILITY_PATH = 'results/preverify/T_transferability.json'
+
+# T_repr / T_head / T_adapter are produced by Phase 1 (src/transferability.py).
+# Phase 4 only consumes the JSON; do not regenerate it inside training runs.

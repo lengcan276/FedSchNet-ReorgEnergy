@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="903.208692pt" height="520.39175pt" viewBox="0 0 903.208692 520.39175" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-05-18T14:57:45.369429</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 520.39175 
+L 903.208692 520.39175 
+L 903.208692 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 119.808 447.84 
+L 306.509657 447.84 
+L 306.509657 70.848 
+L 119.808 70.848 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 128.294439 447.84 
+L 144.719805 447.84 
+L 144.719805 140.948822 
+L 128.294439 140.948822 
+z
+" clip-path="url(#p5337277669)" style="fill: #888888; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 173.920455 447.84 
+L 190.34582 447.84 
+L 190.34582 128.355254 
+L 173.920455 128.355254 
+z
+" clip-path="url(#p5337277669)" style="fill: #d03b43; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 219.54647 447.84 
+L 235.971836 447.84 
+L 235.971836 175.038962 
+L 219.54647 175.038962 
+z
+" clip-path="url(#p5337277669)" style="fill: #a0408e; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 265.172486 447.84 
+L 281.597852 447.84 
+L 281.597852 182.433648 
+L 265.172486 182.433648 
+z
+" clip-path="url(#p5337277669)" style="fill: #2e8b57; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 144.719805 447.84 
+L 161.14517 447.84 
+L 161.14517 297.856453 
+L 144.719805 297.856453 
+z
+" clip-path="url(#p5337277669)" style="fill: #888888; opacity: 0.45; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 190.34582 447.84 
+L 206.771186 447.84 
+L 206.771186 293.685883 
+L 190.34582 293.685883 
+z
+" clip-path="url(#p5337277669)" style="fill: #d03b43; opacity: 0.45; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 235.971836 447.84 
+L 252.397202 447.84 
+L 252.397202 291.629576 
+L 235.971836 291.629576 
+z
+" clip-path="url(#p5337277669)" style="fill: #a0408e; opacity: 0.45; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 281.597852 447.84 
+L 298.023218 447.84 
+L 298.023218 295.090137 
+L 281.597852 295.090137 
+z
+" clip-path="url(#p5337277669)" style="fill: #2e8b57; opacity: 0.45; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m1427766d1c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m1427766d1c" x="144.719805" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(131.971445 461.085156)">FedPer</text>
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(116.856367 470.496062)">(no calibration)</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m1427766d1c" x="190.34582" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(183.492461 461.085156)">PC²</text>
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(165.479102 470.496062)">no calibration</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m1427766d1c" x="235.971836" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(209.951289 461.085156)">PC²-FedReorg</text>
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(226.726446 470.631062)">(full)</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m1427766d1c" x="281.597852" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(265.186914 461.085156)">FedPer +</text>
+      <text style="font-size: 9px; font-family: 'Liberation Serif', serif" transform="translate(253.230977 470.496062)">calibration only</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_5">
+      <defs>
+       <path id="m15f1c2b622" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m15f1c2b622" x="119.808" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: end" x="112.808" y="451.309531" transform="rotate(-0 112.808 451.309531)">0.0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m15f1c2b622" x="119.808" y="366.517141" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: end" x="112.808" y="369.986673" transform="rotate(-0 112.808 369.986673)">0.2</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m15f1c2b622" x="119.808" y="285.194283" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: end" x="112.808" y="288.663814" transform="rotate(-0 112.808 288.663814)">0.4</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m15f1c2b622" x="119.808" y="203.871424" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: end" x="112.808" y="207.340956" transform="rotate(-0 112.808 207.340956)">0.6</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m15f1c2b622" x="119.808" y="122.548566" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: end" x="112.808" y="126.018097" transform="rotate(-0 112.808 126.018097)">0.8</text>
+     </g>
+    </g>
+    <g id="text_10">
+     <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="94.178312" y="259.344" transform="rotate(-90 94.178312 259.344)">MAE (eV; mean ± SEM over 5 seeds)</text>
+    </g>
+   </g>
+   <g id="LineCollection_1">
+    <path d="M 136.507122 143.874722 
+L 136.507122 138.022921 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+    <path d="M 182.133138 130.816515 
+L 182.133138 125.893994 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+    <path d="M 227.759153 178.953961 
+L 227.759153 171.123963 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+    <path d="M 273.385169 186.942292 
+L 273.385169 177.925004 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+   </g>
+   <g id="line2d_10">
+    <defs>
+     <path id="m1823fc656d" d="M 3 0 
+L -3 -0 
+" style="stroke: #000000"/>
+    </defs>
+    <g clip-path="url(#p5337277669)">
+     <use xlink:href="#m1823fc656d" x="136.507122" y="143.874722" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="182.133138" y="130.816515" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="227.759153" y="178.953961" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="273.385169" y="186.942292" style="stroke: #000000"/>
+    </g>
+   </g>
+   <g id="line2d_11">
+    <g clip-path="url(#p5337277669)">
+     <use xlink:href="#m1823fc656d" x="136.507122" y="138.022921" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="182.133138" y="125.893994" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="227.759153" y="171.123963" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="273.385169" y="177.925004" style="stroke: #000000"/>
+    </g>
+   </g>
+   <g id="LineCollection_2">
+    <path d="M 152.932487 300.843405 
+L 152.932487 294.869501 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+    <path d="M 198.558503 295.280474 
+L 198.558503 292.091292 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+    <path d="M 244.184519 294.001553 
+L 244.184519 289.257599 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+    <path d="M 289.810535 296.249779 
+L 289.810535 293.930496 
+" clip-path="url(#p5337277669)" style="fill: none; stroke: #000000; stroke-width: 1.5"/>
+   </g>
+   <g id="line2d_12">
+    <g clip-path="url(#p5337277669)">
+     <use xlink:href="#m1823fc656d" x="152.932487" y="300.843405" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="198.558503" y="295.280474" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="244.184519" y="294.001553" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="289.810535" y="296.249779" style="stroke: #000000"/>
+    </g>
+   </g>
+   <g id="line2d_13">
+    <g clip-path="url(#p5337277669)">
+     <use xlink:href="#m1823fc656d" x="152.932487" y="294.869501" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="198.558503" y="292.091292" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="244.184519" y="289.257599" style="stroke: #000000"/>
+     <use xlink:href="#m1823fc656d" x="289.810535" y="293.930496" style="stroke: #000000"/>
+    </g>
+   </g>
+   <g id="patch_11">
+    <path d="M 119.808 447.84 
+L 119.808 70.848 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 119.808 447.84 
+L 306.509657 447.84 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="119.808" y="64.848" transform="rotate(-0 119.808 64.848)">(a)  C-triplet / C-hole MAE under four configurations</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_13">
+     <path d="M 220.931922 84.448 
+L 237.931922 84.448 
+L 237.931922 78.498 
+L 220.931922 78.498 
+z
+" style="fill: #888888; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_12">
+     <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="244.731922" y="84.448" transform="rotate(-0 244.731922 84.448)">C-triplet (n=49)</text>
+    </g>
+    <g id="patch_14">
+     <path d="M 220.931922 96.458234 
+L 237.931922 96.458234 
+L 237.931922 90.508234 
+L 220.931922 90.508234 
+z
+" style="fill: #888888; opacity: 0.45; stroke: #000000; stroke-width: 0.7; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_13">
+     <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="244.731922" y="96.458234" transform="rotate(-0 244.731922 96.458234)">C-hole (n=53)</text>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_15">
+    <path d="M 373.224382 447.84 
+L 653.276867 447.84 
+L 653.276867 70.848 
+L 373.224382 70.848 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_5">
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m1427766d1c" x="381.976022" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="381.976022" y="461.779062" transform="rotate(-0 381.976022 461.779062)">-0.3</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#m1427766d1c" x="425.734223" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="425.734223" y="461.779062" transform="rotate(-0 425.734223 461.779062)">-0.2</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m1427766d1c" x="469.492423" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="469.492423" y="461.779062" transform="rotate(-0 469.492423 461.779062)">-0.1</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#m1427766d1c" x="513.250624" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="513.250624" y="461.779062" transform="rotate(-0 513.250624 461.779062)">0.0</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m1427766d1c" x="557.008825" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="557.008825" y="461.779062" transform="rotate(-0 557.008825 461.779062)">0.1</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_19">
+      <g>
+       <use xlink:href="#m1427766d1c" x="600.767026" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_19">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="600.767026" y="461.779062" transform="rotate(-0 600.767026 461.779062)">0.2</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m1427766d1c" x="644.525227" y="447.84" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_20">
+      <text style="font-size: 10px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="644.525227" y="461.779062" transform="rotate(-0 644.525227 461.779062)">0.3</text>
+     </g>
+    </g>
+    <g id="text_21">
+     <text style="font-size: 9.5px; font-family: 'Liberation Serif', serif" transform="translate(454.259335 474.500859)">Paired ΔMAE on C-triplet,  eV</text>
+     <text style="font-size: 9.5px; font-family: 'Liberation Serif', serif" transform="translate(362.608085 484.434594)">Top 3 rows:  MAE(E71) − MAE(other);  rows 4–7:  MAE(PC²) − MAE(other);</text>
+     <text style="font-size: 9.5px; font-family: 'Liberation Serif', serif" transform="translate(437.755312 494.484109)">negative = first method has lower MAE</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4"/>
+   <g id="LineCollection_3">
+    <path d="M 494.16964 87.984 
+L 525.774146 87.984 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke: #2e8b57; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_21">
+    <defs>
+     <path id="m06299e21af" d="M 0 4 
+L 0 -4 
+" style="stroke: #2e8b57"/>
+    </defs>
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m06299e21af" x="494.16964" y="87.984" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="line2d_22">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m06299e21af" x="525.774146" y="87.984" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="LineCollection_4">
+    <path d="M 415.543063 145.104 
+L 501.74329 145.104 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke: #2e8b57; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_23">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m06299e21af" x="415.543063" y="145.104" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="line2d_24">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m06299e21af" x="501.74329" y="145.104" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="LineCollection_5">
+    <path d="M 423.376744 202.224 
+L 509.726396 202.224 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke: #2e8b57; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_25">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m06299e21af" x="423.376744" y="202.224" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="line2d_26">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m06299e21af" x="509.726396" y="202.224" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="LineCollection_6">
+    <path d="M 414.766418 259.344 
+L 506.547881 259.344 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke: #c03030; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_27">
+    <defs>
+     <path id="m5bb4c24c23" d="M 0 4 
+L 0 -4 
+" style="stroke: #c03030"/>
+    </defs>
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m5bb4c24c23" x="414.766418" y="259.344" style="fill: #c03030; stroke: #c03030"/>
+    </g>
+   </g>
+   <g id="line2d_28">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m5bb4c24c23" x="506.547881" y="259.344" style="fill: #c03030; stroke: #c03030"/>
+    </g>
+   </g>
+   <g id="LineCollection_7">
+    <path d="M 512.954359 316.464 
+L 553.324654 316.464 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke: #666666; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_29">
+    <defs>
+     <path id="mcab874ea19" d="M 0 4 
+L 0 -4 
+" style="stroke: #666666"/>
+    </defs>
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mcab874ea19" x="512.954359" y="316.464" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="line2d_30">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mcab874ea19" x="553.324654" y="316.464" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="LineCollection_8">
+    <path d="M 513.528516 373.584 
+L 537.364633 373.584 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke: #666666; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_31">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mcab874ea19" x="513.528516" y="373.584" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="line2d_32">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mcab874ea19" x="537.364633" y="373.584" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="LineCollection_9">
+    <path d="M 451.061101 430.704 
+L 564.346043 430.704 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke: #666666; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_33">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mcab874ea19" x="451.061101" y="430.704" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="line2d_34">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mcab874ea19" x="564.346043" y="430.704" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="line2d_35">
+    <path d="M 513.250624 447.84 
+L 513.250624 70.848 
+" clip-path="url(#p7094f2edaa)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #000000; stroke-width: 0.8"/>
+   </g>
+   <g id="line2d_36">
+    <defs>
+     <path id="mc85535947e" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #2e8b57"/>
+    </defs>
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mc85535947e" x="510.681885" y="87.984" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="line2d_37">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mc85535947e" x="458.591777" y="145.104" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="line2d_38">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#mc85535947e" x="465.775106" y="202.224" style="fill: #2e8b57; stroke: #2e8b57"/>
+    </g>
+   </g>
+   <g id="line2d_39">
+    <defs>
+     <path id="m19b21f4c77" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #c03030"/>
+    </defs>
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m19b21f4c77" x="461.160516" y="259.344" style="fill: #c03030; stroke: #c03030"/>
+    </g>
+   </g>
+   <g id="line2d_40">
+    <defs>
+     <path id="m74029c00b5" d="M 0 3.5 
+C 0.928211 3.5 1.81853 3.131218 2.474874 2.474874 
+C 3.131218 1.81853 3.5 0.928211 3.5 0 
+C 3.5 -0.928211 3.131218 -1.81853 2.474874 -2.474874 
+C 1.81853 -3.131218 0.928211 -3.5 0 -3.5 
+C -0.928211 -3.5 -1.81853 -3.131218 -2.474874 -2.474874 
+C -3.131218 -1.81853 -3.5 -0.928211 -3.5 0 
+C -3.5 0.928211 -3.131218 1.81853 -2.474874 2.474874 
+C -1.81853 3.131218 -0.928211 3.5 0 3.5 
+z
+" style="stroke: #666666"/>
+    </defs>
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m74029c00b5" x="532.188726" y="316.464" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="line2d_41">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m74029c00b5" x="524.871836" y="373.584" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="line2d_42">
+    <g clip-path="url(#p7094f2edaa)">
+     <use xlink:href="#m74029c00b5" x="508.70009" y="430.704" style="fill: #666666; stroke: #666666"/>
+    </g>
+   </g>
+   <g id="patch_16">
+    <path d="M 373.224382 447.84 
+L 373.224382 70.848 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 373.224382 447.84 
+L 653.276867 447.84 
+" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="531.02513" y="90.016031" transform="rotate(-0 531.02513 90.016031)">E71 vs PC²-FedReorg (E66)   n.s. (p = 0.93)</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="506.994274" y="147.147984" transform="rotate(-0 506.994274 147.147984)">E71 vs PC² no-calibration (E70)   nominal p = 0.021</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="514.97738" y="204.267984" transform="rotate(-0 514.97738 204.267984)">E71 vs FedPer (E63)   nominal p = 0.028</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="511.798865" y="261.387984" transform="rotate(-0 511.798865 261.387984)">PC² vs PC² no-calibration (E70)   nominal p = 0.043</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="558.575638" y="318.539195" transform="rotate(-0 558.575638 318.539195)">PC² vs uniform gate (E69)   n.s. (p = 0.18)</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="542.615617" y="375.627984" transform="rotate(-0 542.615617 375.627984)">PC² vs no-C-cross repr (E68)   n.s. (p = 0.07)</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 8.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="569.597028" y="432.747984" transform="rotate(-0 569.597028 432.747984)">PC² vs D→C pretrain (E65)   n.s. (p = 0.85)</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 10.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="373.224382" y="64.848" transform="rotate(-0 373.224382 64.848)">(b)  Paired effect-size forest plot (E71 contrasts + PC² ablations)</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="text_30">
+    <g id="patch_18">
+     <path d="M 723.16552 287.531762 
+L 896.008692 287.531762 
+Q 900.358692 287.531762 900.358692 283.181762 
+L 900.358692 78.447652 
+Q 900.358692 74.097652 896.008692 74.097652 
+L 723.16552 74.097652 
+Q 718.81552 74.097652 718.81552 78.447652 
+L 718.81552 283.181762 
+Q 718.81552 287.531762 723.16552 287.531762 
+z
+" style="fill: #f6f2e7; stroke: #a8a095; stroke-width: 0.8; stroke-linejoin: miter"/>
+    </g>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 85.044699)">• E71 ≈ E66  (n.s.; p = 0.929)</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 94.842259)">      FedPer + calibration</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 104.639818)">      reproduces PC²-FedReorg.</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 114.49719)"/>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 124.294749)">• E71 &lt;  E63  (nominal p = 0.028)</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 134.092309)">      Calibration alone improves</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 143.889868)">      over plain FedPer.</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 153.687427)"/>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 163.484987)">• E71 &lt;  E70  (nominal p = 0.021)</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 173.282546)">      Removing calibration is</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 183.139918)">      more harmful than removing</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 192.99729)">      adapter + gate.</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 202.854662)"/>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 212.652221)">─────────────────────────</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 222.449781)">Gate is not required for the</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 232.265012)">observed C-triplet gain in this</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 242.122384)">federation; retained as auditable</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 251.919943)">compatibility metadata only.</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 261.717503)"/>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 271.515062)">C-hole remains at a small-sample</text>
+    <text style="font-size: 8.7px; font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Computer Modern Typewriter', 'Andale Mono', 'Nimbus Mono L', 'Courier New', 'Courier', 'Fixed', 'Terminal', monospace" transform="translate(723.16552 281.312621)">data ceiling (all p ≥ 0.42).</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 10.5px; font-family: 'Liberation Serif', serif; text-anchor: start" x="719.991592" y="64.848" transform="rotate(-0 719.991592 64.848)">(c)  Mechanism summary</text>
+   </g>
+  </g>
+  <g id="text_32">
+   <text style="font-size: 11.5px; font-family: 'Liberation Serif', serif; text-anchor: middle" x="487.008" y="15.179922" transform="rotate(-0 487.008 15.179922)">Calibration under personalized heads explains the C-triplet gain</text>
+  </g>
+  <g id="text_33">
+   <text style="font-style: italic; font-size: 8px; font-family: 'Liberation Serif', serif; text-anchor: start; fill: #555555" x="7.2" y="511.488" transform="rotate(-0 7.2 511.488)">All p-values are paired Wilcoxon (5-seed median per-molecule abs error), unadjusted nominal; Bonferroni threshold for the three E71 contrasts is α/3 ≈ 0.017 (see §4.4).</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p5337277669">
+   <rect x="119.808" y="70.848" width="186.701657" height="376.992"/>
+  </clipPath>
+  <clipPath id="p7094f2edaa">
+   <rect x="373.224382" y="70.848" width="280.052485" height="376.992"/>
+  </clipPath>
+ </defs>
+</svg>

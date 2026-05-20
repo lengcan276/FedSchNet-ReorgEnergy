@@ -1,0 +1,638 @@
+% =============================================================================
+% PC2-FedReorg Supporting Information -- Overleaf-ready LaTeX source
+%
+% Built from paper/SI.md (commit on 2026-05-12). All scientific statements,
+% numerical values, and TODO notes are preserved verbatim from the Markdown
+% source. Figures are loaded from ../figures and the bibliography is shared
+% with main.tex (references.bib in the same directory).
+%
+% This file is intended to compile as a standalone Supporting Information PDF.
+% Cross-references to the main manuscript use the same labels as main.tex but
+% they will appear as "??" in the compiled SI unless main.tex is included via
+% \input{main} or the SI is compiled together with the main file. Keep the SI
+% as a standalone artefact for journals that submit SI separately; switch to
+% xr-hyper package for cross-document references if required.
+% =============================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{caption}
+\captionsetup{labelfont=bf,font=small}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\sisetup{detect-all,range-units=single,range-phrase=\,--\,}
+
+\newcommand{\PC}{PC\textsuperscript{2}-FedReorg}
+\newcommand{\TODO}[1]{\textcolor{red}{\textsf{[TODO: #1]}}}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black}
+
+% Cross-document references to the main manuscript are hardcoded as plain
+% text (e.g. "main-text Table 1") rather than imported via xr/xr-hyper,
+% because both packages conflict with natbib's citation entries in the
+% imported main.aux (\@citex extra-brace errors during compilation). The
+% main-text table/figure numbers used in cross-references are stable across
+% any reordering inside Sections 1-7 of main.tex, so hardcoding is safe.
+
+% Allow TeX to stretch line ends to absorb tt-font / long-token over-runs
+% (paths, SMILES, T-matrix subscripts) in narrative paragraphs.
+\setlength{\emergencystretch}{5em}
+\tolerance=2000
+\hbadness=2000
+
+\usepackage[numbers,sort&compress]{natbib}
+\bibliographystyle{unsrtnat}
+
+% Renumber sections, figures, tables with the "S" prefix used in the Markdown SI.
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thesubsection}{S\arabic{section}.\arabic{subsection}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\title{Supporting Information for\\
+\emph{Calibration-Aware Personalized Federated Learning for Molecular Reorganization Energy Prediction}}
+
+\author{\TODO{Authors as in main.tex}}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent This document provides supporting material for the main manuscript: dataset and task-client definitions (Section~\ref{si:data}), pre-verification analyses motivating the algorithmic choices (Section~\ref{si:preverify}), model and implementation details (Section~\ref{si:impl}), the auditable transferability matrices (Section~\ref{si:gate}), full performance results (Section~\ref{si:perf}), paired statistical testing (Section~\ref{si:paired}), ablation studies (Section~\ref{si:abl}), per-molecule prediction artefacts (Section~\ref{si:per-mol}), a reproducibility checklist (Section~\ref{si:repro}), and a list of additional limitations (Section~\ref{si:lim}).
+
+All numerical artefacts referenced below are released alongside the manuscript at \TODO{repository URL -- to be supplied} and are also identified by their relative path in this codebase (e.g.\ \texttt{results/pc2\_phase5\_stats.csv}).
+
+% =============================================================================
+\section{Dataset and task-client details}\label{si:data}
+
+\subsection{Five task-client nodes}
+
+The federation comprises five nodes (see main-text Table). Each node is defined not only by its underlying samples but also by the \emph{quantity} it measures and the \emph{DFT protocol} that produced its labels. We adopt the term \textbf{task-client} to make this distinction explicit: a single physical laboratory may host more than one task-client when it measures more than one physical quantity. The five quantities are all reorganization-energy-related but they are not interchangeable: A and B are cation-$\lambda$; C-hole and D are both hole-$\lambda$ but at different DFT functionals ($\omega$B97X-D vs.\ B3LYP) and different chemical spaces; C-triplet is a triplet-$\lambda$ task. Pairwise head sharing across these distinct physical quantities is blocked by clause 1 of the head gate (Section~\ref{si:gate}).
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Per-task-client summary statistics (extended). Values taken from \texttt{results/preverify/T\_transferability.json}.}\label{tab:si:nodes}
+\begin{tabularx}{\textwidth}{@{}l X X r c c@{}}
+\toprule
+Task-client & Source & Physical quantity & $n$ & Label mean $\pm$ SD (eV) & Label range (eV) \\
+\midrule
+A         & QM9 non-aromatic public  & cation reorg.\ energy             & 6{,}020 & $0.821 \pm 0.422$ & 0.021--2.939 \\
+B         & QM9 aromatic public      & cation reorg.\ energy             & 9{,}190 & $0.658 \pm 0.319$ & 0.011--2.680 \\
+C-hole    & in-house TADF laboratory & hole reorg.\ energy ($\omega$B97X-D)    & 53      & $1.215 \pm 0.496$ & 0.449--3.004 \\
+C-triplet & in-house TADF laboratory & triplet reorg.\ energy ($\omega$B97X-D) & 49      & $2.638 \pm 0.745$ & 1.047--4.273 \\
+D         & Atahan-Evrenk 2019       & hole reorg.\ energy (B3LYP/6-31G*) & 5{,}876 & $0.258 \pm 0.048$ & 0.076--0.870 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Why A and B are cation-$\lambda$, C is hole/triplet, D is hole-$\lambda$}
+\begin{itemize}
+  \item \textbf{A / B (QM9 public):} the public QM9-derived reorganization-energy split is computed as a cation reorganization energy at B3LYP/6-31G* by previous work on the same compound set. We split QM9 by aromatic-ring count (\verb|Chem.rdMolDescriptors.CalcNumAromaticRings|) into a non-aromatic subset (A, $n = 6{,}020$) and an aromatic subset (B, $n = 9{,}190$).
+  \item \textbf{C-hole / C-triplet (in-house TADF):} the in-house laboratory provides per-molecule reorganization energies computed at $\omega$B97X-D using the adiabatic four-point Nelsen protocol~\citep{Nelsen1987} with one conformer per molecule. After dropping rows with missing values, $n = 53$ for the hole-$\lambda$ target and $n = 49$ for the triplet-$\lambda$ target.
+  \item \textbf{D (Atahan-Evrenk 2019)~\citep{AtahanEvrenk2019_RE}:} the published conjugated-organic-semiconductor dataset reports hole reorganization energy at B3LYP/6-31G*; geometry treatment, charge-state handling, and conformer policy are not recorded in machine-readable form.
+\end{itemize}
+
+\subsection{Task-client versus physical client}
+A \emph{physical client} corresponds to a single data-providing entity (laboratory or public dataset). A \emph{task-client} additionally carries the physical quantity and DFT protocol as part of its identity. The distinction affects (i) aggregation routing; (ii) head sharing (quantity-mismatched task-clients have $T_{\mathrm{head}} = 0$ by construction); (iii) calibration installation (each task-client installs its own $(\mu, \sigma)$ from its own training fold).
+
+\subsection{Label distributions and representative molecules}
+Per-node label distributions are shown in main-text Figure 1b. The label scales span an order of magnitude (D mean \SI{0.258}{\eV}; C-triplet mean \SI{2.638}{\eV}; ratio $10.2\times$). The representative SMILES (chosen by the deterministic median rule) are recorded in the standard output of \texttt{paper/make\_figures.py}:
+\begin{itemize}
+  \item A: \texttt{C\#CC\#CC(=O)C1CC1}, $\lambda = \SI{0.733}{\eV}$
+  \item B: \texttt{Nc1nc(O)nc(=O)[nH]1}, $\lambda = \SI{0.583}{\eV}$
+  \item C-hole: \texttt{N\#CC1=C(C\#N)C1=C1C(O)=CC=C1O}, $\lambda_h = \SI{1.057}{\eV}$
+  \item C-triplet: \texttt{NC1=CC=C(N)C1=C1C=CC=CC=C1}, $\lambda_T = \SI{2.747}{\eV}$
+  \item D: \texttt{c1ccc2c(c1)Cc1c3cnc4ccCc4c3[nH]c21}, $\lambda_h = \SI{0.264}{\eV}$
+\end{itemize}
+
+\subsection{Protocol metadata}
+\begin{sloppypar}
+Full per-node protocol metadata is persisted as \texttt{results/preverify/T\_transferability.\linebreak[1]json:protocol\_meta}. Clients A and B are derived from a single public QM9 cation-reorganization-energy source and share \texttt{source\_id}; their pairwise head-sharing is therefore governed by the \emph{same-source shortcut} of the head gate (Section~\ref{si:gate}), which fires \emph{before} clauses 2 and 3 of the per-field checks and does not require the auxiliary fields to be populated --- the per-field entries in main-text Table~1 are accordingly shown as ``--- (same-source)''. Unknown fields are reserved for cases where the same-source shortcut does not apply: D's \texttt{geometry}, \texttt{charge\_state}, and \texttt{conformers} are tagged \texttt{"unknown"} (the published source provides only functional and basis), and C's \texttt{basis} field is not exposed in the in-house CSV used here. These three genuinely missing fields trigger clause 2 of the head gate (Section~\ref{si:gate}) wherever the shortcut does not fire.
+\end{sloppypar}
+
+% =============================================================================
+\section{Pre-verification before transfer (V1 / V2 / V3)}\label{si:preverify}
+
+\subsection{V1: label and protocol divergence between D and C}
+\begin{itemize}
+  \item D-hole-$\lambda$ vs.\ C-hole-$\lambda$: two-sample Kolmogorov--Smirnov test, $p \approx 1.1 \times 10^{-116}$ (label distributions disjoint in mean, range, and shape).
+  \item DFT-protocol divergence: D uses B3LYP/6-31G* with abstract-only metadata; C-hole uses $\omega$B97X-D with the four-point Nelsen geometry treatment.
+  \item Combined trigger: $T_{\mathrm{head}}[\mathrm{D}, \mathrm{C\text{-}hole}] = 0$ independently of any training-time signal.
+\end{itemize}
+
+V1 does \textbf{not} assert that naive D~$\to$~C transfer must produce negative outcomes -- that empirical question is addressed by the E65 ablation (Section~\ref{si:abl-e65}).
+
+\subsection{V2: classical C-only baselines and the data-ceiling diagnosis}\label{si:v2}
+
+Classical regressors trained under the same 5-seed LOOCV protocol as the federated runs, using Morgan fingerprints (radius 2, 2048 bits) as features. Results persisted in \texttt{results/preverify/V2\_classical\_baselines.csv} and \texttt{results/preverify/V2\_summary.md}.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Classical-baseline LOOCV results on C-hole, mean $\pm$ SD across five seeds.}\label{tab:si:v2-hole}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Model & MAE (eV) & RMSE (eV) & $R^2$ \\
+\midrule
+Random Forest             & $0.408 \pm 0.004$ & $0.573 \pm 0.005$ & $-0.334 \pm 0.024$ \\
+Gaussian Process          & $0.397 \pm 0.000$ & $0.532 \pm 0.000$ & $-0.150 \pm 0.000$ \\
+\textbf{K-Nearest Neighbours} & $\mathbf{0.367 \pm 0.000}$ & $\mathbf{0.521 \pm 0.000}$ & $\mathbf{-0.101 \pm 0.000}$ (best) \\
+XGBoost                   & $0.469 \pm 0.007$ & $0.646 \pm 0.006$ & $-0.696 \pm 0.032$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Classical-baseline LOOCV results on C-triplet, mean $\pm$ SD across five seeds.}\label{tab:si:v2-triplet}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Model & MAE (eV) & RMSE (eV) & $R^2$ \\
+\midrule
+\textbf{Random Forest}    & $\mathbf{0.552 \pm 0.005}$ & $\mathbf{0.713 \pm 0.005}$ & $\mathbf{+0.084 \pm 0.012}$ (best) \\
+Gaussian Process          & $0.592 \pm 0.000$ & $0.761 \pm 0.000$ & $-0.042 \pm 0.000$ \\
+K-Nearest Neighbours      & $0.637 \pm 0.000$ & $0.787 \pm 0.000$ & $-0.116 \pm 0.000$ \\
+XGBoost                   & $0.584 \pm 0.008$ & $0.720 \pm 0.008$ & $+0.068 \pm 0.021$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The best classical $R^2$ is $-0.101$ on C-hole (KNN) and $+0.084$ on C-triplet (Random Forest). Three of the four C-hole baselines and three of the four C-triplet baselines produce negative $R^2$ across all five seeds, despite reporting MAE values comparable to the federated methods. This is consistent with a small-sample data-ceiling regime in which the per-molecule label variance is large relative to the spread of the labels, so that explained variance is a brittle metric. We use MAE / RMSE as the primary regression metrics; $R^2$ is reported only as auxiliary.
+
+\subsection{V3: chemical-space overlap}
+Per-pair chemistry overlap was computed as: \textbf{$K_{ij}$} -- the mean over molecules of $i$ of the maximum Tanimoto similarity to any molecule of $j$ (Morgan fingerprints, radius 2, 2048 bits, computed with RDKit~\citep{RDKit2023}); \textbf{$S_{ij}$} -- the asymmetric Murcko-scaffold overlap $|\mathrm{Scaf}(i) \cap \mathrm{Scaf}(j)| / |\mathrm{Scaf}(i)|$. Selected values: $K(\mathrm{C\text{-}hole} \to \mathrm{D}) = 0.120$; $K(\mathrm{C\text{-}triplet} \to \mathrm{D}) = 0.118$ (median per-C-molecule max-Tanimoto to D); $S(\mathrm{C\text{-}hole} \to \mathrm{D}) = S(\mathrm{C\text{-}triplet} \to \mathrm{D}) = 0.0$ (no C scaffold appears in D). D and C therefore live in disjoint chemical spaces.
+
+\subsection{D~$\to$~C direct transfer cannot be assumed protocol-compatible}
+The combination of V1 and V3 makes a naive D~$\to$~C supervised transfer unsafe to assume without evidence. \PC{} encodes this caution as $T_{\mathrm{head}}[\mathrm{D}, \mathrm{C\text{-}*}] = 0$ by construction. The empirical comparison (E65, Section~\ref{si:abl-e65}) does not statistically distinguish naive D~$\to$~C pretrain from \PC{} on either target; we therefore do not claim that D~$\to$~C transfer necessarily produces negative outcomes.
+
+% =============================================================================
+\section{Model and implementation details}\label{si:impl}
+
+\subsection{Encoder}
+5-layer Graph Isomorphism Network (GIN)~\citep{Xu2019_GIN} with hidden dimension 300, Jumping-Knowledge concatenation, mean+max pooling, and a final projection to 256-d via a two-layer MLP. The codebase additionally implements a SchNet 3D encoder~\citep{Schutt2017_SchNet_NeurIPS} accessible through the same \texttt{encoder\_type} switch, but \textbf{no SchNet results are reported in this manuscript}.
+
+Node features: 11-dimensional descriptor (atom type one-hot, degree, formal charge, hybridisation, aromaticity, in-ring flag, total Hs, Gasteiger partial charge). When HOMO/LUMO/gap/dipole node features are enabled the descriptor extends to 15 dimensions; for clients without those measurements the extra channels are zero-padded.
+
+\subsection{KAN head}
+\texttt{efficient-kan}~\citep{EfficientKAN2024} with grid size 5 and spline order 3. Three KAN layers stacked: $256 \to 64 \to 32 \to 1$. KAN parameters are private to each task-client; the only non-zero $T_{\mathrm{head}}$ off-diagonal in our federation is A$\leftrightarrow$B (Section~\ref{si:gate}).
+
+\subsection{Residual adapter}
+Optional residual bottleneck ($256 \to 128 \to 256$, GELU activation, LayerNorm before the residual addition). The final projection is zero-initialised so that, prior to any training, the adapter is the identity. The adapter participates in cross-client aggregation under $T_{\mathrm{adapter}}$.
+
+\subsection{Calibration buffer}
+Each task-client owns a \texttt{CalibrationHead} with two non-trainable buffers ($\mu$, $\sigma$) registered via \verb|torch.nn.Module.register_buffer|. A small floor $\sigma \ge 10^{-8}$ prevents division-by-zero on degenerate folds. Calibration is installed per LOOCV fold from the $(n - 1)$ training labels of that fold; the held-out test molecule's label never enters \verb|set_calibration(mu, sigma)|.
+
+\subsection{z-space loss / eV-space metrics}
+Training loss is computed in z-space:
+\[
+\mathcal{L}_c = \mathrm{MSE}\!\bigl(\,\mathrm{model}_z(x), \; (\lambda - \mu_c)/\sigma_c\bigr).
+\]
+Predictions are inverted back to eV-space at inference: $\hat\lambda = \sigma_c \cdot z_{\mathrm{pred}} + \mu_c$. All reported MAE/RMSE/$R^2$ values are computed in eV-space.
+
+\subsection{Aggregation exclusion}
+\verb|_get_exclude_keys(state_dict)| returns the set of keys to skip during aggregation: every key matching \verb|*calibration*|, plus \verb|*.bn.*| and \verb|*.norm.*|. Heads, adapters and encoders are routed by the per-key per-target rule given in main-text Equation~(1).
+
+\subsection{No-leakage calibration tests}
+\verb|tests/test_calibration_isolation.py| (20 cases) verifies that:
+\begin{enumerate}
+  \item \verb|set_calibration(mu, sigma)| accepts only the training-fold labels;
+  \item cross-aggregating two models with different $(\mu, \sigma)$ does not mix their calibration values;
+  \item z-space $\to$ eV-space round-trip identity holds to $1 \times 10^{-5}$ eV;
+  \item \PC{} never reads a calibration buffer from the aggregated parameter dictionary.
+\end{enumerate}
+All 20 tests pass on the commit hash recorded in \texttt{logs/pc2\_batch1/FROZEN\_INFO.txt}.
+
+% =============================================================================
+\section{Transferability matrices}\label{si:gate}
+
+Three $5\times 5$ transferability matrices are pre-computed once before training and persisted as \texttt{results/preverify/T\_transferability.json}.
+
+\subsection{Definitions}
+
+\paragraph{$T_{\mathrm{repr}}$ (encoder gate, chemistry-driven):}
+\[
+T_{\mathrm{repr}}[i, j] = \max\!\bigl(\epsilon_r,\; w_K\, K_{ij} + w_S\, S_{ij}\bigr),
+\]
+with $(w_K, w_S) = (0.6, 0.4)$ and $\epsilon_r = 10^{-3}$.
+
+\paragraph{$T_{\mathrm{head}}$ (head gate, conservative protocol clauses, evaluated in the order applied by \texttt{src/transferability.py:t\_head\_compatibility}):}
+\begin{enumerate}
+  \item \textbf{Clause 1 -- quantity mismatch:} if $\mathrm{quantity}(i) \ne \mathrm{quantity}(j)$, set $T_{\mathrm{head}}[i, j] = 0$.
+  \item \textbf{Clause 4 -- V1 hard rule:} if $i = \mathrm{D}$ and $j \in \{\mathrm{C\text{-}hole}, \mathrm{C\text{-}triplet}\}$, set $T_{\mathrm{head}}[i, j] = 0$. Clause 4 is applied \emph{before} the per-field checks so the JSON \texttt{reasons} field attributes D $\to$ C-* to V1.
+  \item \textbf{Same-source shortcut:} if quantity matches and $\mathrm{source\_id}(i) = \mathrm{source\_id}(j)$, the pair is treated as protocol-compatible by source and the per-field checks (clauses 2 and 3 below) are skipped. In our federation the shortcut fires only for A $\leftrightarrow$ B (both \texttt{source\_id = "qm9\_public\_reorg\_15210"}).
+  \item \textbf{Clause 2 -- unknown protocol field:} if the shortcut did not fire and any of \{functional, basis, geometry, charge\_state, conformers\} equals \texttt{"unknown"} on either side, set $T_{\mathrm{head}}[i, j] = 0$.
+  \item \textbf{Clause 3 -- protocol-field mismatch:} if the shortcut did not fire and any populated protocol field disagrees, set $T_{\mathrm{head}}[i, j] = 0$.
+\end{enumerate}
+For pairs that survive the above (in our federation: A $\leftrightarrow$ B plus all diagonals):
+\[
+T_{\mathrm{head}}[i, j] = L_{ij}^{\gamma_L},\quad
+L_{ij} = \exp(-\alpha_W\,W_1(\hat p_i^{\mathrm{label}}, \hat p_j^{\mathrm{label}})) \cdot \min(\sigma_i/\sigma_j, \sigma_j/\sigma_i),
+\]
+with $\alpha_W = 5.0$ and $\gamma_L = 1.0$; values below $10^{-2}$ are hard-floored to zero.
+
+\paragraph{$T_{\mathrm{adapter}}$ (interpolating gate):}
+\[
+T_{\mathrm{adapter}}[i, j] = \max\!\bigl(\epsilon_a,\;\sqrt{T_{\mathrm{repr}}[i, j] \cdot T_{\mathrm{head}}[i, j]}\bigr).
+\]
+
+\subsection{Numerical values used in this study}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Selected ordered pairs from \texttt{T\_transferability.json}. Full $5\times 5$ matrices are released in the JSON artefact.}\label{tab:si:tmat}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+(source $\to$ target) & $T_{\mathrm{repr}}$ & $T_{\mathrm{adapter}}$ & $T_{\mathrm{head}}$ \\
+\midrule
+A $\to$ B                 & 0.16 & 0.23 & 0.33 \\
+B $\to$ A                 & 0.15 & 0.22 & 0.33 \\
+C-hole $\to$ C-triplet    & 0.98 & $\sim 0$ & 0 \\
+C-triplet $\to$ C-hole    & 1.00 & $\sim 0$ & 0 \\
+D $\to$ C-hole            & 0.05 & $\sim 0$ & \textbf{0} (V1 hard rule; D's geometry/charge-state/conformers also unknown) \\
+D $\to$ C-triplet         & 0.05 & $\sim 0$ & \textbf{0} (quantity mismatch) \\
+A $\to$ C-hole            & $\sim 0.07$ & $\sim 0$ & 0 (clause 1: A's quantity tag is \texttt{reorg\_energy\_general}; same-source shortcut does not apply, $\texttt{source\_id}(A) \neq \texttt{source\_id}(\textrm{C-hole})$) \\
+B $\to$ C-hole            & $\sim 0.07$ & $\sim 0$ & 0 (clause 1: B's quantity tag is \texttt{reorg\_energy\_general}; same-source shortcut does not apply, $\texttt{source\_id}(B) \neq \texttt{source\_id}(\textrm{C-hole})$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Invariants generated by the clauses}
+The conservative $T_{\mathrm{head}}$ rules generate the following key invariants. The \texttt{reasons} field of \texttt{T\_transferability.json} reports the first clause that fires; subsequent clauses that would also block the pair are listed for completeness.
+\begin{enumerate}
+  \item $T_{\mathrm{head}}[\mathrm{D}, \mathrm{C\text{-}hole}] = 0$ -- reported by clause 4 (V1 hard rule). Clauses 2 (D's protocol fields are unknown) and 3 (functional family differs: B3LYP vs.\ $\omega$B97X-D) would each independently block this pair; the invariant is multiply-determined.
+  \item $T_{\mathrm{head}}[\mathrm{D}, \mathrm{C\text{-}triplet}] = 0$ -- reported by clause 1 (quantity mismatch: hole-$\lambda$ vs.\ triplet-$\lambda$); D's metadata gap is irrelevant here.
+  \item $T_{\mathrm{head}}[\mathrm{C\text{-}hole}, \mathrm{C\text{-}triplet}] = T_{\mathrm{head}}[\mathrm{C\text{-}triplet}, \mathrm{C\text{-}hole}] = 0$ -- reported by clause 1.
+  \item $T_{\mathrm{head}}[\mathrm{A}, \mathrm{B}] = T_{\mathrm{head}}[\mathrm{B}, \mathrm{A}] = 0.33$ -- the only non-zero off-diagonal of $T_{\mathrm{head}}$. The same-source shortcut fires (both clients share \texttt{source\_id}); the per-field clauses 2 and 3 are skipped, and $L_{AB}$ is evaluated from the label distributions.
+\end{enumerate}
+Verified by \texttt{tests/test\_transferability.py} (22 cases).
+
+\subsection{Auditability, not performance lever}
+The transferability matrices serve as \textbf{auditable algorithmic transparency}; the empirical question of performance is examined in Section~\ref{si:abl}. In our particular federation the chemistry/protocol gate is \emph{not} the source of \PC{}'s C-triplet improvement.
+
+% =============================================================================
+\section{Full performance results}\label{si:perf}
+
+Aggregated 5-seed means and standard errors for each (method, target) cell are released in \texttt{results/pc2\_batch1\_multiseed\_summary.csv} and \texttt{results/pc2\_phase5\_ablation\_summary.csv}, and summarized in main-text Table~2.
+
+\paragraph{A and B 5-fold cross-validation.} Headline MAE (eV): FedAvg 0.171 (A) / 0.103 (B); FedPer competitive; \PC{} 0.142 (A) / 0.078 (B). \PC{} achieves the lowest A/B MAE among the evaluated methods, but the A/B improvements are not the headline claim of this manuscript.
+
+\paragraph{C-hole LOOCV ($n = 53$).} Per-method MAE (mean across seeds):
+
+\begin{center}
+\small
+\begin{tabular}{@{}lc@{}}
+\toprule
+Method & MAE (eV) \\
+\midrule
+E60 Local-only       & 0.414 \\
+E61 FedAvg           & 0.385 \\
+E62 FedProx          & 0.386 \\
+E63 FedPer           & 0.368 \\
+E66 \PC{} & 0.382 \\
+\bottomrule
+\end{tabular}
+\end{center}
+All methods produce MAE within the narrow band 0.368--0.414 eV; all paired tests return $p \ge 0.20$ after rounding (Section~\ref{si:paired}).
+
+\paragraph{C-triplet LOOCV ($n = 49$).} Per-method MAE:
+\begin{center}
+\small
+\begin{tabular}{@{}lc@{}}
+\toprule
+Method & MAE (eV) \\
+\midrule
+E60 Local-only       & 0.747 \\
+E61 FedAvg           & 0.763 \\
+E62 FedProx          & 0.784 \\
+E63 FedPer           & 0.762 \\
+\textbf{E66 \PC{}}   & \textbf{0.660} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\PC{} achieves the lowest MAE; paired Wilcoxon tests against FedAvg, FedProx and FedPer give $p = 0.045, 0.045, 0.042$ respectively (Section~\ref{si:paired}).
+
+\paragraph{Auxiliary $R^2$ statement.} For all C LOOCV cells, the seed-averaged $R^2$ is negative or slightly positive ($\sim 0.0 \pm 0.2$). This is consistent with the V2 classical-baseline ceiling (Section~\ref{si:v2}); we do not use $R^2$ as a primary metric.
+
+% =============================================================================
+\section{Paired statistical testing}\label{si:paired}
+
+\subsection{Methodology}
+For each method pair (\PC{} vs.\ comparator) and each LOOCV target: (i) per-molecule absolute errors aggregated as the median across the five seeds; (ii) paired Wilcoxon signed-rank test (two-sided, SciPy \verb|zero_method='wilcox'|); (iii) bootstrap 95\,\% CI on the paired MAE difference (5{,}000 resamples of molecule indices); (iv) win / loss / tie counts per molecule. Persisted as \texttt{results/pc2\_phase5\_stats.csv}.
+
+\subsection{C-hole -- eight paired comparisons, all non-significant}
+\begin{table}[h]
+\centering
+\small
+\caption{Paired tests, target $=$ C-hole LOOCV, reference $=$ \PC{} (E66). All comparisons return $p \ge 0.20$ after rounding.}\label{tab:si:paired-hole}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Comparator & MAE\textsubscript{comp} (eV) & $\Delta$MAE & 95\,\% CI low & 95\,\% CI high & Wins / loses & $p$ \\
+\midrule
+E60 Local           & 0.414 & $-0.032$ & $-0.115$ & $+0.050$ & 25 / 28 & 0.580 \\
+E61 FedAvg          & 0.385 & $-0.003$ & $-0.042$ & $+0.039$ & 27 / 26 & 0.898 \\
+E62 FedProx         & 0.386 & $-0.004$ & $-0.055$ & $+0.044$ & 28 / 25 & 0.821 \\
+E63 FedPer          & 0.368 & $+0.014$ & $-0.021$ & $+0.049$ & 23 / 30 & 0.198 \\
+E65 D $\to$ C pretrain      & 0.403 & $-0.021$ & $-0.099$ & $+0.055$ & 28 / 25 & 0.760 \\
+E68 no C-cross repr & 0.382 & $-0.0001$ & $-0.017$ & $+0.017$ & 30 / 23 & 0.562 \\
+E69 uniform gate    & 0.370 & $+0.012$ & $-0.020$ & $+0.043$ & 26 / 27 & 0.428 \\
+E70 no calibration  & 0.377 & $+0.005$ & $-0.033$ & $+0.042$ & 23 / 30 & 0.580 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{C-triplet -- four significant baselines, four non-significant controls}
+\begin{table}[h]
+\centering
+\small
+\caption{Paired tests, target $=$ C-triplet LOOCV, reference $=$ \PC{} (E66). Statistically significant comparisons ($p < 0.05$) are bold-faced.}\label{tab:si:paired-triplet}
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+Comparator & MAE\textsubscript{comp} (eV) & $\Delta$MAE & CI low & CI high & Wins / loses & $p$ & Sig.\ \\
+\midrule
+E60 Local           & 0.747 & $-0.088$ & $-0.230$ & $+0.053$ & 28 / 21 & 0.174 & n.s. \\
+\textbf{E61 FedAvg} & 0.763 & $\mathbf{-0.104}$ & $-0.220$ & $+0.004$ & 31 / 18 & \textbf{0.045} & * \\
+\textbf{E62 FedProx} & 0.784 & $\mathbf{-0.124}$ & $-0.254$ & $-0.007$ & 30 / 19 & \textbf{0.045} & * \\
+\textbf{E63 FedPer} & 0.762 & $\mathbf{-0.103}$ & $-0.205$ & $-0.002$ & 32 / 17 & \textbf{0.042} & * \\
+E65 D $\to$ C pretrain      & 0.670 & $-0.010$ & $-0.142$ & $+0.117$ & 27 / 22 & 0.851 & n.s. \\
+E68 no C-cross repr & 0.633 & $+0.027$ & $+0.001$ & $+0.055$ & 17 / 32 & 0.070 & n.s. \\
+E69 uniform gate    & 0.616 & $+0.043$ & $-0.001$ & $+0.092$ & 21 / 28 & 0.181 & n.s. \\
+\textbf{E70 no calibration} & 0.779 & $\mathbf{-0.119}$ & $-0.225$ & $-0.015$ & 35 / 14 & \textbf{0.043} & * \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Interpretation}
+\begin{itemize}
+  \item \textbf{C-hole improvement is not supported.} Future work should expand C-hole sample size.
+  \item \textbf{C-triplet improvement over FedAvg/FedProx/FedPer is supported} with $p < 0.05$ in each pair.
+  \item \textbf{Calibration ablation (E70) reaches significance}, $\Delta$MAE $= -0.119$ eV, CI entirely below zero.
+  \item \textbf{Gate ablations (E68, E69) do not support a performance-driver claim.}
+\end{itemize}
+
+% =============================================================================
+\section{Ablation studies}\label{si:abl}
+
+\subsection{E70 -- task-specific calibration removed}\label{si:abl-e70}
+C-triplet: $\Delta$MAE $= -0.119$ eV, CI $(-0.225, -0.015)$, $p = 0.043$, 35/14 wins for \PC{}. C-hole: $\Delta$MAE $= +0.005$ eV, $p = 0.58$ (n.s.). The only ablation with a statistically significant effect; the effect is restricted to C-triplet, consistent with the larger label-scale gap (mean \SI{2.64}{\eV} vs.\ \SI{1.22}{\eV}). Calibration is the only ablation-supported active component.
+
+\subsection{E68 -- no chemistry-driven cross-quantity encoder sharing}
+A modified \texttt{T\_transferability\_no\_ccross.json} with $T_{\mathrm{repr}}[\mathrm{C\text{-}hole}][\mathrm{C\text{-}triplet}]$ and $T_{\mathrm{repr}}[\mathrm{C\text{-}triplet}][\mathrm{C\text{-}hole}]$ floored to $10^{-3}$; everything else identical. Result: $\Delta$MAE $= +0.027$ eV on C-triplet ($p = 0.07$), $\Delta$MAE $= -0.0001$ eV on C-hole ($p = 0.56$). No statistically significant difference vs.\ \PC{}.
+
+\subsection{E69 -- uniform FedAvg weighting in place of the gate}
+The \texttt{aggregation\_strategy} option is switched from \texttt{pc2\_fed} to \texttt{fedavg}; calibration and adapter retained. Result: $\Delta$MAE $= +0.043$ eV on C-triplet ($p = 0.18$), $\Delta$MAE $= +0.012$ eV on C-hole ($p = 0.43$). No statistically significant difference. Together with E68 this establishes that chemistry-driven gate weighting is not the source of \PC{}'s C-triplet improvement in our setting.
+
+\subsection{E65 -- D $\to$ C supervised pretrain control}\label{si:abl-e65}
+Two-stage pipeline: (Stage 1) train one GIN+KAN model on all 5{,}876 D molecules for 50 epochs; (Stage 2) per-fold LOOCV fine-tune on C with the D-pretrained weights as the starting point. Result: $\Delta$MAE $= -0.010$ eV on C-triplet ($p = 0.85$), $\Delta$MAE $= -0.021$ eV on C-hole ($p = 0.76$). \PC{} and a naive D $\to$ C pretrain are not statistically distinguishable on either target in our setting; we do not claim that D's labels necessarily produce negative transfer.
+
+\subsection{Synthesis}
+\begin{itemize}
+  \item \textbf{Supported by ablation evidence (E70) and confirmed by the positive control (E71, \S\ref{si:abl-e71}):} task-specific calibration under personalized heads is the only PC$^2$ component whose removal causes a statistically significant degradation, the effect is confined to C-triplet (E70), and the calibration mechanism is \emph{sufficient}~---~adding it to a plain FedPer baseline already reproduces \PC{}'s C-triplet improvement (E71).
+  \item \textbf{Not supported by ablation evidence:} the chemistry-driven gate weighting (\texorpdfstring{$T_{\mathrm{repr}}$}{T\_repr} cross-routing, \texorpdfstring{$T_{\mathrm{head}}$}{T\_head} sparsification) does not drive the C-triplet improvement over uniform weighting (E68, E69), and adding the residual adapter and the transferability gate on top of the calibrated FedPer baseline does not yield measurable performance over E71 (E71 $\approx$ E66).
+  \item \textbf{Not demonstrated by ablation evidence:} a claim that naive D $\to$ C supervised pretrain produces negative transfer (E65).
+\end{itemize}
+
+\subsection{E71 -- FedPer with calibration only (positive control)}\label{si:abl-e71}
+
+\textbf{Purpose.} The four \PC{} component ablations in \S\ref{si:abl-e70}--\S\ref{si:abl-e65} each \emph{remove} one ingredient from \PC{}, which collectively show that calibration is necessary. E71 is the symmetric \emph{positive control}: a plain FedPer baseline endowed only with the per-task-client $(\mu, \sigma)$ calibration buffer (no residual adapter, no transferability-driven routing). It directly tests whether the calibration mechanism is also \emph{sufficient} to reproduce \PC{}'s C-triplet gain.
+
+\textbf{Specification.} E71 uses the same code path as E66 with two differences: \texttt{use\_adapter = False} and no \texttt{aggregation\_strategy = 'pc2\_fed'}. The encoder is shared by plain FedPer; the head is private (FedPer); the per-task-client $(\mu, \sigma)$ buffer is installed per LOOCV fold and universally excluded from aggregation by \texttt{src/federated.py:\_get\_exclude\_keys} (the same exclusion rule that protects calibration under FedAvg, FedProx, FedPer, FedBN and \PC{}). All other hyperparameters match E66~/~E63 exactly: 5 seeds $\{42, 123, 456, 789, 1000\}$; LOOCV on C-hole~/~C-triplet; 5-fold CV on A/B/D; 50 federation rounds; 5 local epochs per round; 3-layer KAN head (grid $=$ 5, spline order $=$ 3); Adam optimizer with cosine annealing at \texttt{lr=1e-4}; early-stop patience 15; identical device assignment.
+
+\textbf{Wall-clock.} Five-seed run on dual A30: $\approx 2$\,h\,27\,min (consistent with E66 on the same federation).
+
+\textbf{Released files.} All E71 outputs are isolated in the \texttt{results/e71\_*} namespace and do not modify the E60--E70 prediction archive: \texttt{results/e71\_summary.csv} (across-seed summary), \texttt{results/e71\_predictions.json} (per-fold predictions for both C targets, all seeds), \texttt{results/e71\_vs\_e66\_stats.\{csv,md\}} (paired statistics vs.\ \PC{}), \texttt{results/e71\_vs\_e63\_stats.md} (vs.\ FedPer), \texttt{results/e71\_vs\_e70\_stats.md} (vs.\ \PC{} without calibration). Training log: \texttt{logs/E71\_20260517\_2022.log}. Registration: \texttt{experiments/run\_all.py} (E71 entry, additive only).
+
+\textbf{Across-seed metrics (5-seed mean $\pm$ SEM):}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccc}
+\toprule
+target & $n$ & MAE (eV) & RMSE (eV) & $R^2$ (auxiliary) \\
+\midrule
+A 5-fold     & 6{,}020       & $0.1508 \pm 0.0006$ & $0.2119 \pm 0.0008$ & $+0.747 \pm 0.002$ \\
+B 5-fold     & 9{,}190       & $0.0824 \pm 0.0009$ & $0.1262 \pm 0.0009$ & $+0.843 \pm 0.002$ \\
+C-hole       & 53 LOOCV      & $0.3757 \pm 0.0029$ & $0.5139 \pm 0.0061$ & $-0.074 \pm 0.026$ \\
+C-triplet    & 49 LOOCV      & $0.6527 \pm 0.0111$ & $0.8259 \pm 0.0116$ & $-0.229 \pm 0.034$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Paired comparisons on C-triplet (median per-molecule abs error across seeds, 5{,}000-resample bootstrap CI):}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccc}
+\toprule
+comparison & $\Delta$MAE (eV) & 95\,\% CI & wins / loses & Wilcoxon $p$ \\
+\midrule
+E71 vs.\ E66 (\PC{})            & $-0.0059$ & $(-0.0437, +0.0293)$ & 23 / 26 & $0.929$ \\
+E71 vs.\ E63 (FedPer, no cal)   & $-0.1085$ & $(-0.2083, -0.0097)$ & 32 / 17 & $0.028$ \\
+E71 vs.\ E70 (\PC{} no cal)     & $-0.1249$ & $(-0.2242, -0.0272)$ & 33 / 16 & $0.021$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Paired comparisons on C-hole (all non-significant):}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccc}
+\toprule
+comparison & $\Delta$MAE (eV) & 95\,\% CI & Wilcoxon $p$ \\
+\midrule
+E71 vs.\ E66 & $-0.0084$ & $(-0.0264, +0.0093)$ & $0.423$ \\
+E71 vs.\ E63 & $+0.0054$ & $(-0.0271, +0.0391)$ & $0.598$ \\
+E71 vs.\ E70 & $-0.0036$ & $(-0.0398, +0.0331)$ & $0.842$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Interpretation.} Three paired comparisons jointly support the calibration-is-sufficient reading on C-triplet: (i) E71 $\approx$ E66 within seed-SEM with a bootstrap CI that straddles zero and balanced per-molecule sign counts; (ii) E71 $<$ E63 by an effect size matching \PC{} vs.\ FedPer in \S\ref{si:abl-e70}; (iii) E71 $<$ E70 by an effect size matching \PC{} vs.\ its no-calibration ablation. C-hole remains at its small-sample data ceiling for all methods (all three E71 paired tests return $p \ge 0.42$ with CIs that straddle zero), consistent with the main-text~\S4.3 and SI~\S\ref{si:v2}.
+
+\textbf{Reproducibility command.} From the project root, with the H-CAAN conda environment activated:
+
+\begin{verbatim}
+tmux new -s e71
+nohup python experiments/run_e71_multiseed.py \
+    > logs/E71_$(date +%Y%m%d_%H%M).log 2>&1 &
+# Ctrl-b d to detach; ~2.5 h on dual A30.
+python experiments/compute_e71_stats.py     # writes results/e71_vs_*.md/.csv
+\end{verbatim}
+
+\textbf{Statistical caveat.} The paired Wilcoxon $p$-values above are unadjusted nominal values; the Bonferroni threshold for the three E71 contrasts is $\alpha/3 \approx 0.017$, which neither of the two effect-bearing comparisons crosses. We therefore treat effect size, bootstrap CI direction and per-molecule sign counts as primary evidence and the nominal $p$-values as supportive but not definitive. The chemically meaningful effect size for organic-electronics screening is $\pm 0.1$ eV (typical conformer-averaging noise on $\omega$B97X-D reorganization energies); both the E71-vs-FedPer and E71-vs-no-calibration $\Delta$MAEs sit at this scale and should be re-evaluated on a larger TADF dataset before being treated as deployment-ready.
+
+% =============================================================================
+\section{Per-molecule prediction artefacts}\label{si:per-mol}
+
+\subsection{Released files}
+For every (method, seed, target) cell, the \verb|y_true| and \verb|y_pred| vectors are released:
+\begin{itemize}
+  \item \texttt{results/pc2\_batch1\_multiseed\_predictions.json} -- E60, E61, E62, E63, E66 on both C targets.
+  \item \texttt{results/pc2\_phase5\_ablation\_predictions.json} -- E65, E68, E69, E70 on both C targets.
+  \item \texttt{results/e71\_predictions.json} -- E71 (FedPer + calibration only, the \S\ref{si:abl-e71} positive control) on both C targets.
+\end{itemize}
+
+\subsection{Top improved / degraded cases (C-triplet)}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Most-improved C-triplet molecules under \PC{} (relative to FedAvg, by per-molecule $\Delta|\mathrm{err}|$). All SMILES verbatim from the in-house TADF dataset.}\label{tab:si:improved}
+\begin{tabular}{@{}>{\ttfamily\raggedright\arraybackslash\scriptsize}p{7.5cm}cccc@{}}
+\toprule
+\normalfont SMILES & True $\lambda_T$ (eV) & $|\mathrm{err}|$ FedAvg & $|\mathrm{err}|$ PC$^2$ & $\Delta|\mathrm{err}|$ \\
+\midrule
+ClC1=C(Cl)C(=C2C(c3ccccc3)=C2c2ccccc2)C(Cl)=C1Cl & 1.133 & 3.055 & 1.701 & $-1.354$ \\
+C1=CC(=C2C=C2)C=C1                                & 3.265 & 1.622 & 0.770 & $-0.852$ \\
+BC1=CC(=C2C=C2)C=C1B                              & 3.431 & 1.396 & 0.667 & $-0.729$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\footnotesize
+\caption{Most-degraded C-triplet molecules under \PC{} (relative to FedAvg).}\label{tab:si:degraded}
+\begin{tabular}{@{}>{\ttfamily\raggedright\arraybackslash\scriptsize}p{6.5cm}cccc@{}}
+\toprule
+\normalfont SMILES & True $\lambda_T$ (eV) & $|\mathrm{err}|$ FedAvg & $|\mathrm{err}|$ PC$^2$ & $\Delta|\mathrm{err}|$ \\
+\midrule
+CN(C)C1=CC=C(N(C)C)C1=C1C(N=[N-])=C1[N+]\#N & 3.164 & 0.217 & 1.088 & $+0.871$ \\
+C1=CC=CC(=C2C=CC=C2)C=C1                                & 1.113 & 0.927 & 1.637 & $+0.710$ \\
+OC1=CC=C(O)C1=C1C=C1                                      & 2.106 & 0.064 & 0.707 & $+0.643$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Disclaimer}
+The per-molecule ordering is \emph{qualitative}: \PC{}'s top-improved molecule under FedAvg-baseline ordering is not necessarily its top-improved molecule under FedProx- or FedPer-baseline ordering, and seed-to-seed variation can permute the bottom-$k$. These tables are provided to give chemistry-discipline readers a feel for the kinds of structures \PC{} helps and hurts; they are not the basis of any statistical claim.
+
+\subsection{Figure S1: per-molecule error cases}\label{si:figS1}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../figures/FigS1_per_molecule_cases.pdf}
+\caption[Per-molecule error analysis on C-triplet -- illustrative cases]{\textbf{Figure S1.} Per-molecule error analysis on C-triplet --- illustrative cases. Three molecules where \PC{} achieves the largest reduction in absolute error relative to FedAvg (left column, green outlines) and three where it shows the largest degradation (right column, red outlines), selected by per-molecule $\Delta|\mathrm{err}|$. Per-molecule absolute errors are aggregated as the median across the five seeds. The figure is provided as a qualitative aid for chemistry interpretation only and is \textbf{not} the basis of any statistical claim; the per-molecule rankings can vary across seeds and across choice of baseline. Demoted from main-text Figure 6 to Supporting Information on 2026-05-13.}
+\label{fig:si:cases}
+\end{figure}
+
+% =============================================================================
+\section{Reproducibility checklist}\label{si:repro}
+
+\subsection{Random seeds}
+$\{42, 123, 456, 789, 1000\}$.  \verb|set_all_seeds(seed)| initialises \verb|random|, \verb|numpy.random|, \verb|torch.manual_seed|, \verb|torch.cuda.manual_seed_all|, and sets \verb|torch.backends.cudnn.deterministic = True|.
+
+\subsection{Hardware and runtime}
+Dual NVIDIA A30 24~GB (CUDA 12.4), dual Intel Xeon Platinum 8260. Each federated run $\approx 30$ minutes wall-clock; the 25-run main batch (5 methods $\times$ 5 seeds) plus the 20-run ablation batch (4 ablations $\times$ 5 seeds) for this manuscript total $\approx 20$ GPU-hours.
+
+\subsection{Code paths}
+\noindent\footnotesize
+\begin{tabularx}{\textwidth}{@{}X >{\ttfamily}l@{}}
+\toprule
+\normalfont Component & \normalfont Path \\
+\midrule
+Data loading and graph construction            & src/data\_utils.py \\
+Encoders, heads, adapter, calibration          & src/models.py \\
+Federated aggregation operators                & src/federated.py \\
+Per-round training, evaluation, paired metrics & src/train\_eval.py \\
+Transferability matrix construction            & src/transferability.py \\
+Experiment registry                            & experiments/configs.py; experiments/run\_all.py \\
+5-seed batch driver (E60--E63, E66)            & experiments/run\_pc2\_multiseed.py \\
+Ablation batch driver (E65, E68, E69, E70)     & experiments/run\_phase5\_step3\_4.py \\
+Paired statistical tests                       & experiments/run\_phase5\_step5\_stats.py \\
+Figure and table generation                    & paper/make\_figures.py \\
+\bottomrule
+\end{tabularx}\normalsize
+
+\subsection{Result files}
+See main manuscript Data and Code Availability. Per-molecule predictions and paired stats are persisted under \texttt{results/}.
+
+\subsection{Unit tests}
+93 unit tests across four modules pass on the commit hash recorded in \texttt{logs/pc2\_batch1/FROZEN\_INFO.txt}.
+
+\subsection{Transferability JSON invariants}
+After Phase 1, the compiled \texttt{T\_transferability.json} satisfies: diag($T_{\mathrm{repr}}$) = diag($T_{\mathrm{adapter}}$) = diag($T_{\mathrm{head}}$) = 1; $T_{\mathrm{head}}[\mathrm{D}, \mathrm{C\text{-}hole}] = T_{\mathrm{head}}[\mathrm{D}, \mathrm{C\text{-}triplet}] = 0$; $T_{\mathrm{head}}[\mathrm{C\text{-}hole}, \mathrm{C\text{-}triplet}] = T_{\mathrm{head}}[\mathrm{C\text{-}triplet}, \mathrm{C\text{-}hole}] = 0$. SHA-256 recorded in \texttt{FROZEN\_INFO.txt}.
+
+% =============================================================================
+\section{Additional limitations and future work}\label{si:lim}
+
+\subsection{Deferred baselines}
+MOON~\citep{Li2021_MOON} and D-MPNN / ChemProp~\citep{Yang2019_ChemProp} are recommended additions for a manuscript revision.
+
+\subsection{Learnable calibration}
+A learnable affine layer over the standardised output (E72 ablation, planned) was deferred to avoid introducing additional degrees of freedom at the present sample size.
+
+\subsection{C-hole data ceiling}
+All evaluated methods produce MAE in the narrow band \SI{0.368}{}--\SI{0.414}{\eV} on $n = 53$ C-hole LOOCV, with no paired test reaching significance. Expanding C-hole through additional $\omega$B97X-D conformer-resolved measurements is the most direct route to breaking the ceiling.
+
+\subsection{Chemistry gate testing under more diverse client pairs}
+$T_{\mathrm{repr}}$ between C-hole and C-triplet is near-unity. The chemistry-driven encoder gate is therefore tested on the easier regime (very similar chemistry) but not on the harder regime (moderate diversity).
+
+\subsection{Font availability for current draft figures}
+The figures distributed with this manuscript draft were rendered using Liberation Serif (a metric-compatible substitute for Times New Roman) because Times New Roman was not installed on either of the project's compute nodes at the time of writing. For final journal submission, the figure-generation script (\texttt{paper/make\_figures.py}) should be re-run on a machine that has Times New Roman registered with matplotlib's font manager.
+
+\subsection{Other future directions}
+Quantity-aware multi-head extensions; communication compression via top-$k$ sparsification; federated active learning using the per-task-client $\sigma$ as an uncertainty proxy.
+
+% =============================================================================
+\section{Controlled pseudo-federation tests of task-specific calibration}\label{si:calgen}
+
+To check whether the calibration signal observed on the real TADF C-triplet target (\S\ref{si:abl-e71}, main-text Figure~5) is an isolated outcome or part of a broader pattern, we ran two additional controlled experiments on synthetic pseudo-federations constructed from the public QM9-derived dataset \texttt{data/client\_a\_b/public\_reorg\_energy\_15210.csv}. \textbf{These experiments do not modify any main-text result on the real C-hole or C-triplet targets}; the raw outputs are in \texttt{results/calibration\_generalization/} and the unified report is at \texttt{paper/calibration\_generalization/calibration\_generalization\_report.md}. The summary verdict is PASS-LIMITED: calibration generalises in the small-target regime that mirrors C-triplet, but not in the moderate-target / aggressive-transform regime where local-only training is already adequate.
+
+\subsection{Phase 1 -- label-scale stress test}
+A five-client pseudo-federation was built with one target (S1, identity label transform, $n_{\mathrm{target}} = 100$) and four sources carrying aggressive affine plus noise transforms (S2: $y \to 2y + 0.5$; S3: $y \to 0.5y - 0.2$; S4: $y \to 3y + 1.0$; S5: $y + \mathcal{N}(0, 0.05)$, $n_{\mathrm{source}} = 200$ each). Five seeds, twelve communication rounds, five local epochs per round. Across the five seeds, local-only training reaches MAE $= 0.309 \pm 0.010$~eV (mean $\pm$ SEM); plain FedPer reaches $0.358$; FedPer~$+$~calibration reaches $0.340$; FedAvg without calibration reaches $0.342$. Paired Wilcoxon on per-target median-across-seeds absolute errors: \textbf{FedPer~$+$~calibration vs.\ FedPer: $\Delta$MAE $= +0.010$~eV ($p = 0.73$, n.s.)} -- calibration shows no advantage over plain FedPer at this $n_{\mathrm{target}}$. FedPer~$+$~calibration vs.\ FedAvg without calibration: $\Delta$MAE $= -0.043$~eV ($p = 0.008$) -- calibration improves over no-encoder-personalisation. Local-only is already competitive in this regime, so the federation itself is not load-bearing.
+
+\subsection{Phase 2 -- pseudo-task multi-target validation}
+Ten label-quantile-binned pseudo-targets ($n_{\mathrm{per\;task}} = 50$, identity transforms) were each evaluated under the same federation. Three seeds, eight communication rounds, three local epochs per round, three folds of CV per target. The headline result is that \textbf{FedPer~$+$~calibration improved over plain FedPer on 9 of 10 pseudo-targets}, with median $\Delta$MAE $= -0.020$~eV (interquartile range $[-0.030, -0.013]$). Per-task paired Wilcoxon tests give $p < 0.001$ on 7 of 10 tasks; one task is borderline ($p = 0.745$ on T00\_quantile0, $\Delta$MAE $= -0.001$~eV) and one is in the opposite direction (T09\_quantile9, the extreme high-label quantile, $\Delta$MAE $= +0.035$~eV, $p = 0.112$). This supports the calibration-centered interpretation in small-target pseudo-federations.
+
+\subsection{Phase 3 -- calibration variants (not run)}
+Shrinkage calibration and learnable affine calibration were specified as candidate variants but not executed (\texttt{results/calibration\_generalization/calibration\_variants/variant\_feasibility\_report.md}); the PASS-LIMITED Phase 1 result does not meet the threshold for full variant testing. Shrinkage would not require a \texttt{src/} modification; learnable affine would, and at $n \approx 30$ LOOCV-train labels carries a substantial over-fit risk. The feasibility report records the decision and the design space.
+
+\begin{table}[ht]
+\centering\small
+\caption{Calibration-generalisation experiments. Controlled pseudo-federation tests built from public QM9-derived data; \textbf{not} real TADF targets. ``Comparison'' rows are paired Wilcoxon signed-rank tests on per-target median-across-seeds absolute errors.}\label{tab:calgen}
+\begin{tabular}{lllllll}
+\toprule
+Experiment & Setting & $n_{\mathrm{target}}$ & Comparison & $\Delta$MAE (eV) & Wilcoxon $p$ & Outcome / interpretation \\
+\midrule
+Phase 1 label-scale stress  & 5 clients, aggressive transforms & 100 & cal vs.\ FedPer    & $+0.010$ & $0.73$  & no advantage over FedPer in this regime \\
+Phase 1 label-scale stress  & 5 clients, aggressive transforms & 100 & cal vs.\ FedAvg    & $-0.043$ & $0.008$ & improves over FedAvg (no encoder personalisation) \\
+Phase 2 pseudo-task val.    & 10 label-quantile pseudo-targets  &  50 & cal vs.\ FedPer    & median $-0.020$ & 7/10 $< 0.001$ & improves 9/10 pseudo-targets \\
+Phase 3 calibration variants & shrinkage / learnable affine     & --- & not run            & ---      & ---     & feasibility report only \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Summary.}
+These controlled experiments strengthen the interpretation that task-specific calibration is useful in small-target heterogeneous settings, while the Phase 1 null result prevents a universal performance claim. We therefore present them as robustness evidence for the small-target reading of the main-text C-triplet result rather than as a claim of general superiority.
+
+% =============================================================================
+\bibliography{references}
+
+\end{document}

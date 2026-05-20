@@ -303,8 +303,8 @@ def plot_fig4_tsne():
         'Client A': 25, 'Client B': 25, 'Client C': 25, 'Client D': 200,
     }
 
-    fig, ax = plt.subplots(figsize=(12, 8))
-    fig.subplots_adjust(left=0.18, right=0.82, top=0.85, bottom=0.15)
+    fig, ax = plt.subplots(figsize=(12, 9))
+    fig.subplots_adjust(left=0.20, right=0.80, top=0.82, bottom=0.18)
 
     # --- Convex hull outlines (dashed, no fill) ---
     for cl in ['Client A', 'Client B', 'Client C', 'Client D']:
@@ -340,10 +340,10 @@ def plot_fig4_tsne():
 
     # --- Molecule insets: 2 per client, well-separated on 4 edges ---
     offset_map = {
-        'Client A': [(-250, 80), (-250, -80)],    # far left
-        'Client B': [(-80, 220), (80, 220)],       # far top
-        'Client C': [(250, 80), (250, -80)],       # far right
-        'Client D': [(-80, -220), (80, -220)],     # far bottom
+        'Client A': [(-300, 80), (-300, -80)],    # far left
+        'Client B': [(-80, 280), (80, 280)],       # far top
+        'Client C': [(300, 80), (300, -80)],       # far right
+        'Client D': [(-80, -280), (80, -280)],     # far bottom
     }
     # Short label for annotation next to each molecule image
     client_short = {

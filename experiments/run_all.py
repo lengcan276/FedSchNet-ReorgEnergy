@@ -66,6 +66,89 @@ EXPERIMENTS = {
     # --- Batch 4: Physics enhancement ---
     'E20': {'desc': 'E16+Physics',                'head': 'kan', 'fed': 'fedper',  'ssl': 'atom_mask', 'physics': True},
     'E21': {'desc': 'E16+HOMO/LUMO_node',         'head': 'kan', 'fed': 'fedper',  'ssl': 'atom_mask', 'node_physics': True},
+
+    # ----- Batch 5: PC²-FedReorg (Phase 4 wired; not yet executed) -----
+    # Constraint 8 (user spec): legacy fedper / fedbn semantics MUST be
+    # preserved for E63; do NOT silently swap to fedper_pc2.
+    'E60': {'desc': 'PC2 baseline: Local-only GIN+KAN',
+            'head': 'kan', 'fed': None,      'ssl': None,
+            'pc2': {}},
+    'E61': {'desc': 'PC2 baseline: FedAvg GIN+KAN',
+            'head': 'kan', 'fed': 'fedavg',  'ssl': None,
+            'pc2': {}},
+    'E62': {'desc': 'PC2 baseline: FedProx GIN+KAN (mu=0.01)',
+            'head': 'kan', 'fed': 'fedavg_prox', 'ssl': None,
+            'pc2': {}},
+    'E63': {'desc': 'PC2 baseline: FedPer (legacy semantics) GIN+KAN',
+            'head': 'kan', 'fed': 'fedper',  'ssl': None,
+            'pc2': {}},
+    # E65 D->C supervised pretrain (negative control). The "pretrain on D,
+    # finetune on C" pipeline is not implemented in train_eval today; this
+    # entry is registered as a placeholder for the Batch-1 result table and
+    # will be wired in a follow-up. Constraint 9: D's head must NEVER enter
+    # C in PC²; that's enforced by T_head[D, C-*] = 0 in Phase 1, not here.
+    'E65': {'desc': 'PC2 negative control: D->C supervised pretrain (placeholder)',
+            'head': 'kan', 'fed': 'fedper',  'ssl': None,
+            'pc2': {'placeholder': True, 'pretrain_source': 'client_d',
+                    'finetune_target': 'client_c'}},
+    # ★ E66: PC²-FedReorg main entry. All PC² flags ON.
+    # 'fed': 'fedavg' is a routing scaffold so run_single_experiment enters
+    # the federated branch; the actual aggregation is overridden by
+    # pc2_kwargs['aggregation_strategy']='pc2_fed' inside train_federated
+    # (verified by smoke run on 2026-05-09).
+    'E66': {'desc': 'PC2-FedReorg (ours)',
+            'head': 'kan', 'fed': 'fedavg', 'ssl': None,
+            'pc2': {'use_adapter': True,
+                    'adapter_type': 'mlp',
+                    'use_calibration': True,
+                    'aggregation_strategy': 'pc2_fed',
+                    'transferability_path': 'results/preverify/T_transferability.json'}},
+
+    # ----- Phase 5 ablations (Step 4): probe individual PC² components -----
+    # E68: T_repr cross between C-hole and C-triplet forced to floor (1e-3).
+    # Tests whether C-triplet improvement comes from cross-quantity representation
+    # sharing. All other PC² flags identical to E66.
+    'E68': {'desc': 'PC2 ablation: T_repr no C-cross (no C-hole<->C-triplet repr share)',
+            'head': 'kan', 'fed': 'fedavg', 'ssl': None,
+            'pc2': {'use_adapter': True,
+                    'adapter_type': 'mlp',
+                    'use_calibration': True,
+                    'aggregation_strategy': 'pc2_fed',
+                    'transferability_path': 'results/preverify/T_transferability_no_ccross.json'}},
+
+    # E69: same architecture as E66 (adapter + calibration ON) but uniform
+    # FedAvg aggregation -- no T-gating. Tests whether E66 gains come from the
+    # gate or from extra parameters / calibration alone.
+    'E69': {'desc': 'PC2 ablation: adapter + calibration with uniform FedAvg (no T-gate)',
+            'head': 'kan', 'fed': 'fedavg', 'ssl': None,
+            'pc2': {'use_adapter': True,
+                    'adapter_type': 'mlp',
+                    'use_calibration': True,
+                    # NO aggregation_strategy -> falls back to fed='fedavg'
+                    }},
+
+    # E70: PC² gate + adapter ON, calibration OFF. Tests calibration's
+    # contribution to label-scale handling.
+    'E70': {'desc': 'PC2 ablation: pc2_fed + adapter, no calibration',
+            'head': 'kan', 'fed': 'fedavg', 'ssl': None,
+            'pc2': {'use_adapter': True,
+                    'adapter_type': 'mlp',
+                    'use_calibration': False,
+                    'aggregation_strategy': 'pc2_fed',
+                    'transferability_path': 'results/preverify/T_transferability.json'}},
+
+    # E71: FedPer + per-task-client calibration buffer. No adapter, no T-gate.
+    # Purpose: tests whether PC²'s C-triplet gain over FedPer is fully
+    # explained by the calibration buffer alone. Differs from E63 only in
+    # use_calibration=True; differs from E66 in use_adapter=False AND no
+    # aggregation_strategy ('fedper' routing handles encoder/head split).
+    'E71': {'desc': 'PC2 ablation: FedPer + calibration only (no adapter, no T-gate)',
+            'head': 'kan', 'fed': 'fedper', 'ssl': None,
+            'pc2': {'use_adapter': False,
+                    'use_calibration': True,
+                    # NO aggregation_strategy -> uses fed='fedper' aggregation
+                    # NO transferability_path -> uniform mask
+                    }},
 }
 
 BATCHES = {
@@ -73,6 +156,9 @@ BATCHES = {
     '2': ['E10', 'E12', 'E14', 'E15'],
     '3': ['E16', 'E17', 'E18'],
     '4': ['E20', 'E21'],
+    # Batch 5 is the PC²-FedReorg main table (Phase 5 will run these; Phase 4
+    # only registers them).
+    '5': ['E60', 'E61', 'E62', 'E63', 'E65', 'E66'],
 }
 
 
@@ -91,6 +177,33 @@ def setup_devices():
 
 # ============ Run single experiment ============
 
+def _extract_pc2_kwargs(exp_cfg: dict, target_type: str) -> dict:
+    """Extract PC²-FedReorg keyword arguments to forward into train_federated /
+    federated_loocv_c_fast.
+
+    Returns an empty dict for legacy experiments (which do NOT have a 'pc2'
+    entry, or whose 'pc2' entry is empty) -- preserving E1-E59 behavior.
+
+    Phase 4 contract: defaults are off; only entries that explicitly set
+    use_adapter / use_calibration / aggregation_strategy can opt in. The
+    'placeholder' marker (used by E65) skips wiring entirely so the caller
+    can route to a custom pretrain-then-finetune pipeline (not implemented
+    in Phase 4).
+    """
+    pc2 = exp_cfg.get('pc2')
+    if not pc2 or pc2.get('placeholder'):
+        return {}
+    kwargs = {}
+    for key in ('use_adapter', 'adapter_type', 'adapter_bottleneck',
+                'use_calibration', 'aggregation_strategy', 'transferability_path'):
+        if key in pc2:
+            kwargs[key] = pc2[key]
+    # target_type comes from the per-call context (hole-side vs triplet-side).
+    if pc2.get('aggregation_strategy') == 'pc2_fed' or pc2.get('use_calibration'):
+        kwargs['target_type'] = target_type
+    return kwargs
+
+
 def run_single_experiment(
     exp_id: str,
     client_data_hole: dict,
@@ -105,11 +218,18 @@ def run_single_experiment(
     ssl_method = exp_cfg['ssl']
     use_physics = exp_cfg.get('physics', False)
     use_node_physics = exp_cfg.get('node_physics', False)
+    pc2_marker = exp_cfg.get('pc2', {}) or {}
 
     print(f"\n{'#'*60}")
     print(f"# {exp_id}: {exp_cfg['desc']}")
     print(f"#   head={head_type}, fed={fed_strategy}, ssl={ssl_method}, "
           f"physics={use_physics}, node_physics={use_node_physics}")
+    if pc2_marker.get('placeholder'):
+        print(f"#   [placeholder] pc2={pc2_marker} -- not implemented in Phase 4")
+        return {'exp_id': exp_id, 'desc': exp_cfg['desc'],
+                'placeholder': True, 'pc2': pc2_marker}
+    if pc2_marker:
+        print(f"#   PC² flags: {pc2_marker}")
     print(f"{'#'*60}")
 
     start_time = time.time()
@@ -130,8 +250,11 @@ def run_single_experiment(
                 client_data_hole['client_b'], head_type, device_b,
                 'Client B', verbose, use_physics=False,
             )
-        elif exp_id in ('E3', 'E9'):
-            # Client C only (hole LOOCV + triplet LOOCV)
+        elif exp_id in ('E3', 'E9', 'E60'):
+            # Client C only (hole LOOCV + triplet LOOCV).
+            # E60 = "PC2 baseline: Local-only GIN+KAN" -- mirrors E3/E9 path
+            # (local LOOCV, no federation, no PC² flags). The pc2 dict is
+            # empty, so use_calibration / use_adapter stay off.
             result['loocv_c_hole'] = _run_local_loocv(
                 client_data_hole['client_c'], head_type, device_b,
                 'Client C hole', verbose, use_physics=use_physics,
@@ -183,6 +306,8 @@ def run_single_experiment(
 
         # Federated training + Client A CV
         print(f"\n  [Federated training + Client A CV]")
+        # PC² flags (constraint 7): empty for E1-E59; populated for E66 etc.
+        pc2_kwargs_hole = _extract_pc2_kwargs(exp_cfg, target_type='hole')
         fed_result = train_federated(
             data_hole_fed, head_type=head_type, fed_strategy=fed_strategy,
             n_rounds=N_FED_ROUNDS, n_local_epochs=N_LOCAL_EPOCHS,
@@ -191,6 +316,7 @@ def run_single_experiment(
             pretrained_encoder=pretrained_encoder,
             kan_grid=KAN_GRID, use_physics_c=use_physics, in_dim=in_dim,
             mu=FEDPROX_MU, verbose=verbose,
+            **pc2_kwargs_hole,
         )
 
         # Use federated trained encoder for CV
@@ -222,6 +348,7 @@ def run_single_experiment(
             pretrained_encoder=pretrained_encoder,
             kan_grid=KAN_GRID, use_physics_c=use_physics, in_dim=in_dim,
             mu=FEDPROX_MU, verbose=verbose,
+            **_extract_pc2_kwargs(exp_cfg, target_type='hole'),
         )
 
         # Client C LOOCV (triplet) -- fast
@@ -234,6 +361,7 @@ def run_single_experiment(
             pretrained_encoder=pretrained_encoder,
             kan_grid=KAN_GRID, use_physics_c=use_physics, in_dim=in_dim,
             mu=FEDPROX_MU, verbose=verbose,
+            **_extract_pc2_kwargs(exp_cfg, target_type='triplet'),
         )
 
         result['fed_history'] = fed_result['history']

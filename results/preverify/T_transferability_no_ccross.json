@@ -1,0 +1,235 @@
+{
+  "description": "PC\u00b2-FedReorg transferability matrices over 5 task-client nodes. T_repr is chemistry-driven; T_head is a conservative protocol gate; T_adapter is the geometric mean. Diagonals = 1.0. See src/transferability.py for the formulas and clause definitions. [E68 ablation: T_repr cross between C-hole and C-triplet zeroed to floor; tests whether C-triplet improvement comes from cross-quantity representation sharing.]",
+  "node_keys": [
+    "A",
+    "B",
+    "C-hole",
+    "C-triplet",
+    "D"
+  ],
+  "parameters": {
+    "w_K": 0.6,
+    "w_S": 0.4,
+    "T_repr_floor": 0.001,
+    "alpha_W": 5.0,
+    "gamma_L": 1.0,
+    "T_head_cutoff": 0.01,
+    "T_adapter_floor": 0.001
+  },
+  "protocol_meta": {
+    "A": {
+      "quantity": "reorg_energy_general",
+      "source_id": "qm9_public_reorg_15210",
+      "functional": "unknown",
+      "basis": "unknown",
+      "geometry": "unknown",
+      "charge_state": "unknown",
+      "conformers": "unknown"
+    },
+    "B": {
+      "quantity": "reorg_energy_general",
+      "source_id": "qm9_public_reorg_15210",
+      "functional": "unknown",
+      "basis": "unknown",
+      "geometry": "unknown",
+      "charge_state": "unknown",
+      "conformers": "unknown"
+    },
+    "C-hole": {
+      "quantity": "hole_lambda",
+      "source_id": "client_c_dft",
+      "functional": "wB97XD",
+      "basis": "unknown_in_csv",
+      "geometry": "adiabatic_4point_nelsen",
+      "charge_state": "neutral_to_cation",
+      "conformers": "one_per_molecule"
+    },
+    "C-triplet": {
+      "quantity": "triplet_lambda",
+      "source_id": "client_c_dft",
+      "functional": "wB97XD",
+      "basis": "unknown_in_csv",
+      "geometry": "adiabatic_4point_nelsen",
+      "charge_state": "neutral_to_T1",
+      "conformers": "one_per_molecule"
+    },
+    "D": {
+      "quantity": "hole_lambda",
+      "source_id": "atahan_2019",
+      "functional": "B3LYP",
+      "basis": "6-31G*",
+      "geometry": "unknown",
+      "charge_state": "unknown",
+      "conformers": "unknown"
+    }
+  },
+  "n_kept": {
+    "A": 6020,
+    "B": 9190,
+    "C-hole": 53,
+    "C-triplet": 49,
+    "D": 5876
+  },
+  "label_means": {
+    "A": 0.8212809706451725,
+    "B": 0.6576256564583693,
+    "C-hole": 1.2154246226415093,
+    "C-triplet": 2.638207937142857,
+    "D": 0.258112332799309
+  },
+  "label_stds": {
+    "A": 0.42166817979788845,
+    "B": 0.31890414249593474,
+    "C-hole": 0.4960643771760528,
+    "C-triplet": 0.7452705715732386,
+    "D": 0.04825102835094725
+  },
+  "T_repr": {
+    "A": {
+      "A": 1.0,
+      "B": 0.1472815213513985,
+      "C-hole": 0.06950693048503014,
+      "C-triplet": 0.06901314074260581,
+      "D": 0.06729337008297893
+    },
+    "B": {
+      "A": 0.15560198259396935,
+      "B": 1.0,
+      "C-hole": 0.08538306926293343,
+      "C-triplet": 0.08424835699216772,
+      "D": 0.12005458290623275
+    },
+    "C-hole": {
+      "A": 0.14608360774655338,
+      "B": 0.14352147932244091,
+      "C-hole": 1.0,
+      "C-triplet": 0.001,
+      "D": 0.07443629011770224
+    },
+    "C-triplet": {
+      "A": 0.14509004816716384,
+      "B": 0.1439218464645451,
+      "C-hole": 0.001,
+      "C-triplet": 1.0,
+      "D": 0.07447634507562757
+    },
+    "D": {
+      "A": 0.1131958956940528,
+      "B": 0.18927177391886624,
+      "C-hole": 0.05458523730430836,
+      "C-triplet": 0.05456874863122619,
+      "D": 1.0
+    }
+  },
+  "T_head": {
+    "A": {
+      "A": 1.0,
+      "B": 0.3320656782742023,
+      "C-hole": 0.0,
+      "C-triplet": 0.0,
+      "D": 0.0
+    },
+    "B": {
+      "A": 0.3320656782742023,
+      "B": 1.0,
+      "C-hole": 0.0,
+      "C-triplet": 0.0,
+      "D": 0.0
+    },
+    "C-hole": {
+      "A": 0.0,
+      "B": 0.0,
+      "C-hole": 1.0,
+      "C-triplet": 0.0,
+      "D": 0.0
+    },
+    "C-triplet": {
+      "A": 0.0,
+      "B": 0.0,
+      "C-hole": 0.0,
+      "C-triplet": 1.0,
+      "D": 0.0
+    },
+    "D": {
+      "A": 0.0,
+      "B": 0.0,
+      "C-hole": 0.0,
+      "C-triplet": 0.0,
+      "D": 1.0
+    }
+  },
+  "T_adapter": {
+    "A": {
+      "A": 1.0,
+      "B": 0.22114958350584463,
+      "C-hole": 0.001,
+      "C-triplet": 0.001,
+      "D": 0.001
+    },
+    "B": {
+      "A": 0.22731053185208347,
+      "B": 1.0,
+      "C-hole": 0.001,
+      "C-triplet": 0.001,
+      "D": 0.001
+    },
+    "C-hole": {
+      "A": 0.001,
+      "B": 0.001,
+      "C-hole": 1.0,
+      "C-triplet": 0.001,
+      "D": 0.001
+    },
+    "C-triplet": {
+      "A": 0.001,
+      "B": 0.001,
+      "C-hole": 0.001,
+      "C-triplet": 1.0,
+      "D": 0.001
+    },
+    "D": {
+      "A": 0.001,
+      "B": 0.001,
+      "C-hole": 0.001,
+      "C-triplet": 0.001,
+      "D": 1.0
+    }
+  },
+  "reasons": {
+    "A": {
+      "A": null,
+      "B": null,
+      "C-hole": "clause 1: quantity mismatch",
+      "C-triplet": "clause 1: quantity mismatch",
+      "D": "clause 1: quantity mismatch"
+    },
+    "B": {
+      "A": null,
+      "B": null,
+      "C-hole": "clause 1: quantity mismatch",
+      "C-triplet": "clause 1: quantity mismatch",
+      "D": "clause 1: quantity mismatch"
+    },
+    "C-hole": {
+      "A": "clause 1: quantity mismatch",
+      "B": "clause 1: quantity mismatch",
+      "C-hole": null,
+      "C-triplet": "clause 1: quantity mismatch",
+      "D": "clause 3: functional differs (wB97XD vs B3LYP)"
+    },
+    "C-triplet": {
+      "A": "clause 1: quantity mismatch",
+      "B": "clause 1: quantity mismatch",
+      "C-hole": "clause 1: quantity mismatch",
+      "C-triplet": null,
+      "D": "clause 1: quantity mismatch"
+    },
+    "D": {
+      "A": "clause 1: quantity mismatch",
+      "B": "clause 1: quantity mismatch",
+      "C-hole": "clause 4: V1=FAIL hard rule (D -> C)",
+      "C-triplet": "clause 1: quantity mismatch",
+      "D": null
+    }
+  }
+}

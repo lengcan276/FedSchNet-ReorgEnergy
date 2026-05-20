@@ -1,0 +1,34 @@
+{
+  "experiment_id": "label_scale_stress",
+  "phase": "phase1",
+  "data_source": "data/client_a_b/public_reorg_energy_15210.csv",
+  "n_target": 100,
+  "n_source": 200,
+  "n_source_clients": 4,
+  "n_folds": 5,
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    1000
+  ],
+  "n_rounds": 12,
+  "n_local_epochs": 5,
+  "lr": 0.001,
+  "batch_size": 64,
+  "methods": [
+    "local",
+    "fedavg_no_cal",
+    "fedper",
+    "fedper_cal"
+  ],
+  "kan_grid": 5,
+  "encoder_out_dim": 256,
+  "node_feat_dim": 11,
+  "head_type": "kan",
+  "device": "cuda:0",
+  "bootstrap_seed_for_stats": 20260520,
+  "smoke": false,
+  "timestamp_utc": "2026-05-20T04:47:48Z"
+}

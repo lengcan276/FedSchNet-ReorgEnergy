@@ -29,6 +29,18 @@ except ImportError:
     from federated import get_aggregation_fn, distribute_params, FedProxRegularizer
     from ssl_pretrain import federated_ssl_pretrain, SSLEncoder
 
+# PC²-FedReorg dispatch helpers (Phase 4). Imported lazily-friendly: even if
+# the JSON file is missing, importing the module is fine -- only calling
+# pc2_fed_dispatch needs the file.
+try:
+    from experiments.pc2_fedreorg import pc2_fed_dispatch, task_client_for
+except ImportError:
+    # Fallback when src/train_eval.py is imported as a script with cwd != project root
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
+    from experiments.pc2_fedreorg import pc2_fed_dispatch, task_client_for
+
 RESULTS_DIR = Path(__file__).resolve().parent.parent / 'results'
 CHECKPOINT_DIR = Path(__file__).resolve().parent.parent / 'checkpoints'
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -69,16 +81,29 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
 
 def train_one_epoch(model, loader, optimizer, device, criterion,
                     fedprox_reg: Optional[FedProxRegularizer] = None):
-    """Train for one epoch."""
+    """Train for one epoch.
+
+    PC²-FedReorg integration (Phase 4): when ``model.use_calibration`` is True,
+    the loss is computed in z-space (standardized labels) using
+    ``model.calibration.standardize`` and ``model(batch, return_z=True)``.
+    Otherwise, falls back to the legacy eV-space loss exactly as before.
+    """
     model.train()
     total_loss = 0.0
     n_samples = 0
 
+    use_calibration = getattr(model, 'use_calibration', False)
+
     for batch in loader:
         batch = batch.to(device)
         optimizer.zero_grad()
-        pred = model(batch).squeeze(-1)
-        loss = criterion(pred, batch.y)
+        if use_calibration:
+            pred_z = model(batch, return_z=True).squeeze(-1)
+            y_z = model.calibration.standardize(batch.y)
+            loss = criterion(pred_z, y_z)
+        else:
+            pred = model(batch).squeeze(-1)
+            loss = criterion(pred, batch.y)
 
         # FedProx regularization
         if fedprox_reg is not None:
@@ -96,20 +121,58 @@ def train_one_epoch(model, loader, optimizer, device, criterion,
 
 @torch.no_grad()
 def evaluate(model, loader, device):
-    """Evaluate model, return predictions and ground truth."""
+    """Evaluate model, return predictions and ground truth.
+
+    PC²-FedReorg integration (Phase 4): when ``model.use_calibration`` is True,
+    predictions are returned in physical eV-space via
+    ``model(batch, return_physical=True)``. Otherwise, falls back to the
+    legacy ``model(batch)`` call (whose unit depends on whether the calling
+    pipeline pre-normalized labels via ``norm_stats``).
+    """
     model.eval()
     y_true_list = []
     y_pred_list = []
 
+    use_calibration = getattr(model, 'use_calibration', False)
+
     for batch in loader:
         batch = batch.to(device)
-        pred = model(batch).squeeze(-1)
+        if use_calibration:
+            pred = model(batch, return_physical=True).squeeze(-1)
+        else:
+            pred = model(batch).squeeze(-1)
         y_true_list.append(batch.y.cpu().numpy())
         y_pred_list.append(pred.cpu().numpy())
 
     y_true = np.concatenate(y_true_list)
     y_pred = np.concatenate(y_pred_list)
     return y_true, y_pred
+
+
+# ============ Calibration helper (Phase 4) ============
+
+def install_calibration_from_train(model, train_data) -> tuple:
+    """Compute (mu, sigma) from train labels and install into ``model.calibration``.
+
+    Must be called per (client, fold) using ONLY that fold's train split. For
+    LOOCV on Client C the held-out test molecule's label MUST NOT enter this
+    computation; the caller is responsible for passing only n-1 train data.
+
+    Args:
+        model: ReorgEnergyModel with ``use_calibration=True``.
+        train_data: iterable of PyG ``Data`` objects with a ``.y`` scalar each.
+
+    Returns:
+        (mu, sigma): the values installed (sigma is floored to 1e-8).
+    """
+    if not getattr(model, 'use_calibration', False):
+        raise ValueError('install_calibration_from_train: model.use_calibration is False; '
+                         'cannot install calibration on a model without a CalibrationHead.')
+    ys = torch.tensor([float(d.y.item()) for d in train_data], dtype=torch.float32)
+    mu = float(ys.mean().item())
+    sigma = float(ys.std(unbiased=False).item())
+    model.calibration.set_stats(mu, sigma)  # set_stats applies the SIGMA_FLOOR internally
+    return mu, sigma
 
 
 # ============ Local training (no federation) ============
@@ -430,17 +493,42 @@ def train_federated(
     encoder_out_dim: int = 256,
     norm_stats: dict = None,
     model_factory=None,
+    # ---- PC²-FedReorg integration (Phase 4) ----
+    use_adapter: bool = False,
+    adapter_type: str = 'mlp',
+    adapter_bottleneck: int = 128,
+    use_calibration: bool = False,
+    aggregation_strategy: Optional[str] = None,
+    transferability_path: Optional[str] = None,
+    target_type: Optional[str] = None,
 ) -> dict:
     """Federated training (supports N clients).
 
     Args:
         client_data: {'client_a': [...], 'client_b': [...], 'client_c': [...], optional 'client_d': [...]}
-        fed_strategy: 'fedavg', 'fedper', 'fedbn'
+        fed_strategy: 'fedavg', 'fedper', 'fedbn', 'fedper_pc2', 'fedbn_pc2'
+            (legacy strategies preserve E1-E59 semantics; pc2 variants are new
+            ablations).
         n_rounds: number of federation communication rounds
         n_local_epochs: number of local training epochs per round
         mu: FedProx regularization coefficient (only effective when fed_strategy contains 'prox')
         norm_stats: {client_name: (y_mean, y_std)} per-client label normalization parameters
+            (legacy pre-normalization scheme). Mutually exclusive with use_calibration=True.
         model_factory: optional callable returning a fresh model instance
+        use_adapter: enable residual bottleneck adapter (PC²; Phase 2 module)
+        adapter_type: 'mlp' (default) or 'kan' (ablation)
+        adapter_bottleneck: bottleneck inner dim for the adapter
+        use_calibration: install per-client CalibrationHead with frozen
+            (mu, sigma) buffers computed from each client's train split.
+            Loss runs in z-space; metrics in eV-space.
+        aggregation_strategy: when set to 'pc2_fed', bypass get_aggregation_fn
+            and use experiments/pc2_fedreorg.pc2_fed_dispatch (per-key gated
+            aggregation reading T_transferability.json). Defaults to None,
+            which preserves the legacy single-output aggregator path.
+        transferability_path: required when aggregation_strategy='pc2_fed';
+            path to the JSON produced by Phase 1 (src/transferability.py).
+        target_type: 'hole' or 'triplet'; required when aggregation_strategy='pc2_fed'
+            with client_c participating (selects C-hole vs C-triplet task-client).
 
     Returns:
         dict with models, metrics, loss history
@@ -453,14 +541,36 @@ def train_federated(
         print(f"\n{'='*60}")
         print(f"Federated training: strategy={fed_strategy}, head={head_type}, "
               f"rounds={n_rounds}, local_epochs={n_local_epochs}, clients={client_keys}")
+        if use_adapter or use_calibration or aggregation_strategy:
+            print(f"  PC²: use_adapter={use_adapter}, adapter_type={adapter_type!r}, "
+                  f"use_calibration={use_calibration}, "
+                  f"aggregation_strategy={aggregation_strategy!r}, "
+                  f"target_type={target_type!r}")
         print(f"{'='*60}")
+
+    # Sanity: legacy norm_stats and new use_calibration are mutually exclusive.
+    if use_calibration and norm_stats is not None:
+        raise ValueError(
+            'train_federated: use_calibration=True is incompatible with norm_stats!=None. '
+            'Calibration handles label scaling internally; pass norm_stats=None when '
+            'use_calibration=True.'
+        )
+    # PC² aggregation needs the JSON path and (when client_c participates) target_type.
+    use_pc2_fed = (aggregation_strategy == 'pc2_fed')
+    if use_pc2_fed:
+        if transferability_path is None:
+            raise ValueError("aggregation_strategy='pc2_fed' requires transferability_path")
+        if 'client_c' in client_keys and target_type not in ('hole', 'triplet'):
+            raise ValueError("aggregation_strategy='pc2_fed' with client_c participating "
+                             "requires target_type='hole' or 'triplet'")
 
     use_fedprox = 'prox' in fed_strategy
     base_strategy = fed_strategy.replace('_prox', '').replace('prox_', '').replace('prox', '')
     if not base_strategy:
         base_strategy = 'fedavg'
 
-    aggregate_fn = get_aggregation_fn(base_strategy)
+    # Only resolve the legacy aggregator when PC² is not in use.
+    aggregate_fn = None if use_pc2_fed else get_aggregation_fn(base_strategy)
 
     # GPU assignment
     device_map = _get_device_map(client_keys, device_a, device_b)
@@ -479,6 +589,9 @@ def train_federated(
                 encoder_out_dim=encoder_out_dim,
                 use_global_desc=True, use_physics_feat=up,
                 phys_feats_dim=phys_feats_dim,
+                use_adapter=use_adapter, adapter_type=adapter_type,
+                adapter_bottleneck=adapter_bottleneck,
+                use_calibration=use_calibration,
             ).to(device_map[name])
 
     # Load pretrained encoder
@@ -522,6 +635,17 @@ def train_federated(
             train_loaders[name] = DataLoader(tr, batch_size=batch_size_ab,
                                              shuffle=True, drop_last=False)
             val_loaders[name] = DataLoader(va, batch_size=batch_size_ab, shuffle=False)
+
+    # PC²-FedReorg (Phase 4): install per-task-client (mu, sigma) AFTER the
+    # train/val split so the val split's labels never enter calibration stats.
+    # For client_c (full-data training within the federation), this installs
+    # whole-data stats; downstream LOOCV (federated_loocv_c_fast) overrides
+    # this per fold using only the n-1 train labels of that fold.
+    if use_calibration:
+        for name in client_keys:
+            mu_c, sigma_c = install_calibration_from_train(models[name], train_data[name])
+            if verbose:
+                print(f"  Calibration[{name}] (train-split only): mu={mu_c:.4f}, sigma={sigma_c:.4f}")
 
     # Optimizers & schedulers
     optimizers = {name: torch.optim.Adam(models[name].parameters(), lr=lr)
@@ -578,15 +702,32 @@ def train_federated(
 
         # Aggregate (on CPU)
         models_cpu = [copy.deepcopy(models[name]).cpu() for name in client_keys]
-        avg_dict = aggregate_fn(models_cpu, weights_list)
 
-        # Distribute
-        for name in client_keys:
-            local_dict = models[name].state_dict()
-            for key in avg_dict:
-                if key in local_dict:
-                    local_dict[key] = avg_dict[key].clone().to(local_dict[key].device)
-            models[name].load_state_dict(local_dict)
+        if use_pc2_fed:
+            # PC²-FedReorg: per-target dict-of-dicts via experiments/pc2_fedreorg.
+            # Calibration / bn / norm keys are absent from the per-target dicts
+            # by design and stay local on each client.
+            per_target_avg = pc2_fed_dispatch(
+                models_cpu, client_keys, counts,
+                target_type=target_type,
+                transferability_path=transferability_path,
+            )
+            for name in client_keys:
+                avg_for_name = per_target_avg[name]
+                local_dict = models[name].state_dict()
+                for key in avg_for_name:
+                    if key in local_dict:
+                        local_dict[key] = avg_for_name[key].clone().to(local_dict[key].device)
+                models[name].load_state_dict(local_dict)
+        else:
+            # Legacy single-output aggregator (E1-E59 path).
+            avg_dict = aggregate_fn(models_cpu, weights_list)
+            for name in client_keys:
+                local_dict = models[name].state_dict()
+                for key in avg_dict:
+                    if key in local_dict:
+                        local_dict[key] = avg_dict[key].clone().to(local_dict[key].device)
+                models[name].load_state_dict(local_dict)
 
         # Validation
         val_maes = {}
@@ -766,11 +907,32 @@ def federated_loocv_c_fast(
     encoder_out_dim: int = 256,
     norm_stats: dict = None,
     model_factory=None,
+    # ---- PC²-FedReorg integration (Phase 4) ----
+    use_adapter: bool = False,
+    adapter_type: str = 'mlp',
+    adapter_bottleneck: int = 128,
+    use_calibration: bool = False,
+    aggregation_strategy: Optional[str] = None,
+    transferability_path: Optional[str] = None,
+    target_type: Optional[str] = None,
 ) -> dict:
     """Fast federated LOOCV: train full federation once to obtain shared encoder,
     then LOOCV retrain head only.
     Supports N clients and per-fold label denormalization.
+
+    PC²-FedReorg integration (Phase 4):
+        - The PC² kwargs (use_adapter / use_calibration / aggregation_strategy /
+          transferability_path / target_type) are forwarded to ``train_federated``.
+        - In Step 2 (LOOCV head retraining), if use_calibration=True, the
+          per-fold (mu, sigma) is recomputed from ONLY that fold's n-1 train
+          labels and re-installed via ``model_c.calibration.set_stats``. The
+          held-out test molecule's label never enters calibration stats.
     """
+    if use_calibration and norm_stats is not None:
+        raise ValueError(
+            'federated_loocv_c_fast: use_calibration=True is incompatible with '
+            'norm_stats!=None. Calibration handles label scaling internally.'
+        )
     n_c = len(client_data['client_c'])
     device_c = device_b
 
@@ -778,6 +940,9 @@ def federated_loocv_c_fast(
         print(f"\n{'='*60}")
         print(f"Fast federated LOOCV for Client C: {n_c} molecules")
         print(f"  strategy={fed_strategy}, head={head_type}")
+        if use_adapter or use_calibration or aggregation_strategy:
+            print(f"  PC²: use_adapter={use_adapter}, use_calibration={use_calibration}, "
+                  f"aggregation_strategy={aggregation_strategy!r}, target_type={target_type!r}")
         print(f"  Step 1: Full federated training to obtain shared encoder")
         print(f"{'='*60}")
 
@@ -793,6 +958,12 @@ def federated_loocv_c_fast(
         phys_feats_dim=phys_feats_dim, encoder_out_dim=encoder_out_dim,
         norm_stats=norm_stats,
         model_factory=model_factory,
+        use_adapter=use_adapter, adapter_type=adapter_type,
+        adapter_bottleneck=adapter_bottleneck,
+        use_calibration=use_calibration,
+        aggregation_strategy=aggregation_strategy,
+        transferability_path=transferability_path,
+        target_type=target_type,
     )
 
     # Save the federated encoder
@@ -841,15 +1012,26 @@ def federated_loocv_c_fast(
                 encoder_out_dim=encoder_out_dim,
                 use_global_desc=True, use_physics_feat=use_physics_c,
                 phys_feats_dim=phys_feats_dim,
+                use_adapter=use_adapter, adapter_type=adapter_type,
+                adapter_bottleneck=adapter_bottleneck,
+                use_calibration=use_calibration,
             ).to(device_c)
         model_c.encoder.load_state_dict(fed_encoder, strict=False)
+
+        # PC²-FedReorg: per-fold (mu, sigma) on n-1 train molecules ONLY.
+        # The held-out c_test label never enters calibration stats.
+        if use_calibration:
+            install_calibration_from_train(model_c, c_train)
 
         # Freeze encoder parameters
         for param in model_c.encoder.parameters():
             param.requires_grad = False
 
-        # Only optimize head parameters
-        head_params = [p for p in model_c.head.parameters() if p.requires_grad]
+        # Only optimize head parameters (and adapter, if present and trainable)
+        trainable = [p for p in model_c.head.parameters() if p.requires_grad]
+        if use_adapter:
+            trainable += [p for p in model_c.adapter.parameters() if p.requires_grad]
+        head_params = trainable
         optimizer = torch.optim.Adam(head_params, lr=lr)
         scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=n_finetune_epochs)
 
@@ -869,8 +1051,14 @@ def federated_loocv_c_fast(
             for batch in train_loader:
                 batch = batch.to(device_c)
                 optimizer.zero_grad()
-                pred = model_c(batch).squeeze(-1)
-                loss = criterion(pred, batch.y)
+                if use_calibration:
+                    # PC²: loss in z-space.
+                    pred_z = model_c(batch, return_z=True).squeeze(-1)
+                    y_z = model_c.calibration.standardize(batch.y)
+                    loss = criterion(pred_z, y_z)
+                else:
+                    pred = model_c(batch).squeeze(-1)
+                    loss = criterion(pred, batch.y)
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(head_params, max_norm=5.0)
                 optimizer.step()
