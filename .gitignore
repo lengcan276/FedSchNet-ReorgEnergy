@@ -18,3 +18,9 @@ logs/
 checkpoints/
 .ipynb_checkpoints/
 audit_submission.py
+
+# Claude Code IDE state
+.claude/
+
+# Conversation transcripts
+session.md

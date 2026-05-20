@@ -1,0 +1,100 @@
+{
+  "description": "V3-allpairs chemistry-overlap stats for the 5-node task-client transferability matrix used by PC\u00b2-FedReorg. K[i,j] = mean over i-mols of max-Tanimoto similarity to any j-mol (Morgan radius=2, nBits=2048). S[i,j] = |Scaf(i) \u2229 Scaf(j)| / |Scaf(i)| (Murcko scaffolds, asymmetric, source-normalized). Diagonals = 1.0.",
+  "node_keys": [
+    "A",
+    "B",
+    "C-hole",
+    "C-triplet",
+    "D"
+  ],
+  "n_kept": {
+    "A": 6020,
+    "B": 9190,
+    "C-hole": 53,
+    "C-triplet": 49,
+    "D": 5876
+  },
+  "n_unique_scaffolds": {
+    "A": 631,
+    "B": 680,
+    "C-hole": 4,
+    "C-triplet": 4,
+    "D": 5873
+  },
+  "morgan_radius": 2,
+  "morgan_bits": 2048,
+  "K": {
+    "A": {
+      "A": 1.0,
+      "B": 0.24546920225233085,
+      "C-hole": 0.1158448841417169,
+      "C-triplet": 0.11502190123767635,
+      "D": 0.1121556168049649
+    },
+    "B": {
+      "A": 0.2593366376566156,
+      "B": 1.0,
+      "C-hole": 0.14230511543822238,
+      "C-triplet": 0.14041392832027955,
+      "D": 0.18832626562803498
+    },
+    "C-hole": {
+      "A": 0.24347267957758897,
+      "B": 0.23920246553740152,
+      "C-hole": 1.0,
+      "C-triplet": 0.9717680600873253,
+      "D": 0.12406048352950375
+    },
+    "C-triplet": {
+      "A": 0.24181674694527308,
+      "B": 0.23986974410757514,
+      "C-hole": 1.0,
+      "C-triplet": 1.0,
+      "D": 0.12412724179271263
+    },
+    "D": {
+      "A": 0.1886598261567547,
+      "B": 0.3140907906877523,
+      "C-hole": 0.0909753955071806,
+      "C-triplet": 0.09094791438537699,
+      "D": 1.0
+    }
+  },
+  "S": {
+    "A": {
+      "A": 1.0,
+      "B": 0.0,
+      "C-hole": 0.0,
+      "C-triplet": 0.0,
+      "D": 0.0
+    },
+    "B": {
+      "A": 0.0,
+      "B": 1.0,
+      "C-hole": 0.0,
+      "C-triplet": 0.0,
+      "D": 0.01764705882352941
+    },
+    "C-hole": {
+      "A": 0.0,
+      "B": 0.0,
+      "C-hole": 1.0,
+      "C-triplet": 1.0,
+      "D": 0.0
+    },
+    "C-triplet": {
+      "A": 0.0,
+      "B": 0.0,
+      "C-hole": 1.0,
+      "C-triplet": 1.0,
+      "D": 0.0
+    },
+    "D": {
+      "A": 0.0,
+      "B": 0.002043248765537204,
+      "C-hole": 0.0,
+      "C-triplet": 0.0,
+      "D": 1.0
+    }
+  }
+}

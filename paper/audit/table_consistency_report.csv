@@ -1,0 +1,261 @@
+table,claim,field,paper,recomputed,abs_diff,tol,verdict,note
+table2,E60 Local-only / C-hole,MAE_mean,0.4227,0.422709,0.000009,0.001,PASS,5-seed mean of per-seed MAE
+table2,E60 Local-only / C-hole,MAE_sem,0.0149,0.014924,0.000024,0.001,PASS,
+table2,E60 Local-only / C-hole,RMSE_mean,0.6365,0.636503,0.000003,0.001,PASS,
+table2,E60 Local-only / C-hole,RMSE_sem,0.0186,0.018571,0.000029,0.001,PASS,
+table2,E60 Local-only / C-hole,R2_mean,-0.6520,-0.651967,0.000033,0.001,PASS,
+table2,E60 Local-only / C-triplet,MAE_mean,0.7561,0.756138,0.000038,0.001,PASS,5-seed mean of per-seed MAE
+table2,E60 Local-only / C-triplet,MAE_sem,0.0217,0.021688,0.000012,0.001,PASS,
+table2,E60 Local-only / C-triplet,RMSE_mean,0.8994,0.899383,0.000017,0.001,PASS,
+table2,E60 Local-only / C-triplet,RMSE_sem,0.0165,0.016531,0.000031,0.001,PASS,
+table2,E60 Local-only / C-triplet,R2_mean,-0.4583,-0.458304,0.000004,0.001,PASS,
+table2,E61 FedAvg / C-hole,MAE_mean,0.3934,0.393420,0.000020,0.001,PASS,5-seed mean of per-seed MAE
+table2,E61 FedAvg / C-hole,MAE_sem,0.0029,0.002929,0.000029,0.001,PASS,
+table2,E61 FedAvg / C-hole,RMSE_mean,0.5304,0.530362,0.000038,0.001,PASS,
+table2,E61 FedAvg / C-hole,RMSE_sem,0.0076,0.007573,0.000027,0.001,PASS,
+table2,E61 FedAvg / C-hole,R2_mean,-0.1440,-0.143994,0.000006,0.001,PASS,
+table2,E61 FedAvg / C-triplet,MAE_mean,0.7658,0.765795,0.000005,0.001,PASS,5-seed mean of per-seed MAE
+table2,E61 FedAvg / C-triplet,MAE_sem,0.0064,0.006387,0.000013,0.001,PASS,
+table2,E61 FedAvg / C-triplet,RMSE_mean,0.9724,0.972353,0.000047,0.001,PASS,
+table2,E61 FedAvg / C-triplet,RMSE_sem,0.0044,0.004398,0.000002,0.001,PASS,
+table2,E61 FedAvg / C-triplet,R2_mean,-0.7024,-0.702377,0.000023,0.001,PASS,
+table2,E62 FedProx / C-hole,MAE_mean,0.3894,0.389398,0.000002,0.001,PASS,5-seed mean of per-seed MAE
+table2,E62 FedProx / C-hole,MAE_sem,0.0046,0.004579,0.000021,0.001,PASS,
+table2,E62 FedProx / C-hole,RMSE_mean,0.5334,0.533420,0.000020,0.001,PASS,
+table2,E62 FedProx / C-hole,RMSE_sem,0.0043,0.004256,0.000044,0.001,PASS,
+table2,E62 FedProx / C-hole,R2_mean,-0.1566,-0.156572,0.000028,0.001,PASS,
+table2,E62 FedProx / C-triplet,MAE_mean,0.7876,0.787626,0.000026,0.001,PASS,5-seed mean of per-seed MAE
+table2,E62 FedProx / C-triplet,MAE_sem,0.0060,0.005985,0.000015,0.001,PASS,
+table2,E62 FedProx / C-triplet,RMSE_mean,1.0105,1.010467,0.000033,0.001,PASS,
+table2,E62 FedProx / C-triplet,RMSE_sem,0.0091,0.009116,0.000016,0.001,PASS,
+table2,E62 FedProx / C-triplet,R2_mean,-0.8389,-0.838897,0.000003,0.001,PASS,
+table2,E63 FedPer / C-hole,MAE_mean,0.3689,0.368860,0.000040,0.001,PASS,5-seed mean of per-seed MAE
+table2,E63 FedPer / C-hole,MAE_sem,0.0073,0.007346,0.000046,0.001,PASS,
+table2,E63 FedPer / C-hole,RMSE_mean,0.5123,0.512291,0.000009,0.001,PASS,
+table2,E63 FedPer / C-hole,RMSE_sem,0.0042,0.004207,0.000007,0.001,PASS,
+table2,E63 FedPer / C-hole,R2_mean,-0.0668,-0.066780,0.000020,0.001,PASS,
+table2,E63 FedPer / C-triplet,MAE_mean,0.7547,0.754748,0.000048,0.001,PASS,5-seed mean of per-seed MAE
+table2,E63 FedPer / C-triplet,MAE_sem,0.0072,0.007196,0.000004,0.001,PASS,
+table2,E63 FedPer / C-triplet,RMSE_mean,0.9320,0.932019,0.000019,0.001,PASS,
+table2,E63 FedPer / C-triplet,RMSE_sem,0.0086,0.008648,0.000048,0.001,PASS,
+table2,E63 FedPer / C-triplet,R2_mean,-0.5645,-0.564483,0.000017,0.001,PASS,
+table2,E66 PC²-FedReorg / C-hole,MAE_mean,0.3842,0.384173,0.000027,0.001,PASS,5-seed mean of per-seed MAE
+table2,E66 PC²-FedReorg / C-hole,MAE_sem,0.0058,0.005833,0.000033,0.001,PASS,
+table2,E66 PC²-FedReorg / C-hole,RMSE_mean,0.5256,0.525617,0.000017,0.001,PASS,
+table2,E66 PC²-FedReorg / C-hole,RMSE_sem,0.0068,0.006840,0.000040,0.001,PASS,
+table2,E66 PC²-FedReorg / C-hole,R2_mean,-0.1235,-0.123456,0.000044,0.001,PASS,
+table2,E66 PC²-FedReorg / C-triplet,MAE_mean,0.6709,0.670909,0.000009,0.001,PASS,5-seed mean of per-seed MAE
+table2,E66 PC²-FedReorg / C-triplet,MAE_sem,0.0096,0.009628,0.000028,0.001,PASS,
+table2,E66 PC²-FedReorg / C-triplet,RMSE_mean,0.8459,0.845925,0.000025,0.001,PASS,
+table2,E66 PC²-FedReorg / C-triplet,RMSE_sem,0.0147,0.014666,0.000034,0.001,PASS,
+table2,E66 PC²-FedReorg / C-triplet,R2_mean,-0.2899,-0.289906,0.000006,0.001,PASS,
+table2,E71 FedPer + calibration only / C-hole,MAE_mean,0.3757,0.375663,0.000037,0.001,PASS,5-seed mean of per-seed MAE
+table2,E71 FedPer + calibration only / C-hole,MAE_sem,0.0029,0.002852,0.000048,0.001,PASS,
+table2,E71 FedPer + calibration only / C-hole,RMSE_mean,0.5139,0.513912,0.000012,0.001,PASS,
+table2,E71 FedPer + calibration only / C-hole,RMSE_sem,0.0061,0.006083,0.000017,0.001,PASS,
+table2,E71 FedPer + calibration only / C-hole,R2_mean,-0.0739,-0.073854,0.000046,0.001,PASS,
+table2,E71 FedPer + calibration only / C-triplet,MAE_mean,0.6527,0.652723,0.000023,0.001,PASS,5-seed mean of per-seed MAE
+table2,E71 FedPer + calibration only / C-triplet,MAE_sem,0.0111,0.011088,0.000012,0.001,PASS,
+table2,E71 FedPer + calibration only / C-triplet,RMSE_mean,0.8259,0.825900,0.000000,0.001,PASS,
+table2,E71 FedPer + calibration only / C-triplet,RMSE_sem,0.0116,0.011639,0.000039,0.001,PASS,
+table2,E71 FedPer + calibration only / C-triplet,R2_mean,-0.2291,-0.229056,0.000044,0.001,PASS,
+table3,E66 vs E60 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E60 / loocv_c_hole,mae_other,0.4137,0.413653,0.000047,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E60 / loocv_c_hole,mae_diff,-0.0316,-0.031640,0.000040,0.001,PASS,
+table3,E66 vs E60 / loocv_c_hole,ci_low,-0.1148,-0.115873,0.001073,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E60 / loocv_c_hole,ci_high,+0.0500,0.050193,0.000193,0.002,PASS,
+table3,E66 vs E60 / loocv_c_hole,ref_wins,25,25,0,exact,PASS,
+table3,E66 vs E60 / loocv_c_hole,ref_loses,28,28,0,exact,PASS,
+table3,E66 vs E60 / loocv_c_hole,wilcoxon_p,0.5801,0.580060,0.000040,0.001,PASS,
+table3,E66 vs E61 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E61 / loocv_c_hole,mae_other,0.3846,0.384604,0.000004,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E61 / loocv_c_hole,mae_diff,-0.0026,-0.002592,0.000008,0.001,PASS,
+table3,E66 vs E61 / loocv_c_hole,ci_low,-0.0421,-0.043057,0.000957,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E61 / loocv_c_hole,ci_high,+0.0391,0.038165,0.000935,0.002,PASS,
+table3,E66 vs E61 / loocv_c_hole,ref_wins,27,27,0,exact,PASS,
+table3,E66 vs E61 / loocv_c_hole,ref_loses,26,26,0,exact,PASS,
+table3,E66 vs E61 / loocv_c_hole,wilcoxon_p,0.8979,0.897860,0.000040,0.001,PASS,
+table3,E66 vs E62 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E62 / loocv_c_hole,mae_other,0.3861,0.386140,0.000040,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E62 / loocv_c_hole,mae_diff,-0.0041,-0.004128,0.000028,0.001,PASS,
+table3,E66 vs E62 / loocv_c_hole,ci_low,-0.0555,-0.054488,0.001012,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E62 / loocv_c_hole,ci_high,+0.0444,0.043433,0.000967,0.002,PASS,
+table3,E66 vs E62 / loocv_c_hole,ref_wins,28,28,0,exact,PASS,
+table3,E66 vs E62 / loocv_c_hole,ref_loses,25,25,0,exact,PASS,
+table3,E66 vs E62 / loocv_c_hole,wilcoxon_p,0.8214,0.821399,0.000001,0.001,PASS,
+table3,E66 vs E63 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E63 / loocv_c_hole,mae_other,0.3682,0.368227,0.000027,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E63 / loocv_c_hole,mae_diff,+0.0138,0.013785,0.000015,0.001,PASS,
+table3,E66 vs E63 / loocv_c_hole,ci_low,-0.0214,-0.022630,0.001230,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E63 / loocv_c_hole,ci_high,+0.0487,0.047349,0.001351,0.002,PASS,
+table3,E66 vs E63 / loocv_c_hole,ref_wins,23,23,0,exact,PASS,
+table3,E66 vs E63 / loocv_c_hole,ref_loses,30,30,0,exact,PASS,
+table3,E66 vs E63 / loocv_c_hole,wilcoxon_p,0.1977,0.197719,0.000019,0.001,PASS,
+table3,E66 vs E65 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E65 / loocv_c_hole,mae_other,0.4028,0.402769,0.000031,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E65 / loocv_c_hole,mae_diff,-0.0208,-0.020757,0.000043,0.001,PASS,
+table3,E66 vs E65 / loocv_c_hole,ci_low,-0.0992,-0.099486,0.000286,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E65 / loocv_c_hole,ci_high,+0.0552,0.056907,0.001707,0.002,PASS,
+table3,E66 vs E65 / loocv_c_hole,ref_wins,28,28,0,exact,PASS,
+table3,E66 vs E65 / loocv_c_hole,ref_loses,25,25,0,exact,PASS,
+table3,E66 vs E65 / loocv_c_hole,wilcoxon_p,0.7600,0.760046,0.000046,0.001,PASS,
+table3,E66 vs E68 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E68 / loocv_c_hole,mae_other,0.3821,0.382088,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E68 / loocv_c_hole,mae_diff,-0.0001,-0.000076,0.000024,0.001,PASS,
+table3,E66 vs E68 / loocv_c_hole,ci_low,-0.0173,-0.017296,0.000004,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E68 / loocv_c_hole,ci_high,+0.0175,0.018101,0.000601,0.002,PASS,
+table3,E66 vs E68 / loocv_c_hole,ref_wins,30,30,0,exact,PASS,
+table3,E66 vs E68 / loocv_c_hole,ref_loses,23,23,0,exact,PASS,
+table3,E66 vs E68 / loocv_c_hole,wilcoxon_p,0.5620,0.562012,0.000012,0.001,PASS,
+table3,E66 vs E69 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E69 / loocv_c_hole,mae_other,0.3700,0.370039,0.000039,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E69 / loocv_c_hole,mae_diff,+0.0120,0.011973,0.000027,0.001,PASS,
+table3,E66 vs E69 / loocv_c_hole,ci_low,-0.0203,-0.019003,0.001297,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E69 / loocv_c_hole,ci_high,+0.0427,0.042537,0.000163,0.002,PASS,
+table3,E66 vs E69 / loocv_c_hole,ref_wins,26,26,0,exact,PASS,
+table3,E66 vs E69 / loocv_c_hole,ref_loses,27,27,0,exact,PASS,
+table3,E66 vs E69 / loocv_c_hole,wilcoxon_p,0.4282,0.428173,0.000027,0.001,PASS,
+table3,E66 vs E70 / loocv_c_hole,mae_ref,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E70 / loocv_c_hole,mae_other,0.3773,0.377252,0.000048,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E70 / loocv_c_hole,mae_diff,+0.0048,0.004760,0.000040,0.001,PASS,
+table3,E66 vs E70 / loocv_c_hole,ci_low,-0.0333,-0.034706,0.001406,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E70 / loocv_c_hole,ci_high,+0.0425,0.041515,0.000985,0.002,PASS,
+table3,E66 vs E70 / loocv_c_hole,ref_wins,23,23,0,exact,PASS,
+table3,E66 vs E70 / loocv_c_hole,ref_loses,30,30,0,exact,PASS,
+table3,E66 vs E70 / loocv_c_hole,wilcoxon_p,0.5801,0.580060,0.000040,0.001,PASS,
+table3,E66 vs E60 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E60 / loocv_c_triplet,mae_other,0.7471,0.747112,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E60 / loocv_c_triplet,mae_diff,-0.0876,-0.087638,0.000038,0.001,PASS,
+table3,E66 vs E60 / loocv_c_triplet,ci_low,-0.2297,-0.232017,0.002317,0.002,FAIL,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E60 / loocv_c_triplet,ci_high,+0.0534,0.053396,0.000004,0.002,PASS,
+table3,E66 vs E60 / loocv_c_triplet,ref_wins,28,28,0,exact,PASS,
+table3,E66 vs E60 / loocv_c_triplet,ref_loses,21,21,0,exact,PASS,
+table3,E66 vs E60 / loocv_c_triplet,wilcoxon_p,0.1745,0.174485,0.000015,0.001,PASS,
+table3,E66 vs E61 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E61 / loocv_c_triplet,mae_other,0.7630,0.763015,0.000015,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E61 / loocv_c_triplet,mae_diff,-0.1035,-0.103542,0.000042,0.001,PASS,
+table3,E66 vs E61 / loocv_c_triplet,ci_low,-0.2195,-0.224296,0.004796,0.002,FAIL,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E61 / loocv_c_triplet,ci_high,+0.0043,0.012279,0.007979,0.002,FAIL,
+table3,E66 vs E61 / loocv_c_triplet,ref_wins,31,31,0,exact,PASS,
+table3,E66 vs E61 / loocv_c_triplet,ref_loses,18,18,0,exact,PASS,
+table3,E66 vs E61 / loocv_c_triplet,wilcoxon_p,0.0449,0.044884,0.000016,0.001,PASS,
+table3,E66 vs E62 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E62 / loocv_c_triplet,mae_other,0.7837,0.783736,0.000036,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E62 / loocv_c_triplet,mae_diff,-0.1243,-0.124262,0.000038,0.001,PASS,
+table3,E66 vs E62 / loocv_c_triplet,ci_low,-0.2542,-0.258529,0.004329,0.002,FAIL,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E62 / loocv_c_triplet,ci_high,-0.0069,0.002385,0.009285,0.002,FAIL,
+table3,E66 vs E62 / loocv_c_triplet,ref_wins,30,30,0,exact,PASS,
+table3,E66 vs E62 / loocv_c_triplet,ref_loses,19,19,0,exact,PASS,
+table3,E66 vs E62 / loocv_c_triplet,wilcoxon_p,0.0449,0.044884,0.000016,0.001,PASS,
+table3,E66 vs E63 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E63 / loocv_c_triplet,mae_other,0.7621,0.762098,0.000002,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E63 / loocv_c_triplet,mae_diff,-0.1026,-0.102625,0.000025,0.001,PASS,
+table3,E66 vs E63 / loocv_c_triplet,ci_low,-0.2049,-0.208644,0.003744,0.002,FAIL,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E63 / loocv_c_triplet,ci_high,-0.0023,0.007449,0.009749,0.002,FAIL,
+table3,E66 vs E63 / loocv_c_triplet,ref_wins,32,32,0,exact,PASS,
+table3,E66 vs E63 / loocv_c_triplet,ref_loses,17,17,0,exact,PASS,
+table3,E66 vs E63 / loocv_c_triplet,wilcoxon_p,0.0417,0.041704,0.000004,0.001,PASS,
+table3,E66 vs E65 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E65 / loocv_c_triplet,mae_other,0.6699,0.669873,0.000027,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E65 / loocv_c_triplet,mae_diff,-0.0104,-0.010399,0.000001,0.001,PASS,
+table3,E66 vs E65 / loocv_c_triplet,ci_low,-0.1421,-0.141602,0.000498,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E65 / loocv_c_triplet,ci_high,+0.1168,0.116064,0.000736,0.002,PASS,
+table3,E66 vs E65 / loocv_c_triplet,ref_wins,27,27,0,exact,PASS,
+table3,E66 vs E65 / loocv_c_triplet,ref_loses,22,22,0,exact,PASS,
+table3,E66 vs E65 / loocv_c_triplet,wilcoxon_p,0.8514,0.851431,0.000031,0.001,PASS,
+table3,E66 vs E68 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E68 / loocv_c_triplet,mae_other,0.6329,0.632916,0.000016,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E68 / loocv_c_triplet,mae_diff,+0.0266,0.026558,0.000042,0.001,PASS,
+table3,E66 vs E68 / loocv_c_triplet,ci_low,+0.0006,0.000418,0.000182,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E68 / loocv_c_triplet,ci_high,+0.0551,0.054415,0.000685,0.002,PASS,
+table3,E66 vs E68 / loocv_c_triplet,ref_wins,17,17,0,exact,PASS,
+table3,E66 vs E68 / loocv_c_triplet,ref_loses,32,32,0,exact,PASS,
+table3,E66 vs E68 / loocv_c_triplet,wilcoxon_p,0.0700,0.069990,0.000010,0.001,PASS,
+table3,E66 vs E69 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E69 / loocv_c_triplet,mae_other,0.6162,0.616195,0.000005,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E69 / loocv_c_triplet,mae_diff,+0.0433,0.043279,0.000021,0.001,PASS,
+table3,E66 vs E69 / loocv_c_triplet,ci_low,-0.0007,-0.000055,0.000645,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E69 / loocv_c_triplet,ci_high,+0.0916,0.090417,0.001183,0.002,PASS,
+table3,E66 vs E69 / loocv_c_triplet,ref_wins,21,21,0,exact,PASS,
+table3,E66 vs E69 / loocv_c_triplet,ref_loses,28,28,0,exact,PASS,
+table3,E66 vs E69 / loocv_c_triplet,wilcoxon_p,0.1809,0.180933,0.000033,0.001,PASS,
+table3,E66 vs E70 / loocv_c_triplet,mae_ref,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E70 / loocv_c_triplet,mae_other,0.7785,0.778514,0.000014,0.001,PASS,per-mol median-across-seeds MAE
+table3,E66 vs E70 / loocv_c_triplet,mae_diff,-0.1190,-0.119041,0.000041,0.001,PASS,
+table3,E66 vs E70 / loocv_c_triplet,ci_low,-0.2251,-0.225169,0.000069,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E66 vs E70 / loocv_c_triplet,ci_high,-0.0153,-0.009139,0.006161,0.002,FAIL,
+table3,E66 vs E70 / loocv_c_triplet,ref_wins,35,35,0,exact,PASS,
+table3,E66 vs E70 / loocv_c_triplet,ref_loses,14,14,0,exact,PASS,
+table3,E66 vs E70 / loocv_c_triplet,wilcoxon_p,0.0427,0.042742,0.000042,0.001,PASS,
+table3,E71 vs E66 / loocv_c_hole,mae_ref,0.3736,0.373634,0.000034,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E66 / loocv_c_hole,mae_other,0.3820,0.382012,0.000012,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E66 / loocv_c_hole,mae_diff,-0.0084,-0.008379,0.000021,0.001,PASS,
+table3,E71 vs E66 / loocv_c_hole,ci_low,-0.0264,-0.026955,0.000555,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E71 vs E66 / loocv_c_hole,ci_high,+0.0093,0.009201,0.000099,0.002,PASS,
+table3,E71 vs E66 / loocv_c_hole,ref_wins,31,31,0,exact,PASS,
+table3,E71 vs E66 / loocv_c_hole,ref_loses,22,22,0,exact,PASS,
+table3,E71 vs E66 / loocv_c_hole,wilcoxon_p,0.4230,0.423030,0.000030,0.001,PASS,
+table3,E71 vs E63 / loocv_c_hole,mae_ref,0.3736,0.373634,0.000034,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E63 / loocv_c_hole,mae_other,0.3682,0.368227,0.000027,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E63 / loocv_c_hole,mae_diff,+0.0054,0.005407,0.000007,0.001,PASS,
+table3,E71 vs E63 / loocv_c_hole,ci_low,-0.0271,-0.027990,0.000890,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E71 vs E63 / loocv_c_hole,ci_high,+0.0391,0.039116,0.000016,0.002,PASS,
+table3,E71 vs E63 / loocv_c_hole,ref_wins,24,24,0,exact,PASS,
+table3,E71 vs E63 / loocv_c_hole,ref_loses,29,29,0,exact,PASS,
+table3,E71 vs E63 / loocv_c_hole,wilcoxon_p,0.5984,0.598375,0.000025,0.001,PASS,
+table3,E71 vs E70 / loocv_c_hole,mae_ref,0.3736,0.373634,0.000034,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E70 / loocv_c_hole,mae_other,0.3773,0.377252,0.000048,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E70 / loocv_c_hole,mae_diff,-0.0036,-0.003619,0.000019,0.001,PASS,
+table3,E71 vs E70 / loocv_c_hole,ci_low,-0.0398,-0.041224,0.001424,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E71 vs E70 / loocv_c_hole,ci_high,+0.0331,0.033317,0.000217,0.002,PASS,
+table3,E71 vs E70 / loocv_c_hole,ref_wins,27,27,0,exact,PASS,
+table3,E71 vs E70 / loocv_c_hole,ref_loses,26,26,0,exact,PASS,
+table3,E71 vs E70 / loocv_c_hole,wilcoxon_p,0.8421,0.842116,0.000016,0.001,PASS,
+table3,E71 vs E66 / loocv_c_triplet,mae_ref,0.6536,0.653603,0.000003,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E66 / loocv_c_triplet,mae_other,0.6595,0.659474,0.000026,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E66 / loocv_c_triplet,mae_diff,-0.0059,-0.005870,0.000030,0.001,PASS,
+table3,E71 vs E66 / loocv_c_triplet,ci_low,-0.0437,-0.042987,0.000713,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E71 vs E66 / loocv_c_triplet,ci_high,+0.0293,0.029735,0.000435,0.002,PASS,
+table3,E71 vs E66 / loocv_c_triplet,ref_wins,23,23,0,exact,PASS,
+table3,E71 vs E66 / loocv_c_triplet,ref_loses,26,26,0,exact,PASS,
+table3,E71 vs E66 / loocv_c_triplet,wilcoxon_p,0.9293,0.929312,0.000012,0.001,PASS,
+table3,E71 vs E63 / loocv_c_triplet,mae_ref,0.6536,0.653603,0.000003,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E63 / loocv_c_triplet,mae_other,0.7621,0.762098,0.000002,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E63 / loocv_c_triplet,mae_diff,-0.1085,-0.108495,0.000005,0.001,PASS,
+table3,E71 vs E63 / loocv_c_triplet,ci_low,-0.2083,-0.210883,0.002583,0.002,FAIL,bootstrap 5000 resamples; seed may differ
+table3,E71 vs E63 / loocv_c_triplet,ci_high,-0.0097,-0.001956,0.007744,0.002,FAIL,
+table3,E71 vs E63 / loocv_c_triplet,ref_wins,32,32,0,exact,PASS,
+table3,E71 vs E63 / loocv_c_triplet,ref_loses,17,17,0,exact,PASS,
+table3,E71 vs E63 / loocv_c_triplet,wilcoxon_p,0.0277,0.027738,0.000038,0.001,PASS,
+table3,E71 vs E70 / loocv_c_triplet,mae_ref,0.6536,0.653603,0.000003,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E70 / loocv_c_triplet,mae_other,0.7785,0.778514,0.000014,0.001,PASS,per-mol median-across-seeds MAE
+table3,E71 vs E70 / loocv_c_triplet,mae_diff,-0.1249,-0.124911,0.000011,0.001,PASS,
+table3,E71 vs E70 / loocv_c_triplet,ci_low,-0.2242,-0.222541,0.001659,0.002,PASS,bootstrap 5000 resamples; seed may differ
+table3,E71 vs E70 / loocv_c_triplet,ci_high,-0.0272,-0.021381,0.005819,0.002,FAIL,
+table3,E71 vs E70 / loocv_c_triplet,ref_wins,33,33,0,exact,PASS,
+table3,E71 vs E70 / loocv_c_triplet,ref_loses,16,16,0,exact,PASS,
+table3,E71 vs E70 / loocv_c_triplet,wilcoxon_p,0.0206,0.020627,0.000027,0.001,PASS,
+table4,E66 PC²-FedReorg (reference) / C-hole,MAE_mean,0.3842,0.384173,0.000027,0.001,PASS,5-seed mean
+table4,E66 PC²-FedReorg (reference) / C-hole,MAE_sem,0.0058,0.005833,0.000033,0.001,PASS,
+table4,E66 PC²-FedReorg (reference) / C-triplet,MAE_mean,0.6709,0.670909,0.000009,0.001,PASS,5-seed mean
+table4,E66 PC²-FedReorg (reference) / C-triplet,MAE_sem,0.0096,0.009628,0.000028,0.001,PASS,
+table4,E65 D→C supervised pretrain / C-hole,MAE_mean,0.4078,0.407767,0.000033,0.001,PASS,5-seed mean
+table4,E65 D→C supervised pretrain / C-hole,MAE_sem,0.0099,0.009884,0.000016,0.001,PASS,
+table4,E65 D→C supervised pretrain / C-triplet,MAE_mean,0.6820,0.681991,0.000009,0.001,PASS,5-seed mean
+table4,E65 D→C supervised pretrain / C-triplet,MAE_sem,0.0222,0.022178,0.000022,0.001,PASS,
+table4,E68 PC² − T_repr C-cross removed / C-hole,MAE_mean,0.3851,0.385059,0.000041,0.001,PASS,5-seed mean
+table4,E68 PC² − T_repr C-cross removed / C-hole,MAE_sem,0.0083,0.008289,0.000011,0.001,PASS,
+table4,E68 PC² − T_repr C-cross removed / C-triplet,MAE_mean,0.6395,0.639519,0.000019,0.001,PASS,5-seed mean
+table4,E68 PC² − T_repr C-cross removed / C-triplet,MAE_sem,0.0128,0.012772,0.000028,0.001,PASS,
+table4,E69 PC² − uniform FedAvg gate / C-hole,MAE_mean,0.3690,0.368974,0.000026,0.001,PASS,5-seed mean
+table4,E69 PC² − uniform FedAvg gate / C-hole,MAE_sem,0.0058,0.005760,0.000040,0.001,PASS,
+table4,E69 PC² − uniform FedAvg gate / C-triplet,MAE_mean,0.6253,0.625320,0.000020,0.001,PASS,5-seed mean
+table4,E69 PC² − uniform FedAvg gate / C-triplet,MAE_sem,0.0147,0.014746,0.000046,0.001,PASS,
+table4,E70 PC² − no calibration / C-hole,MAE_mean,0.3791,0.379116,0.000016,0.001,PASS,5-seed mean
+table4,E70 PC² − no calibration / C-hole,MAE_sem,0.0039,0.003922,0.000022,0.001,PASS,
+table4,E70 PC² − no calibration / C-triplet,MAE_mean,0.7857,0.785719,0.000019,0.001,PASS,5-seed mean
+table4,E70 PC² − no calibration / C-triplet,MAE_sem,0.0061,0.006053,0.000047,0.001,PASS,
+table4,E71 FedPer + calibration only (positive control) / C-hole,MAE_mean,0.3757,0.375663,0.000037,0.001,PASS,5-seed mean
+table4,E71 FedPer + calibration only (positive control) / C-hole,MAE_sem,0.0029,0.002852,0.000048,0.001,PASS,
+table4,E71 FedPer + calibration only (positive control) / C-triplet,MAE_mean,0.6527,0.652723,0.000023,0.001,PASS,5-seed mean
+table4,E71 FedPer + calibration only (positive control) / C-triplet,MAE_sem,0.0111,0.011088,0.000012,0.001,PASS,

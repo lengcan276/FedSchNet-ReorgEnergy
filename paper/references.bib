@@ -1,0 +1,256 @@
+% References cited in paper/manuscript.md and paper/SI.md.
+%
+% Manuscript uses square-bracket numeric citations [1]–[18]; the keys below are
+% in the same order for easy cross-reading. Entries whose DOI or arXiv id could
+% not be confidently verified in the present writing pass are annotated
+% `note = {TODO: ...}` and must be confirmed before submission. We do NOT
+% fabricate DOIs.
+%
+% Uncited entries from earlier drafts have been moved to references_unused.bib.
+
+
+% ============================================================================
+% [1] Marcus reorganization energy / electron transfer theory
+% ============================================================================
+@article{Marcus1993,
+  title   = {Electron Transfer Reactions in Chemistry. {T}heory and Experiment},
+  author  = {Marcus, Rudolph A.},
+  journal = {Reviews of Modern Physics},
+  year    = {1993},
+  volume  = {65},
+  pages   = {599--610},
+  doi     = {10.1103/RevModPhys.65.599},
+  note    = {verified}
+}
+
+
+% ============================================================================
+% [2] Coropceanu organic-semiconductor charge transport
+% ============================================================================
+@article{Coropceanu2007,
+  title   = {Charge Transport in Organic Semiconductors},
+  author  = {Coropceanu, Veaceslav and Cornil, J{\'e}r{\^o}me and da Silva Filho, Demetrio A. and Olivier, Yoann and Silbey, Robert and Br{\'e}das, Jean-Luc},
+  journal = {Chemical Reviews},
+  year    = {2007},
+  volume  = {107},
+  pages   = {926--952},
+  doi     = {10.1021/cr050140x},
+  note    = {verified}
+}
+
+
+% ============================================================================
+% [3] Sasabe / Kido OLED review (TADF context)
+% ============================================================================
+@article{Sasabe2011_OLED,
+  title   = {Multifunctional Materials in High-Performance {OLED}s: Challenges for Solid-State Lighting},
+  author  = {Sasabe, Hisahiro and Kido, Junji},
+  journal = {Chemistry of Materials},
+  year    = {2011},
+  volume  = {23},
+  number  = {3},
+  pages   = {621--630},
+  doi     = {10.1021/cm1024309},
+  note    = {TODO: confirm DOI and full title against publisher metadata}
+}
+
+
+% ============================================================================
+% [4] Uoyama TADF Nature 2012
+% ============================================================================
+@article{Uoyama2012_TADF,
+  title   = {Highly Efficient Organic Light-Emitting Diodes from Delayed Fluorescence},
+  author  = {Uoyama, Hiroki and Goushi, Kenichi and Shizu, Katsuyuki and Nomura, Hiroko and Adachi, Chihaya},
+  journal = {Nature},
+  year    = {2012},
+  volume  = {492},
+  pages   = {234--238},
+  doi     = {10.1038/nature11687},
+  note    = {verified}
+}
+
+
+% ============================================================================
+% [5] Atahan-Evrenk & Atalay 2019 -- ML prediction of intramolecular reorganization energy
+% [12] Atahan-Evrenk 2019 dataset -- the n = 5,876 conjugated-organic-semiconductor set used as Client D
+%      (the manuscript references [12] as the dataset companion of [5]; we keep a single bib entry
+%       for the publication and note the dataset role below.)
+% ============================================================================
+@article{AtahanEvrenk2019_RE,
+  title   = {Prediction of Intramolecular Reorganization Energy Using Machine Learning},
+  author  = {Atahan-Evrenk, S{\"u}le and Atalay, F. Bet{\"u}l},
+  journal = {The Journal of Physical Chemistry A},
+  year    = {2019},
+  volume  = {123},
+  pages   = {7855--7863},
+  doi     = {10.1021/acs.jpca.9b02733},
+  note    = {TODO: confirm DOI against publisher metadata. Provides both the prediction methodology and the n = 5,876 hole-reorganization-energy dataset used as Client D in this manuscript.}
+}
+
+
+% ============================================================================
+% [6] SchNet -- Schuett et al. 2017 (NeurIPS)
+% ============================================================================
+@inproceedings{Schutt2017_SchNet_NeurIPS,
+  title     = {{SchNet}: A Continuous-Filter Convolutional Neural Network for Modeling Quantum Interactions},
+  author    = {Sch{\"u}tt, Kristof T. and Kindermans, Pieter-Jan and Sauceda, Huziel E. and Chmiela, Stefan and Tkatchenko, Alexandre and M{\"u}ller, Klaus-Robert},
+  booktitle = {Advances in Neural Information Processing Systems 30 (NeurIPS)},
+  year      = {2017},
+  eprint    = {1706.08566},
+  archiveprefix = {arXiv},
+  note      = {verified arXiv id; the NeurIPS 2017 SchNet paper. Referenced as the 3D molecular encoder available in our codebase but not used in reported PC²-FedReorg experiments.}
+}
+
+
+% ============================================================================
+% [7] FedAvg -- McMahan et al. 2017 (AISTATS)
+% ============================================================================
+@inproceedings{McMahan2017_FedAvg,
+  title     = {Communication-Efficient Learning of Deep Networks from Decentralized Data},
+  author    = {McMahan, Brendan and Moore, Eider and Ramage, Daniel and Hampson, Seth and y Arcas, Blaise Ag{\"u}era},
+  booktitle = {Proceedings of the 20th International Conference on Artificial Intelligence and Statistics (AISTATS)},
+  year      = {2017},
+  pages     = {1273--1282},
+  eprint    = {1602.05629},
+  archiveprefix = {arXiv},
+  note      = {verified arXiv id; canonical FedAvg reference}
+}
+
+
+% ============================================================================
+% [8] FedProx -- Li et al. 2020 (MLSys)
+% ============================================================================
+@inproceedings{Li2020_FedProx,
+  title     = {Federated Optimization in Heterogeneous Networks},
+  author    = {Li, Tian and Sahu, Anit Kumar and Zaheer, Manzil and Sanjabi, Maziar and Talwalkar, Ameet and Smith, Virginia},
+  booktitle = {Proceedings of Machine Learning and Systems (MLSys)},
+  year      = {2020},
+  eprint    = {1812.06127},
+  archiveprefix = {arXiv},
+  note      = {verified arXiv id; canonical FedProx reference}
+}
+
+
+% ============================================================================
+% [9] FedPer -- Arivazhagan et al. 2019 (arXiv workshop)
+% ============================================================================
+@article{Arivazhagan2019_FedPer,
+  title   = {Federated Learning with Personalization Layers},
+  author  = {Arivazhagan, Manoj Ghuhan and Aggarwal, Vinay and Singh, Aaditya Kumar and Choudhary, Sunav},
+  journal = {arXiv preprint arXiv:1912.00818},
+  year    = {2019},
+  eprint  = {1912.00818},
+  archiveprefix = {arXiv},
+  note    = {verified arXiv id; FedPer is referenced as the closest personalization-layer ancestor of PC²-FedReorg's private-head design}
+}
+
+
+% ============================================================================
+% [10] FedBN -- Li et al. 2021 (ICLR)
+% ============================================================================
+@inproceedings{Li2021_FedBN,
+  title     = {{FedBN}: Federated Learning on Non-{IID} Features via Local Batch Normalization},
+  author    = {Li, Xiaoxiao and Jiang, Meirui and Zhang, Xiaofei and Kamp, Michael and Dou, Qi},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2021},
+  eprint    = {2102.07623},
+  archiveprefix = {arXiv},
+  note      = {verified arXiv id; motivates the BatchNorm-exclusion rule reused in PC²-FedReorg}
+}
+
+
+% ============================================================================
+% [11] MOON -- Li, He, Song 2021 (CVPR)
+% ============================================================================
+@inproceedings{Li2021_MOON,
+  title     = {Model-Contrastive Federated Learning},
+  author    = {Li, Qinbin and He, Bingsheng and Song, Dawn},
+  booktitle = {IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2021},
+  eprint    = {2103.16257},
+  archiveprefix = {arXiv},
+  note      = {verified arXiv id; flagged as a deferred baseline in the manuscript's Limitations section}
+}
+
+
+% ============================================================================
+% [13] D-MPNN / ChemProp -- Yang et al. 2019 JCIM
+% ============================================================================
+@article{Yang2019_ChemProp,
+  title   = {Analyzing Learned Molecular Representations for Property Prediction},
+  author  = {Yang, Kevin and Swanson, Kyle and Jin, Wengong and Coley, Connor and Eiden, Philipp and Gao, Hua and Guzman-Perez, Angel and Hopper, Timothy and Kelley, Brian and Mathea, Miriam and Palmer, Andrew and Settels, Volker and Jaakkola, Tommi and Jensen, Klavs and Barzilay, Regina},
+  journal = {Journal of Chemical Information and Modeling},
+  year    = {2019},
+  volume  = {59},
+  number  = {8},
+  pages   = {3370--3388},
+  doi     = {10.1021/acs.jcim.9b00237},
+  note    = {verified DOI; cited as the deferred message-passing baseline (D-MPNN / ChemProp) in Limitations}
+}
+
+
+% ============================================================================
+% [14] Nelsen four-point geometry for reorganization-energy computation
+% ============================================================================
+@article{Nelsen1987,
+  title   = {Estimation of Inner Shell {M}arcus Terms for Amino Nitrogen Compounds by Molecular Orbital Calculations},
+  author  = {Nelsen, Stephen F. and Blackstock, S. C. and Kim, Y.},
+  journal = {Journal of the American Chemical Society},
+  year    = {1987},
+  volume  = {109},
+  pages   = {677--682},
+  doi     = {10.1021/ja00237a007},
+  note    = {TODO: verify DOI. Source of the four-point Nelsen geometry treatment described in Section 2.1.}
+}
+
+
+% ============================================================================
+% [15] GIN -- Xu et al. 2019 (ICLR)
+% ============================================================================
+@inproceedings{Xu2019_GIN,
+  title     = {How Powerful are Graph Neural Networks?},
+  author    = {Xu, Keyulu and Hu, Weihua and Leskovec, Jure and Jegelka, Stefanie},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2019},
+  eprint    = {1810.00826},
+  archiveprefix = {arXiv},
+  note      = {verified arXiv id; canonical GIN reference used as the encoder backbone in this study}
+}
+
+
+% ============================================================================
+% [16] KAN -- Liu et al. 2024 (arXiv)
+% ============================================================================
+@inproceedings{KAN2024,
+  title     = {{KAN}: {K}olmogorov--{A}rnold Networks},
+  author    = {Liu, Ziming and Wang, Yixuan and Vaidya, Sachin and Ruehle, Fabian and Halverson, James and Solja{\v{c}}i{\'c}, Marin and Hou, Thomas Y. and Tegmark, Max},
+  year      = {2024},
+  eprint    = {2404.19756},
+  archiveprefix = {arXiv},
+  note      = {verified arXiv id; the original Kolmogorov--Arnold Networks proposal underlying the efficient-KAN implementation used in this study}
+}
+
+
+% ============================================================================
+% [17] efficient-KAN -- GitHub implementation of KAN used in this study
+% ============================================================================
+@misc{EfficientKAN2024,
+  title   = {An Efficient Implementation of {K}olmogorov--{A}rnold Networks},
+  author  = {Blealtan},
+  year    = {2024},
+  note    = {\url{https://github.com/Blealtan/efficient-kan}. TODO: pin to a Zenodo / arXiv companion (or a tagged release commit) before submission. The library is GitHub-hosted and has no DOI at writing time.}
+}
+
+
+% ============================================================================
+% [18] RDKit -- open-source cheminformatics toolkit used for Tanimoto / Murcko
+% ============================================================================
+@misc{RDKit2023,
+  title   = {{RDKit}: Open-Source Cheminformatics},
+  author  = {Landrum, Greg and others},
+  year    = {2023},
+  note    = {\url{https://www.rdkit.org}. TODO: pin to a specific release version with a Zenodo DOI before submission. The current run uses the conda-forge build present in the H-CAAN environment.}
+}
+
+
+% End of references.bib

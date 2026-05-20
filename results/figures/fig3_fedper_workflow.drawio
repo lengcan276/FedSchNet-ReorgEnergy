@@ -1,0 +1,442 @@
+<mxfile host="app.diagrams.net" modified="2026-03-09" agent="Claude" version="24.0" type="device">
+  <diagram name="Fig3-FedPer-Workflow" id="fig3">
+    <mxGraphModel dx="1422" dy="820" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="780" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ============================================================ -->
+        <!--  Title bar                                                    -->
+        <!-- ============================================================ -->
+        <mxCell id="title" value="&lt;font style=&quot;font-size:9px;&quot; color=&quot;#757575&quot;&gt;One Communication Round (repeated for &lt;i&gt;T&lt;/i&gt; = 30 rounds)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="30" y="10" width="1340" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- Timeline arrow (bottom) -->
+        <mxCell id="timeline" value="" style="endArrow=blockThin;endFill=1;strokeColor=#9E9E9E;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="50" y="700" as="sourcePoint"/>
+            <mxPoint x="1350" y="700" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tl_lbl" value="&lt;font style=&quot;font-size:9px;&quot; color=&quot;#9E9E9E&quot;&gt;&amp;larr; Repeat for &lt;i&gt;T&lt;/i&gt; = 30 communication rounds &amp;rarr;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="400" y="705" width="600" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- Step numbers -->
+        <mxCell id="sn1" value="&lt;font style=&quot;font-size:10px;&quot; color=&quot;#424242&quot;&gt;&lt;b&gt;Step 1&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="38" width="240" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="sn2" value="&lt;font style=&quot;font-size:10px;&quot; color=&quot;#424242&quot;&gt;&lt;b&gt;Step 2&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="380" y="38" width="200" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="sn3" value="&lt;font style=&quot;font-size:10px;&quot; color=&quot;#424242&quot;&gt;&lt;b&gt;Step 3&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="660" y="38" width="200" height="22" as="geometry"/>
+        </mxCell>
+        <mxCell id="sn4" value="&lt;font style=&quot;font-size:10px;&quot; color=&quot;#424242&quot;&gt;&lt;b&gt;Step 4&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="38" width="200" height="22" as="geometry"/>
+        </mxCell>
+
+        <!-- Step subtitles -->
+        <mxCell id="st1" value="&lt;font style=&quot;font-size:9px;&quot; color=&quot;#757575&quot;&gt;Local Training&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="56" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="st2" value="&lt;font style=&quot;font-size:9px;&quot; color=&quot;#757575&quot;&gt;Parameter Upload&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="380" y="56" width="200" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="st3" value="&lt;font style=&quot;font-size:9px;&quot; color=&quot;#757575&quot;&gt;Server Aggregation&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="660" y="56" width="200" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="st4" value="&lt;font style=&quot;font-size:9px;&quot; color=&quot;#757575&quot;&gt;Parameter Download&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="56" width="200" height="18" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!--  STEP 1: Local Training — four client model boxes            -->
+        <!-- ============================================================ -->
+
+        <!-- Client A model -->
+        <mxCell id="m1a" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#1565C0;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="90" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1a_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;A&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="68" y="100" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1a_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;A&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;A&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="186" y="100" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1a_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#1565C0&quot;&gt;&lt;b&gt;Client A&lt;/b&gt; (n=6,020)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="155" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <!-- Internal arrow -->
+        <mxCell id="m1a_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m1a_enc" target="m1a_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Client B model -->
+        <mxCell id="m1b" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#2E7D32;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="195" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1b_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;B&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="68" y="205" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1b_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;B&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;B&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="186" y="205" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1b_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#2E7D32&quot;&gt;&lt;b&gt;Client B&lt;/b&gt; (n=9,190)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1b_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m1b_enc" target="m1b_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Client C model -->
+        <mxCell id="m1c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E65100;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="300" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1c_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;C&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="68" y="310" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1c_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;C&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;C&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="186" y="310" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1c_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#E65100&quot;&gt;&lt;b&gt;Client C&lt;/b&gt; (n=5,876)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="365" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1c_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m1c_enc" target="m1c_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Client D model -->
+        <mxCell id="m1d" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#C62828;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="405" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1d_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;D&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="68" y="415" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1d_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;D&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;D&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="186" y="415" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1d_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#C62828&quot;&gt;&lt;b&gt;Client D&lt;/b&gt; (n=53) &#x1f512;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="470" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1d_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m1d_enc" target="m1d_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Training config label -->
+        <mxCell id="train_cfg" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#616161&quot;&gt;Train locally for &lt;i&gt;E&lt;/i&gt; = 5 epochs&lt;br&gt;Adam, lr = 10&lt;sup&gt;&amp;minus;4&lt;/sup&gt;, cosine annealing&lt;br&gt;Batch: 512 (A/B/C), full (D)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="510" width="240" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!--  STEP 2: Parameter Upload                                    -->
+        <!-- ============================================================ -->
+
+        <!-- Upload arrows from encoders to collection point -->
+        <mxCell id="up_a" style="rounded=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="m1a_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="125" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="340" y="125"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="up_b" style="rounded=1;strokeColor=#2E7D32;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="m1b_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="230" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="340" y="230"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="up_c" style="rounded=1;strokeColor=#E65100;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="m1c_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="335" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="340" y="335"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="up_d" style="rounded=1;strokeColor=#C62828;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="m1d_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="440" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="340" y="440"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Upload collection box -->
+        <mxCell id="up_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1565C0;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="380" y="95" width="200" height="380" as="geometry"/>
+        </mxCell>
+
+        <!-- Encoder params arriving -->
+        <mxCell id="up_enc_a" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;A&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="410" y="115" width="140" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="up_enc_b" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;B&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="410" y="213" width="140" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="up_enc_c" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;C&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="410" y="318" width="140" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="up_enc_d" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;D&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="410" y="423" width="140" height="34" as="geometry"/>
+        </mxCell>
+
+        <!-- KAN stays local labels (locks on Step 1 KAN boxes) -->
+        <mxCell id="lock_a" value="&lt;font style=&quot;font-size:14px;&quot;&gt;&#x1f512;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="258" y="140" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="lock_b" value="&lt;font style=&quot;font-size:14px;&quot;&gt;&#x1f512;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="258" y="245" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="lock_c" value="&lt;font style=&quot;font-size:14px;&quot;&gt;&#x1f512;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="258" y="350" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="lock_d" value="&lt;font style=&quot;font-size:14px;&quot;&gt;&#x1f512;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="258" y="455" width="24" height="24" as="geometry"/>
+        </mxCell>
+
+        <!-- Upload annotations -->
+        <mxCell id="up_txt1" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#1565C0&quot;&gt;&lt;b&gt;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt; only&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="400" y="480" width="160" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="up_txt2" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#616161&quot;&gt;Exclude BN statistics (FedBN)&lt;br&gt;KAN heads stay local &#x1f512;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="385" y="498" width="190" height="34" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!--  STEP 3: Server Aggregation                                  -->
+        <!-- ============================================================ -->
+
+        <!-- Arrows from upload box to aggregation -->
+        <mxCell id="to_agg" style="rounded=1;strokeColor=#424242;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="up_box" target="agg_hex" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Aggregation hexagon -->
+        <mxCell id="agg_hex" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;fillColor=#F5F5F5;strokeColor=#424242;strokeWidth=2;size=20;" vertex="1" parent="1">
+          <mxGeometry x="650" y="180" width="220" height="210" as="geometry"/>
+        </mxCell>
+        <mxCell id="agg_title" value="&lt;font style=&quot;font-size:12px;&quot; color=&quot;#424242&quot;&gt;&lt;b&gt;FedAvg&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="660" y="210" width="200" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="agg_formula" value="&lt;font style=&quot;font-size:10px;&quot; color=&quot;#424242&quot;&gt;&amp;theta;*&lt;sub&gt;enc&lt;/sub&gt; = &amp;Sigma;(&lt;i&gt;n&lt;sub&gt;k&lt;/sub&gt;&lt;/i&gt;/&lt;i&gt;N&lt;/i&gt;)&amp;middot;&amp;theta;&lt;sub&gt;enc&lt;/sub&gt;&lt;sup&gt;k&lt;/sup&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="665" y="250" width="190" height="28" as="geometry"/>
+        </mxCell>
+
+        <!-- Weights -->
+        <mxCell id="wt_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#9E9E9E;strokeWidth=1;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="290" width="160" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="wt_title" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#616161&quot;&gt;&lt;b&gt;Aggregation weights:&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="680" y="292" width="160" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="wt_a" value="&lt;font style=&quot;font-size:8px;&quot;&gt;&lt;font color=&quot;#1565C0&quot;&gt;&amp;bull;&lt;/font&gt; w&lt;sub&gt;A&lt;/sub&gt; = 0.285&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="685" y="310" width="70" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="wt_b" value="&lt;font style=&quot;font-size:8px;&quot;&gt;&lt;font color=&quot;#2E7D32&quot;&gt;&amp;bull;&lt;/font&gt; w&lt;sub&gt;B&lt;/sub&gt; = 0.435&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="685" y="326" width="70" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="wt_c" value="&lt;font style=&quot;font-size:8px;&quot;&gt;&lt;font color=&quot;#E65100&quot;&gt;&amp;bull;&lt;/font&gt; w&lt;sub&gt;C&lt;/sub&gt; = 0.278&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="760" y="310" width="70" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="wt_d" value="&lt;font style=&quot;font-size:8px;&quot;&gt;&lt;font color=&quot;#C62828&quot;&gt;&amp;bull;&lt;/font&gt; w&lt;sub&gt;D&lt;/sub&gt; = 0.003&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="760" y="326" width="70" height="14" as="geometry"/>
+        </mxCell>
+
+        <!-- Note: BN excluded -->
+        <mxCell id="agg_note" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#616161&quot;&gt;BatchNorm params (&amp;gamma;, &amp;beta;, &amp;mu;, &amp;sigma;&amp;sup2;)&lt;br&gt;excluded from aggregation&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="660" y="415" width="200" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!--  STEP 4: Parameter Download                                  -->
+        <!-- ============================================================ -->
+
+        <!-- Arrow from aggregation to download models -->
+        <mxCell id="from_agg" style="rounded=1;strokeColor=#424242;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" source="agg_hex" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="940" y="285" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Client A updated model -->
+        <mxCell id="m4a" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#1565C0;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="940" y="90" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4a_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder*&lt;/b&gt;&lt;br&gt;&amp;theta;*&lt;sub&gt;enc&lt;/sub&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#90CAF9;strokeColor=#1565C0;strokeWidth=1.5;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="948" y="100" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4a_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;A&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;A&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1066" y="100" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4a_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#1565C0&quot;&gt;Updated encoder + unchanged KAN&lt;sub&gt;A&lt;/sub&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="155" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4a_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m4a_enc" target="m4a_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Client B updated model -->
+        <mxCell id="m4b" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#2E7D32;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="940" y="195" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4b_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder*&lt;/b&gt;&lt;br&gt;&amp;theta;*&lt;sub&gt;enc&lt;/sub&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#90CAF9;strokeColor=#1565C0;strokeWidth=1.5;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="948" y="205" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4b_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;B&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;B&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1066" y="205" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4b_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#2E7D32&quot;&gt;Updated encoder + unchanged KAN&lt;sub&gt;B&lt;/sub&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="260" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4b_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m4b_enc" target="m4b_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Client C updated model -->
+        <mxCell id="m4c" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E65100;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="940" y="300" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4c_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder*&lt;/b&gt;&lt;br&gt;&amp;theta;*&lt;sub&gt;enc&lt;/sub&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#90CAF9;strokeColor=#1565C0;strokeWidth=1.5;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="948" y="310" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4c_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;C&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;C&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1066" y="310" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4c_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#E65100&quot;&gt;Updated encoder + unchanged KAN&lt;sub&gt;C&lt;/sub&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="365" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4c_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m4c_enc" target="m4c_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Client D updated model -->
+        <mxCell id="m4d" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#C62828;strokeWidth=1.5;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="940" y="405" width="240" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4d_enc" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Encoder*&lt;/b&gt;&lt;br&gt;&amp;theta;*&lt;sub&gt;enc&lt;/sub&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#90CAF9;strokeColor=#1565C0;strokeWidth=1.5;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="948" y="415" width="110" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4d_kan" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;KAN&lt;sub&gt;D&lt;/sub&gt;&lt;/b&gt;&lt;br&gt;&amp;theta;&lt;sub&gt;head&lt;/sub&gt;&lt;sup&gt;D&lt;/sup&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;arcSize=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="1066" y="415" width="106" height="50" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4d_lbl" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#C62828&quot;&gt;Updated encoder + unchanged KAN&lt;sub&gt;D&lt;/sub&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="470" width="240" height="18" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4d_arr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#616161;strokeWidth=1;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="m4d_enc" target="m4d_kan" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Download arrows from aggregation to Step 4 models -->
+        <mxCell id="dn_a" style="rounded=1;strokeColor=#1565C0;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="m4a_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="870" y="240" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="910" y="240"/>
+              <mxPoint x="910" y="125"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dn_b" style="rounded=1;strokeColor=#2E7D32;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="m4b_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="870" y="270" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="910" y="270"/>
+              <mxPoint x="910" y="230"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dn_c" style="rounded=1;strokeColor=#E65100;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="m4c_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="870" y="310" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="910" y="310"/>
+              <mxPoint x="910" y="335"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dn_d" style="rounded=1;strokeColor=#C62828;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="m4d_enc">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="870" y="340" as="sourcePoint"/>
+            <Array as="points">
+              <mxPoint x="910" y="340"/>
+              <mxPoint x="910" y="440"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Updated encoder note -->
+        <mxCell id="dn_note" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#616161&quot;&gt;Updated encoder &amp;theta;*&lt;sub&gt;enc&lt;/sub&gt;&lt;br&gt;+ unchanged private KAN heads&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="510" width="240" height="34" as="geometry"/>
+        </mxCell>
+
+        <!-- Updated marker note -->
+        <mxCell id="star_note" value="&lt;font style=&quot;font-size:8px;&quot; color=&quot;#1565C0&quot;&gt;* = updated via aggregation&lt;br&gt;(darker blue indicates new params)&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=top;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="940" y="545" width="240" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- ============================================================ -->
+        <!--  LEGEND                                                       -->
+        <!-- ============================================================ -->
+        <mxCell id="leg_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="580" width="500" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg_title" value="&lt;font style=&quot;font-size:9px;&quot;&gt;&lt;b&gt;Legend&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="65" y="583" width="60" height="16" as="geometry"/>
+        </mxCell>
+
+        <!-- Legend items -->
+        <mxCell id="leg1" value="" style="rounded=1;fillColor=#BBDEFB;strokeColor=#1565C0;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="605" width="24" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg1t" value="&lt;font style=&quot;font-size:8px;&quot;&gt;Shared encoder (aggregated)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="103" y="602" width="140" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="leg2" value="" style="rounded=1;fillColor=#FFCDD2;strokeColor=#C62828;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="625" width="24" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg2t" value="&lt;font style=&quot;font-size:8px;&quot;&gt;Private KAN head (never uploaded)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="103" y="622" width="160" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="leg3" value="" style="rounded=1;fillColor=#90CAF9;strokeColor=#1565C0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="75" y="645" width="24" height="14" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg3t" value="&lt;font style=&quot;font-size:8px;&quot;&gt;Updated encoder (post-aggregation)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="103" y="642" width="160" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="leg4" value="&lt;font style=&quot;font-size:14px;&quot;&gt;&#x1f512;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="275" y="602" width="24" height="20" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg4t" value="&lt;font style=&quot;font-size:8px;&quot;&gt;Parameters stay local (privacy-preserving)&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="303" y="600" width="200" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="leg5_arr" value="" style="endArrow=blockThin;endFill=1;strokeColor=#424242;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="278" y="637" as="sourcePoint"/>
+            <mxPoint x="298" y="637" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg5t" value="&lt;font style=&quot;font-size:8px;&quot;&gt;Parameter flow direction&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="303" y="628" width="140" height="18" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="leg6" value="" style="shape=hexagon;perimeter=hexagonPerimeter2;fillColor=#F5F5F5;strokeColor=#424242;strokeWidth=1;size=4;" vertex="1" parent="1">
+          <mxGeometry x="275" y="649" width="24" height="16" as="geometry"/>
+        </mxCell>
+        <mxCell id="leg6t" value="&lt;font style=&quot;font-size:8px;&quot;&gt;Server-side aggregation operator&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="303" y="648" width="160" height="18" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

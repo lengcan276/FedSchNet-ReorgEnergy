@@ -1,0 +1,155 @@
+% References NOT cited in the current draft of manuscript.md or SI.md.
+%
+% Moved out of paper/references.bib during the pre-submission TODO cleanup pass
+% so that the active bib file contains only entries with inline citations.
+% Each entry is preserved verbatim with its original key in case future
+% revisions reintroduce it. Status notes (verified / TODO) are unchanged.
+%
+% To reinstate any entry, paste it back into paper/references.bib and add the
+% corresponding inline citation [N] in manuscript.md or SI.md.
+
+
+% ----- Related but not cited: additional molecular-FL or molecular-ML refs -----
+
+@article{Li2023_SchNet,
+  title   = {Reorganization Energy Predictions with Graph Neural Networks Informed by Low-Cost Conformers},
+  author  = {Li, Cheng-Han and Tabor, Daniel P.},
+  journal = {The Journal of Physical Chemistry A},
+  year    = {2023},
+  volume  = {127},
+  pages   = {3484--3489},
+  doi     = {10.1021/acs.jpca.2c09030},
+  note    = {Reserved for related-work discussion if reorganization-energy-specific GNN work is reintroduced.}
+}
+
+@article{FedChem2022,
+  title   = {Federated Learning of Molecular Properties with Graph Neural Networks in a Heterogeneous Setting},
+  author  = {Zhu, Wei and White, Andrew and Luo, Jiebo},
+  journal = {Patterns},
+  year    = {2022},
+  volume  = {3},
+  pages   = {100521},
+  doi     = {10.1016/j.patter.2022.100521},
+  note    = {FedChem / FLIT family of molecular FL; cite if a future revision adds explicit molecular-FL related work.}
+}
+
+@article{Heyndrickx2023,
+  title   = {{MELLODDY}: Cross-Pharma Federated Learning at Unprecedented Scale Unlocks Benefits in {QSAR} without Compromising Proprietary Information},
+  author  = {Heyndrickx, Wouter and Mervin, Lewis and Morawietz, Tobias and Sturm, Noe and Friedrich, Lukas and others},
+  journal = {Journal of Chemical Information and Modeling},
+  year    = {2023},
+  volume  = {64},
+  pages   = {2331--2344},
+  doi     = {10.1021/acs.jcim.3c00799},
+  note    = {Industrial-scale federated QSAR; cite if positioning PC²-FedReorg relative to pharma-side FL.}
+}
+
+@article{FLAP2023,
+  title   = {Federated Learning of Atomistic Properties with Graph Neural Networks},
+  author  = {Zubatyuk, Roman and Smith, Justin S. and Nebgen, Benjamin T. and Tretiak, Sergei and Isayev, Olexandr},
+  journal = {Journal of Chemical Theory and Computation},
+  year    = {2023},
+  volume  = {19},
+  pages   = {6895--6906},
+  doi     = {10.1021/acs.jctc.3c00596},
+  note    = {Atomistic-property federated learning; cite if a related-work paragraph on FL for quantum properties is added.}
+}
+
+@article{Schutt2018_SchNet,
+  title   = {{SchNet} -- A deep learning architecture for molecules and materials},
+  author  = {Sch{\"u}tt, Kristof T. and Sauceda, Huziel E. and Kindermans, Pieter-Jan and Tkatchenko, Alexandre and M{\"u}ller, Klaus-Robert},
+  journal = {The Journal of Chemical Physics},
+  year    = {2018},
+  volume  = {148},
+  pages   = {241722},
+  doi     = {10.1063/1.5019779},
+  note    = {JCP version; companion of Schutt2017_SchNet_NeurIPS. The NeurIPS version is currently cited in main text.}
+}
+
+@inproceedings{Gilmer2017_MPNN,
+  title     = {Neural Message Passing for Quantum Chemistry},
+  author    = {Gilmer, Justin and Schoenholz, Samuel S. and Riley, Patrick F. and Vinyals, Oriol and Dahl, George E.},
+  booktitle = {International Conference on Machine Learning},
+  year      = {2017},
+  pages     = {1263--1272},
+  note      = {Foundational MPNN reference; cite if message-passing baselines are added in a revision.}
+}
+
+@inproceedings{Gasteiger2020_DimeNet,
+  title     = {Directional Message Passing for Molecular Graphs},
+  author    = {Gasteiger, Johannes and Gro{\ss}, Janek and G{\"u}nnemann, Stephan},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2020},
+  note      = {TODO: confirm full citation. Reserved for related-work discussion of directional / equivariant GNNs.}
+}
+
+@inproceedings{Schutt2021_PaiNN,
+  title     = {Equivariant Message Passing for the Prediction of Tensorial Properties and Molecular Spectra},
+  author    = {Sch{\"u}tt, Kristof T. and Unke, Oliver T. and Gastegger, Michael},
+  booktitle = {International Conference on Machine Learning},
+  year      = {2021},
+  pages     = {9377--9388},
+  note      = {TODO: confirm page numbers. Reserved.}
+}
+
+@inproceedings{You2020_GraphCL,
+  title     = {Graph Contrastive Learning with Augmentations},
+  author    = {You, Yuning and Chen, Tianlong and Sui, Yongduo and Chen, Ting and Wang, Zhangyang and Shen, Yang},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year      = {2020},
+  volume    = {33},
+  note      = {Reserved for the SSL section if it is reintroduced (current manuscript focuses on supervised federation).}
+}
+
+@inproceedings{Hu2020_SSL,
+  title     = {Strategies for Pre-training Graph Neural Networks},
+  author    = {Hu, Weihua and Liu, Bowen and Gomes, Joseph and Zitnik, Marinka and Liang, Percy and Pande, Vijay and Leskovec, Jure},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2020},
+  note      = {Reserved for SSL pre-training discussion.}
+}
+
+@article{KAGNN2025,
+  title   = {Kolmogorov--{A}rnold Graph Neural Networks for Molecular Property Prediction},
+  author  = {Li, Longlong and Zhang, Yipeng and Wang, Guanghui and Xia, Kelin},
+  journal = {Nature Machine Intelligence},
+  year    = {2025},
+  volume  = {7},
+  pages   = {1346--1354},
+  doi     = {10.1038/s42256-025-01087-7},
+  note    = {TODO: verify DOI. Reserved as a recent KAN+GNN reference.}
+}
+
+@article{FedLG2025,
+  title   = {A Federated Graph Learning Method to Realize Multi-party Collaboration for Molecular Discovery},
+  author  = {Zhang, F. and others},
+  journal = {Nature Machine Intelligence},
+  year    = {2025},
+  doi     = {10.1038/s42256-026-01184-1},
+  note    = {TODO: verify DOI (the 2025 Nature MI numbering looks plausible but should be re-checked).}
+}
+
+@article{Wu2018_MoleculeNet,
+  title   = {{MoleculeNet}: A Benchmark for Molecular Machine Learning},
+  author  = {Wu, Zhenqin and Ramsundar, Bharath and Feinberg, Evan N. and Gomes, Joseph and Geniesse, Caleb and Pappu, Aneesh S. and Leswing, Karl and Pande, Vijay},
+  journal = {Chemical Science},
+  year    = {2018},
+  volume  = {9},
+  number  = {2},
+  pages   = {513--530},
+  doi     = {10.1039/c7sc02664a},
+  note    = {verified DOI; reserved for a possible benchmark-protocol paragraph but not cited in the current draft.}
+}
+
+@article{Coley2020_GCN_review,
+  title   = {Graph-Convolutional Neural Networks for Synthesis-Aware Property Prediction},
+  author  = {Coley, Connor W. and Jin, Wengong and Rogers, Luke and Jamison, Timothy F. and Jaakkola, Tommi S. and Green, William H. and Barzilay, Regina and Jensen, Klavs F.},
+  journal = {Chemical Science},
+  year    = {2019},
+  volume  = {10},
+  pages   = {370--377},
+  note    = {TODO: confirm exact title, year and DOI. Reserved.}
+}
+
+
+% End of references_unused.bib

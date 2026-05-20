@@ -1,9 +1,23 @@
 """
 Federated learning strategies.
-- FedAvg:  Weighted average of all parameters
-- FedProx: FedAvg + proximal term mu/2 ||w - w_global||^2
-- FedPer:  Aggregate only encoder non-BN parameters, heads remain private
-- FedBN:   FedPer + additionally skip all BatchNorm parameters
+
+Legacy strategies (preserve E1-E59 reproducibility; only delta is the
+universal calibration exclusion):
+- FedAvg:  Weighted average of all parameters except calibration buffers
+- FedProx: FedAvg + proximal term mu/2 ||w - w_global||^2 (excludes calibration)
+- FedPer:  Excludes head + bn/norm + calibration (encoder non-BN shared)
+- FedBN:   Excludes head + bn/norm + calibration (same exclusion set as FedPer
+           in this codebase; kept as a separate strategy for experiment-tag
+           clarity, mirroring the original implementation)
+
+New strategies for PC²-FedReorg ablations (Phase 3+):
+- fedper_pc2: Excludes head + adapter + calibration (encoder + its BN shared)
+- fedbn_pc2:  Excludes bn/norm + calibration (head + adapter shared)
+- pc2_fed:    Per-key routing aggregator; see experiments/pc2_fedreorg.py
+
+Universal Phase 3 safety fix:
+    'calibration' is excluded from EVERY strategy. Per-task-client (mu, sigma)
+    buffers must never be cross-client averaged.
 """
 
 import copy
@@ -18,20 +32,60 @@ import torch.nn as nn
 def _get_exclude_keys(state_dict: dict, strategy: str) -> set:
     """Determine parameter keys to exclude based on federated strategy.
 
-    FedAvg:  No keys excluded
-    FedPer:  Exclude head + BN
-    FedBN:   Exclude head + BN (same logic as FedPer, explicit declaration)
+    Universal rule (Phase 3 safety fix):
+        Any key containing 'calibration' is ALWAYS excluded -- per-task-client
+        (mu, sigma) buffers must never be cross-client averaged.
+
+    Legacy strategies (E1-E59 semantics preserved; only delta is the universal
+    calibration exclusion):
+        fedavg, fedprox: only 'calibration' excluded.
+        fedper:          'calibration' + 'head' + 'bn'/'norm' excluded
+                         (encoder non-BN shared, heads + BN private).
+        fedbn:           'calibration' + 'head' + 'bn'/'norm' excluded
+                         (same set as fedper in this codebase; kept as a
+                         distinct tag so existing experiment names still
+                         resolve. The original docstring noted that "FedPer
+                         already skips BN, so FedBN has the same exclusion
+                         set"; that invariant is preserved here.)
+
+    New PC²-FedReorg ablation strategies (do NOT alter legacy semantics):
+        fedper_pc2:      'calibration' + 'head' + 'adapter' excluded
+                         (encoder incl. its BN shared, head + adapter private).
+        fedbn_pc2:       'calibration' + 'bn'/'norm' excluded
+                         (head + adapter shared; standard FedBN semantics).
+        pc2_fed:         'calibration' excluded; per-key routing handled by
+                         experiments/pc2_fedreorg.py:pc2_fed_aggregate.
     """
     exclude = set()
     for key in state_dict:
+        # Universal: calibration buffers are never aggregated.
+        if 'calibration' in key:
+            exclude.add(key)
+            continue
+
         if strategy in ('fedper', 'fedbn'):
-            # Exclude head parameters (private layers)
+            # Legacy semantics: head + bn/norm private (matches pre-Phase-3 behavior).
             if 'head' in key:
                 exclude.add(key)
-            # Exclude BatchNorm parameters
             if 'bn' in key or 'norm' in key:
                 exclude.add(key)
-        # FedAvg: no exclusion
+        elif strategy == 'fedper_pc2':
+            # New: head + adapter private (encoder incl. BN shared).
+            if 'head' in key or 'adapter' in key:
+                exclude.add(key)
+        elif strategy == 'fedbn_pc2':
+            # New: only BN private (head + adapter shared).
+            if 'bn' in key or 'norm' in key:
+                exclude.add(key)
+        elif strategy in ('fedavg', 'fedprox', 'pc2_fed'):
+            pass  # only the universal calibration exclusion applies
+        else:
+            raise ValueError(
+                f"unknown strategy {strategy!r}; expected one of "
+                f"'fedavg', 'fedprox', 'fedper', 'fedbn', "
+                f"'fedper_pc2', 'fedbn_pc2', 'pc2_fed'"
+            )
+
     return exclude
 
 
@@ -71,8 +125,10 @@ def fedavg_aggregate(client_models: list, weights: list,
 
 
 def fedavg_strategy(client_models: list, weights: list) -> OrderedDict:
-    """FedAvg: aggregate all parameters."""
-    return fedavg_aggregate(client_models, weights, exclude_keys=set())
+    """FedAvg: aggregate all parameters except calibration buffers (universal rule)."""
+    sample_dict = client_models[0].state_dict()
+    exclude = _get_exclude_keys(sample_dict, 'fedavg')
+    return fedavg_aggregate(client_models, weights, exclude_keys=exclude)
 
 
 # ============ FedPer ============
@@ -97,6 +153,26 @@ def fedbn_aggregate(client_models: list, weights: list) -> OrderedDict:
     """
     sample_dict = client_models[0].state_dict()
     exclude = _get_exclude_keys(sample_dict, 'fedbn')
+    return fedavg_aggregate(client_models, weights, exclude_keys=exclude)
+
+
+# ============ PC²-FedReorg ablation strategies (Phase 3+) ============
+# These do NOT alter the legacy fedper / fedbn semantics. They exist so PC²
+# can compare against personalized baselines that differ in *which* layers
+# are private (head + adapter, vs BN, vs head + BN). Keep separate from
+# legacy strategy names so E1-E59 results stay reproducible.
+
+def fedper_pc2_aggregate(client_models: list, weights: list) -> OrderedDict:
+    """FedPer (PC² variant): exclude head + adapter + calibration. BN shared."""
+    sample_dict = client_models[0].state_dict()
+    exclude = _get_exclude_keys(sample_dict, 'fedper_pc2')
+    return fedavg_aggregate(client_models, weights, exclude_keys=exclude)
+
+
+def fedbn_pc2_aggregate(client_models: list, weights: list) -> OrderedDict:
+    """FedBN (PC² variant): exclude bn/norm + calibration. Head/adapter shared."""
+    sample_dict = client_models[0].state_dict()
+    exclude = _get_exclude_keys(sample_dict, 'fedbn_pc2')
     return fedavg_aggregate(client_models, weights, exclude_keys=exclude)
 
 
@@ -152,15 +228,22 @@ def get_aggregation_fn(strategy: str):
     """Get the aggregation function for a given strategy.
 
     Args:
-        strategy: 'fedavg', 'fedper', 'fedbn'
+        strategy: one of 'fedavg', 'fedper', 'fedbn', 'fedper_pc2', 'fedbn_pc2'.
+
+        Note: 'pc2_fed' is NOT included here -- its aggregator
+        (experiments/pc2_fedreorg.py:pc2_fed_aggregate) returns a per-target
+        dict-of-dicts and has a different signature; the training loop must
+        call it via its own dispatch path.
 
     Returns:
         Aggregation function (client_models, weights) -> OrderedDict
     """
     strategy_map = {
-        'fedavg': fedavg_strategy,
-        'fedper': fedper_aggregate,
-        'fedbn': fedbn_aggregate,
+        'fedavg':     fedavg_strategy,
+        'fedper':     fedper_aggregate,        # legacy semantics (head + bn private)
+        'fedbn':      fedbn_aggregate,         # legacy semantics (same exclusion as fedper)
+        'fedper_pc2': fedper_pc2_aggregate,    # new: head + adapter private, BN shared
+        'fedbn_pc2':  fedbn_pc2_aggregate,     # new: BN private, head + adapter shared
     }
     if strategy not in strategy_map:
         raise ValueError(f"Unknown strategy: {strategy}. Choose from {list(strategy_map.keys())}")
